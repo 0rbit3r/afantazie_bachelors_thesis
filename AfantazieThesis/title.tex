@@ -1,0 +1,181 @@
+%%% Titulní strana práce a další povinné informační strany
+
+%%% Nápisy na přední straně desek
+%%% Pokud je práce ve slovenštině, desky mají být česky.
+
+% Desky obvykle nesázíme, ale pokud je chcete přidat, změnte \iffalse na \iftrue
+\iffalse
+
+\pagestyle{empty}
+\hypersetup{pageanchor=false}
+\begin{center}
+
+\large
+Univerzita Karlova
+
+\medskip
+
+Matematicko-fyzikální fakulta
+
+\vfill
+
+{\huge\bf\ThesisTypeTitle}
+
+\vfill
+
+{\huge\bf\ThesisTitle\par}
+
+\vfill
+\vfill
+
+\hbox to \hsize{\YearSubmitted\hfil \ThesisAuthor}
+
+\end{center}
+
+\newpage\openright
+\setcounter{page}{1}
+
+\fi
+
+%%% Titulní strana práce
+%%% Pokud je práce ve slovenštině, tato strana zůstává česky.
+
+\pagestyle{empty}
+\hypersetup{pageanchor=false}
+
+\begin{center}
+
+\centerline{\mbox{\includegraphics[width=166mm]{img/logo-cs.pdf}}}
+
+\vspace{-8mm}
+\vfill
+
+{\bf\Large\ThesisTypeTitle}
+
+\vfill
+
+{\LARGE\ThesisAuthor}
+
+\vspace{15mm}
+
+{\LARGE\bfseries\ThesisTitle\par}
+
+\vfill
+
+\Department
+
+\vfill
+
+{
+\centerline{\vbox{\halign{\hbox to 0.45\hsize{\hfil #}&\hskip 0.5em\parbox[t]{0.45\hsize}{\raggedright #}\cr
+Vedoucí \ThesisTypeGenitive{} práce:&\Supervisor \cr
+\ifx\ThesisType\TypeRig\else
+\noalign{\vspace{2mm}}
+Studijní program:&\StudyProgramme \cr
+\fi
+}}}}
+
+\vfill
+
+Praha \YearSubmitted
+
+\end{center}
+
+\newpage
+
+%%% Strana s čestným prohlášením k práci
+%%% Pokud je práce ve slovenštině, tato strana zůstává česky.
+
+\openright
+\hypersetup{pageanchor=true}
+\vglue 0pt plus 1fill
+
+\noindent
+Prohlašuji, že jsem tuto \ThesisTypeAccusative{} práci vypracoval(a) samostatně a výhradně
+s~použitím citovaných pramenů, literatury a dalších odborných zdrojů.
+Beru na~vědomí, že se na moji práci vztahují práva a povinnosti vyplývající
+ze zákona č. 121/2000 Sb., autorského zákona v~platném znění, zejména skutečnost,
+že Univerzita Karlova má právo na~uzavření licenční smlouvy o~užití této
+práce jako školního díla podle §60 odst. 1 autorského zákona.
+
+\vspace{10mm}
+
+\hbox{\hbox to 0.5\hsize{%
+V \hbox to 6em{\dotfill} dne \hbox to 6em{\dotfill}
+\hss}\hbox to 0.5\hsize{\dotfill\quad}}
+\smallskip
+\hbox{\hbox to 0.5\hsize{}\hbox to 0.5\hsize{\hfil Podpis autora\hfil}}
+
+\vspace{20mm}
+\newpage
+
+%%% Poděkování
+
+\openright
+
+\noindent
+\Dedication
+
+\newpage
+
+%%% Povinná informační strana práce
+
+\openright
+{\InfoPageFont
+
+\vtop to 0.5\vsize{
+\setlength\parindent{0mm}
+\setlength\parskip{5mm}
+
+Název práce:
+\ThesisTitle
+
+Autor:
+\ThesisAuthor
+
+\DeptType:
+\Department
+
+Vedoucí \ThesisTypeGenitive{} práce:
+\Supervisor, \SupervisorsDepartment
+
+Abstrakt:
+\Abstract
+
+Klíčová slova:
+{\def\sep{\unskip, }\ThesisKeywords}
+
+\vfil
+}
+
+\vtop to 0.49\vsize{
+\setlength\parindent{0mm}
+\setlength\parskip{5mm}
+
+Title:
+\ThesisTitleEN
+
+Author:
+\ThesisAuthor
+
+\DeptTypeEN:
+\DepartmentEN
+
+Supervisor:
+\Supervisor, \SupervisorsDepartmentEN
+
+Abstract:
+\AbstractEN
+
+Keywords:
+{\def\sep{\unskip, }\ThesisKeywordsEN}
+
+\vfil
+}
+
+}
+
+\newpage
+
+%%% Další stránky budeme číslovat
+\pagestyle{plain}

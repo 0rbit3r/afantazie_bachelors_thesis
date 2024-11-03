@@ -1,0 +1,44 @@
+.settings-container {
+    .color-picker-overlay {
+        position: fixed;
+        top: 20vh;
+        right: 15vw;
+        left: 15vw;
+        background-color: #000000;
+        border: 2px solid var(--accent-color-2);
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    h1 {
+        color: var(--primary-color-light);
+    }
+
+    .color-picker-popup {
+        padding: 20px;
+        border-radius: 8px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .color-dot {
+        display: inline-block;
+    }
+
+    .color-dot.selected {
+        border: 2px solid white;
+    }
+
+    .username {
+        font-size: larger;
+        cursor: pointer;
+    }
+
+    .settings-label {
+        font-size: large;
+        margin: 0.8rem;
+    }
+}

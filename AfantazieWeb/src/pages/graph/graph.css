@@ -1,0 +1,153 @@
+.overlay {
+  visibility: collapse;
+  height: 0;
+  /* todo.: figure out safari... and top+bottom urlbars. */
+  background-color: rgba(0, 0, 0, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transition: all 0.3s ease-in-out;
+
+  .text-scroll-container {
+    width: 90%;
+    height: 100%;
+    overflow-y: auto;
+
+    .text-flex-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        white-space: pre-line;
+      }
+    }
+  }
+
+  button {
+    display: block;
+  }
+
+  .thought-overlay-button-row {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin: 0;
+    button{
+      margin-top: 5px;
+      margin-bottom: 0;
+    }
+  }
+
+  h2 {
+    margin: 0;
+    margin-top: 15px;
+  }
+
+  h3 {
+    margin: 10px;
+  }
+
+}
+
+.overlay-expanded-portrait {
+  visibility: visible;
+  width: 100%;
+  height: 40vh;
+}
+
+.overlay-fullscreen-portrait {
+  visibility: visible;
+  width: 100%;
+  height: 86vh;
+}
+
+/* todo... */
+.overlay-expanded-landscape {
+  visibility: visible;
+  width: 100%;
+  height: 40vh;
+}
+
+.overlay-fullscreen-landscape {
+  visibility: visible;
+  height: 86vh;
+}
+
+.in-text-thought-ref {
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+
+
+.graph-stage {
+  transition: all 0.3s ease-in-out;
+}
+
+.graph-bottom-part {
+  position: absolute;
+  bottom: 0;
+}
+
+.stage-container {
+  display: flex;
+  flex-direction: vertical;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.green-text {
+  color: var(--primary-color);
+}
+
+.graph-ui-button{
+  padding: 0;
+  background-color: transparent;
+  color: transparent;
+  border: none;
+  position: absolute;
+  /* background-color: red; */
+  cursor: pointer;
+  height: 50px;
+  width: 50px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.zoom-in-button {
+  bottom: 120px;
+  right: 10px;
+}
+
+.zoom-out-button {
+  bottom: 60px;
+  right: 10px;
+}
+
+.rewind-button {
+  bottom: 60px;
+  left: 10px;
+}
+
+.responses-container {
+  /* background-color: aqua; */
+  /* todo - here nd overall look into heights and url bars and such... */
+  height: 27vh;
+  overflow: auto;
+}
+
+.responses-container-half-screen {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

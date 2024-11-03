@@ -1,0 +1,83 @@
+%%% Vyplňte prosím základní údaje o závěrečné práci (odstraňte \xxx{...}).
+%%% Automaticky se pak vloží na všechna místa, kde jsou potřeba.
+
+% Druh práce:
+%	"bc" pro bakalářskou
+%	"mgr" pro diplomovou
+%	"phd" pro disertační
+%	"rig" pro rigorozní
+\def\ThesisType{bc}
+
+% Název práce v jazyce práce (přesně podle zadání)
+\def\ThesisTitle{\xxx{Afantazie - bc.p. (TBD)}}
+
+% Název práce v angličtině
+\def\ThesisTitleEN{\xxx{TBD}}
+
+% Jméno autora (vy)
+\def\ThesisAuthor{Aleš Kakos}
+
+% Rok odevzdání
+\def\YearSubmitted{2025}
+
+% Název katedry nebo ústavu, kde byla práce oficiálně zadána
+% (dle Organizační struktury MFF UK:
+% https://www.mff.cuni.cz/cs/fakulta/organizacni-struktura,
+% případně plný název pracoviště mimo MFF)
+\def\Department{\xxx{Název katedry nebo ústavu}}
+\def\DepartmentEN{\xxx{Name of the department}}
+
+% Jedná se o katedru (department) nebo o ústav (institute)?
+\def\DeptType{Katedra}
+\def\DeptTypeEN{Department}
+
+% Vedoucí práce: Jméno a příjmení s~tituly
+\def\Supervisor{Doc. RNDr. Irena Holubová, Ph.D.}
+
+% Pracoviště vedoucího (opět dle Organizační struktury MFF)
+\def\SupervisorsDepartment{\xxx{katedra}}
+\def\SupervisorsDepartmentEN{\xxx{department}}
+
+% Studijní program (kromě rigorozních prací)
+\def\StudyProgramme{\xxx{studijní program}}
+
+% Nepovinné poděkování (vedoucímu práce, konzultantovi, tomu, kdo
+% vám nosil pizzu a vařil čaj apod.)
+\def\Dedication{%
+\xxx{Poděkování.}
+}
+
+% Abstrakt (doporučený rozsah cca 80-200 slov; nejedná se o zadání práce)
+\def\Abstract{%
+\xxx{Abstrakt.}
+}
+
+% Anglická verze abstraktu
+\def\AbstractEN{%
+\xxx{Abstract.}
+}
+
+% 3 až 5 klíčových slov (doporučeno) oddělených \sep
+% Hodí se pro nalezení práce podle tématu.
+\def\ThesisKeywords{%
+\xxx{klíčové slovo\sep složitější fráze}
+}
+
+\def\ThesisKeywordsEN{
+\xxx{key\sep words}
+}
+
+% Pokud některá z položek metadat obsahuje TeXové řídící sekvence, je potřeba
+% dodat i verzi v obyčejném textu, která se objeví v metadatech formátu XMP
+% zabudovaných do výstupního souboru PDF. Pokud si nejste jistí, prohlédněte si
+% vygenerovaný soubor thesis.xmpdata.
+\def\ThesisAuthorXMP{\ThesisAuthor}
+\def\ThesisTitleXMP{\ThesisTitle}
+\def\ThesisKeywordsXMP{\ThesisKeywords}
+\def\AbstractXMP{\Abstract}
+
+% Máte-li dlouhý abstrakt a nechceme se mu vejít na informační stranu,
+% můžete použít toto nastavení ke zmenšení písma informační strany.
+% (Uvažte nicméně zkrácení abstraktu, to je často lepší.)
+\def\InfoPageFont{}
+%\def\InfoPageFont{\small}  % odkomentujte pro zmenšení písma

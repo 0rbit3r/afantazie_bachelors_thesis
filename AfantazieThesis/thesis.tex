@@ -1,0 +1,177 @@
+%%% Hlavní soubor. Zde se definují základní parametry a odkazuje se na ostatní části. %%%
+
+% Meta-data o práci (je nutno upravit)
+\input metadata.tex
+
+% Vygenerujeme metadata ve formátu XMP pro použití balíčkem pdfx
+\input xmp.tex
+
+%% Verze pro jednostranný tisk:
+% Okraje: levý 40mm, pravý 25mm, horní a dolní 25mm
+% (ale pozor, LaTeX si sám přidává 1in)
+\documentclass[12pt,a4paper]{report}
+\setlength\textwidth{145mm}
+\setlength\textheight{247mm}
+\setlength\oddsidemargin{15mm}
+\setlength\evensidemargin{15mm}
+\setlength\topmargin{0mm}
+\setlength\headsep{0mm}
+\setlength\headheight{0mm}
+% \openright zařídí, aby následující text začínal na pravé straně knihy
+\let\openright=\clearpage
+
+%% Pokud tiskneme oboustranně:
+% \documentclass[12pt,a4paper,twoside,openright]{report}
+% \setlength\textwidth{145mm}
+% \setlength\textheight{247mm}
+% \setlength\oddsidemargin{14.2mm}
+% \setlength\evensidemargin{0mm}
+% \setlength\topmargin{0mm}
+% \setlength\headsep{0mm}
+% \setlength\headheight{0mm}
+% \let\openright=\cleardoublepage
+
+%% Pokud práci odevzdáváme pouze elektronicky, vypadají lépe symetrické okraje
+% \documentclass[12pt,a4paper]{report}
+% \setlength\textwidth{145mm}
+% \setlength\textheight{247mm}
+% \setlength\oddsidemargin{10mm}
+% \setlength\evensidemargin{10mm}
+% \setlength\topmargin{0mm}
+% \setlength\headsep{0mm}
+% \setlength\headheight{0mm}
+% \let\openright=\clearpage
+
+%% Vytváříme PDF/A-2u
+\usepackage[a-2u]{pdfx}
+
+%% Přepneme na českou sazbu a fonty Latin Modern
+\usepackage[czech]{babel}
+\usepackage{lmodern}
+
+% Pokud nepouživáme LuaTeX, je potřeba ještě nastavit kódování znaků
+\usepackage{iftex}
+\ifpdftex
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\fi
+
+%%% Další užitečné balíčky (jsou součástí běžných distribucí LaTeXu)
+\usepackage{amsmath}        % rozšíření pro sazbu matematiky
+\usepackage{amsfonts}       % matematické fonty
+\usepackage{amsthm}         % sazba vět, definic apod.
+\usepackage{bm}             % tučné symboly (příkaz \bm)
+\usepackage{booktabs}       % lepší vodorovné linky v tabulkách
+\usepackage{caption}        % umožní definovat vlastní popisky plovoucích objektů
+\usepackage{csquotes}       % uvozovky závislé na jazyku
+\usepackage{dcolumn}        % vylepšené zarovnání sloupců tabulek
+\usepackage{floatrow}       % umožní definovat vlastní typy plovoucích objektů
+\usepackage{graphicx}       % vkládání obrázků
+\usepackage{icomma}         % inteligetní čárka v matematickém módu
+\usepackage{indentfirst}    % zavede odsazení 1. odstavce kapitoly
+\usepackage[nopatch=item]{microtype}  % mikrotypografická rozšíření
+\usepackage{paralist}       % lepší enumerate a itemize
+\usepackage[nottoc]{tocbibind} % zajistí přidání seznamu literatury,
+                            % obrázků a tabulek do obsahu
+\usepackage{xcolor}         % barevná sazba
+
+% Balíček hyperref, kterým jdou vyrábět klikací odkazy v PDF,
+% ale hlavně ho používáme k uložení metadat do PDF (včetně obsahu).
+% Většinu nastavítek přednastaví balíček pdfx.
+\hypersetup{unicode}
+\hypersetup{breaklinks=true}
+
+% Balíčky pro sazbu informatických prací
+\usepackage{algpseudocode}  % součást balíčku algorithmicx
+\usepackage[Algoritmus]{algorithm}
+\usepackage{fancyvrb}       % vylepšené prostředí verbatim
+\usepackage{listings}       % zvýrazňování syntaxe zdrojových textů
+
+% Cleveref může zjednodušit odkazování, ale jeho užitečnost pro češtinu
+% je minimalní, protože nezvládá skloňování.
+% \usepackage{cleveref}
+
+% Formátování bibliografie (odkazů na literaturu)
+% Detailní nastavení můžete upravit v souboru macros.tex.
+%
+% POZOR: Zvyklosti různých oborů a kateder se liší. Konzultujte se svým
+% vedoucím, jaký formát citací je pro vaši práci vhodný!
+%
+% Základní formát podle normy ISO 690 s číslovanými odkazy
+\usepackage[natbib,style=iso-numeric,sorting=none]{biblatex}
+% ISO 690 s alfanumerickými odkazy (zkratky jmen autorů)
+%\usepackage[natbib,style=iso-alphabetic]{biblatex}
+% ISO 690 s citacemi tvaru Autor (rok)
+%\usepackage[natbib,style=iso-authoryear]{biblatex}
+%
+% V některých oborech je běžnější obyčejný formát s číslovanými odkazy
+% (sorting=none říká, že se bibliografie má řadit podle pořadí citací):
+%\usepackage[natbib,style=numeric,sorting=none]{biblatex}
+% Číslované odkazy, navíc se [1,2,3,4,5] komprimuje na [1-5]
+%\usepackage[natbib,style=numeric-comp,sorting=none]{biblatex}
+% Obyčejný formát s alfanumerickými odkazy:
+%\usepackage[natbib,style=alphabetic]{biblatex}
+
+% Z tohoto souboru se načítají položky bibliografie
+\addbibresource{literatura.bib}
+
+% Definice různých užitečných maker (viz popis uvnitř souboru)
+\input macros.tex
+
+%%% Titulní strana a různé povinné informační strany
+\begin{document}
+\include{title}
+
+%%% Strana s automaticky generovaným obsahem práce
+
+\tableofcontents
+
+
+%%% Použité zkratky v práci (opět nemusí být nutné uvádět)
+%%% U matematických prací může být lepší přemístit seznam zkratek na začátek práce.
+\include{usedTerms}
+
+
+%%% Jednotlivé kapitoly práce jsou pro přehlednost uloženy v samostatných souborech
+\include{uvod}
+\include{kap01}
+\include{kap02}
+\include{kap03}
+\include{kap04}
+
+\include{zaver}
+
+%%% Seznam použité literatury
+\include{literatura}
+
+%%% Obrázky v práci
+%%% (pokud jich je malé množství, obvykle není třeba seznam uvádět)
+\listoffigures
+
+%%% Tabulky v práci (opět nemusí být nutné uvádět)
+%%% U matematických prací může být lepší přemístit seznam tabulek na začátek práce.
+\listoftables
+
+
+%%% Součástí doktorských prací musí být seznam vlastních publikací
+\ifx\ThesisType\TypePhD
+\chapwithtoc{Seznam publikací}
+\fi
+
+%%% Přílohy k práci, existují-li. Každá příloha musí být alespoň jednou
+%%% odkazována z vlastního textu práce. Přílohy se číslují.
+%%%
+%%% Do tištěné verze se spíše hodí přílohy, které lze číst a prohlížet (dodatečné
+%%% tabulky a grafy, různé textové doplňky, ukázky výstupů z počítačových programů,
+%%% apod.). Do elektronické verze se hodí přílohy, které budou spíše používány
+%%% v elektronické podobě než čteny (zdrojové kódy programů, datové soubory,
+%%% interaktivní grafy apod.). Elektronické přílohy se nahrávají do SISu.
+%%% Povolené formáty souborů specifikuje opatření rektora č. 72/2017.
+%%% Výjimky schvaluje fakultní koordinátor pro zavěrečné práce.
+\appendix
+\chapter{Přílohy}
+
+\section{První příloha}
+
+\end{document}

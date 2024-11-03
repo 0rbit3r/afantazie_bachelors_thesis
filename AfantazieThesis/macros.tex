@@ -1,0 +1,188 @@
+%%% Tento soubor obsahuje definice různých užitečných maker a prostředí %%%
+%%% Další makra připisujte sem, ať nepřekáží v ostatních souborech.     %%%
+
+%%% Přepínače podle typu práce
+
+\def\TypeBc{bc}
+\def\TypeMgr{mgr}
+\def\TypePhD{phd}
+\def\TypeRig{rig}
+
+\ifx\ThesisType\TypeBc
+\def\ThesisTypeName{bakalářská}
+\def\ThesisTypeGenitive{bakalářské}
+\def\ThesisTypeAccusative{bakalářskou}
+\def\ThesisTypeTitle{BAKALÁŘSKÁ PRÁCE}
+\fi
+
+\ifx\ThesisType\TypeMgr
+\def\ThesisTypeName{diplomová}
+\def\ThesisTypeGenitive{diplomové}
+\def\ThesisTypeAccusative{diplomovou}
+\def\ThesisTypeTitle{DIPLOMOVÁ PRÁCE}
+\fi
+
+\ifx\ThesisType\TypePhD
+\def\ThesisTypeName{disertační}
+\def\ThesisTypeGenitive{disertační}
+\def\ThesisTypeAccusative{disertační}
+\def\ThesisTypeTitle{DISERTAČNÍ PRÁCE}
+\fi
+
+\ifx\ThesisType\TypeRig
+\def\ThesisTypeName{rigorozní}
+\def\ThesisTypeGenitive{rigorozní}
+\def\ThesisTypeAccusative{rigorozní}
+\def\ThesisTypeTitle{RIGOROZNÍ PRÁCE}
+\fi
+
+\ifx\ThesisTypeName\undefined
+\PackageError{thesis}{Neznámý typ práce.}{Zkontrolujte prosím definici makra ThesisType v souboru metadata.tex.}
+\fi
+
+%%% Drobné úpravy stylu
+
+% Tato makra přesvědčují mírně ošklivým trikem LaTeX, aby hlavičky kapitol
+% sázel příčetněji a nevynechával nad nimi spoustu místa. Směle ignorujte.
+\makeatletter
+\def\@makechapterhead#1{
+  {\parindent \z@ \raggedright \normalfont
+   \Huge\bfseries \thechapter\quad #1
+   \par\nobreak
+   \vskip 20\p@
+}}
+\def\@makeschapterhead#1{
+  {\parindent \z@ \raggedright \normalfont
+   \Huge\bfseries #1
+   \par\nobreak
+   \vskip 20\p@
+}}
+\makeatother
+
+% Toto makro definuje kapitolu, která není očíslovaná, ale je uvedena v obsahu.
+\def\chapwithtoc#1{
+\chapter*{#1}
+\addcontentsline{toc}{chapter}{#1}
+}
+
+% Trochu volnější nastavení dělení slov, než je default.
+\lefthyphenmin=2
+\righthyphenmin=2
+
+% Zapne černé "slimáky" na koncích řádků, které přetekly, abychom si
+% jich lépe všimli.
+\overfullrule=1mm
+
+%%% Makra pro definice, věty, tvrzení, příklady, ... (vyžaduje baliček amsthm)
+
+\theoremstyle{plain}
+\newtheorem{veta}{Věta}
+\newtheorem{lemma}[veta]{Lemma}
+\newtheorem{tvrz}[veta]{Tvrzení}
+\newtheorem{definice}{Definice}
+
+\theoremstyle{remark}
+\newtheorem*{dusl}{Důsledek}
+\newtheorem*{pozn}{Poznámka}
+\newtheorem*{prikl}{Příklad}
+
+% Alias pro prostředí proof s českým názvem
+\newenvironment{dukaz}{\begin{proof}}{\end{proof}}
+
+%%% Styl popisek obrázků
+
+\ifcsname DeclareCaptionStyle\endcsname
+\DeclareCaptionStyle{thesis}{style=base,font=small,labelfont=bf,labelsep=quad}
+\captionsetup{style=thesis}
+\captionsetup[algorithm]{style=thesis,singlelinecheck=off}
+\captionsetup[listing]{style=thesis,singlelinecheck=off}
+\fi
+
+%%% Prostředí pro sazbu kódu, případně vstupu/výstupu počítačových
+%%% programů.
+
+\DefineVerbatimEnvironment{code}{Verbatim}{fontsize=\small, frame=single}
+
+% Nastavení pro lstlisting -- výpisy programů se zvýrazňováním syntaxe
+\ifcsname lstset\endcsname
+\lstset{
+  language=C++,
+  tabsize=2,
+  showstringspaces=false,
+  basicstyle=\footnotesize\tt\color{black!75},
+  identifierstyle=\bfseries\color{black},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red!50!black},
+  keywordstyle=\color{blue!75!black}}
+\fi
+
+% Plovoucí výpisy kódu, používá se stejně jako figure
+\ifcsname DeclareNewFloatType\endcsname
+\DeclareNewFloatType{listing}{}
+\floatsetup[listing]{style=ruled}
+\floatname{listing}{Program}
+\fi
+
+%%% Prostor reálných, resp. přirozených čísel
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+
+%%% Užitečné operátory pro statistiku a pravděpodobnost
+\DeclareMathOperator{\pr}{\textsf{P}}
+\DeclareMathOperator{\E}{\textsf{E}}
+\DeclareMathOperator{\var}{\textrm{var}}
+\DeclareMathOperator{\sd}{\textrm{sd}}
+
+%%% Příkaz pro transpozici vektoru/matice
+\newcommand{\T}[1]{#1^\top}
+
+%%% Asymptotické "O"
+\def\O{\mathcal{O}}
+
+%%% Vychytávky pro matematiku
+\newcommand{\goto}{\rightarrow}
+\newcommand{\gotop}{\stackrel{P}{\longrightarrow}}
+\newcommand{\maon}[1]{o(n^{#1})}
+\newcommand{\abs}[1]{\left|{#1}\right|}
+\newcommand{\dint}{\int_0^\tau\!\!\int_0^\tau}
+\newcommand{\isqr}[1]{\frac{1}{\sqrt{#1}}}
+
+%%% Vychytávky pro tabulky
+\newcommand{\pulrad}[1]{\raisebox{1.5ex}[0pt]{#1}}
+\newcommand{\mc}[1]{\multicolumn{1}{c}{#1}}
+
+%%% Zvýraznění údajů, které je potřeba doplnit: před odevzdáním práce odstraňte :)
+\newcommand{\xxx}[1]{\textcolor{red!}{#1}}
+
+%%% Detailní nastavení bibliografie
+
+\ifx\citet\undefined\else
+
+% Maximální počet autorů, které uvádíme u jednoho díla (více se uvede pomocí "et al.")
+%\ExecuteBibliographyOptions{maxnames=2}
+% Totéž nastavavení specificky pro citace pomocí \citet{...}
+\ExecuteBibliographyOptions{maxcitenames=2}
+% Totéž nastavavení specificky pro seznam literatury
+%\ExecuteBibliographyOptions{maxbibnames=2}
+
+% Zkracování křestních jmen autorů: "E. A. Poe" místo "Edgar Allan Poe"
+%\ExecuteBibliographyOptions{giveninits}
+% Totéž bez teček ("EA Poe")
+%\ExecuteBibliographyOptions{terseinits}
+
+% Pokud máte problémy s lámáním dlouhých položek bibliografie na řádky,
+% zkuste tento režim:
+%\ExecuteBibliographyOptions{block=ragged}
+
+% Ve stylech, které se neřídí podle ISO 690, můžeme také prohodit jméno a příjmení:
+%\DeclareNameAlias{default}{family-given}
+
+% Ve stylech podle ISO 690 vypadá lépe sázet příjmení kapitálkami:
+\let\familynameformat=\textsc
+
+% Více jmen autorů chceme v citacích oddělovat čárkami
+% (zatímco v bibliografii norma předepisuje středníky)
+\DeclareDelimFormat[textcite]{multinamedelim}{\addcomma\space}
+\DeclareDelimFormat[textcite]{finalnamedelim}{\space a~}
+
+\fi
