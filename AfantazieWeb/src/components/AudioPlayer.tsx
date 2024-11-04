@@ -1,8 +1,13 @@
-function AudioPlayer() {
+
+interface AudioPlayerProps {
+  path: string;
+}
+
+function AudioPlayer(props: AudioPlayerProps) {
   return (
     <div>
       <audio controls>
-        <source src="/46.wav" type="audio/mpeg" />
+        <source src={props.path} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
     </div>

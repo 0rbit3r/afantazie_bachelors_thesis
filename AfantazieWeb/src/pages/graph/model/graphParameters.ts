@@ -5,23 +5,23 @@ export const MAX_RADIUS = 300;
 
 export const IDEAL_LINKED_DISTANCE = 100;
 export const EDGE_COMPRESSIBILITY_FACTOR = 3;
-export const PUSH_THRESH = 1200;
+export const PUSH_THRESH = 1800;
 
-export const MOMENTUM_DAMPENING_RATE = 2;
+export const MOMENTUM_DAMPENING_RATE = 1.8;
 export const MAX_PULL_FORCE = 100;
 export const MAX_PUSH_FORCE = 100;
 
 export const SIMULATION_FRAMES = 10000;
-export const SLOW_SIM_EVERY_N_FRAMES = 1400;
+export const SLOW_SIM_EVERY_N_FRAMES = 2000;
 export const FRAMES_WITH_OVERLAP = 0;
 
-export const SIM_WIDTH = 5000;
-export const SIM_HEIGHT = 5000;
+export const SIM_WIDTH = 8000;
+export const SIM_HEIGHT = 8000;
 
 export const MAX_ZOOM = 2;
-export const MIN_ZOOM = 0.1;
-export const INITIAL_ZOOM = 0.1;
-export const ZOOM_TEXT_VISIBLE_THRESHOLD = 0.7;
+export const MIN_ZOOM = 0.01;
+export const INITIAL_ZOOM = 0.05;
+export const ZOOM_TEXT_VISIBLE_THRESHOLD = 0.3;
 export const ZOOM_STEP_MULTIPLICATOR_WHEEL = 1.04;
 export const ZOOM_STEP_MULTIPLICATOR_BUTTONS = 1.01;
 

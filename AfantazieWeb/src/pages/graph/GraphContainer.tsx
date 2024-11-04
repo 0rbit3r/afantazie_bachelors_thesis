@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import runGraph from './simulation/graphRunner';
 import { RenderedThought } from './model/renderedThought';
 import { thoughtDto } from '../../api/dto/ThoughtDto';
-import { BASE_RADIUS, INITIAL_POSITIONS_RADIUS, SIM_HEIGHT, SIM_WIDTH } from './model/graphConstants';
+import { BASE_RADIUS, INITIAL_POSITIONS_RADIUS, SIM_HEIGHT, SIM_WIDTH } from './model/graphParameters';
 import { useGraphStore } from './GraphStore';
 import { computeSize } from './simulation/simpleSizeComputer';
 

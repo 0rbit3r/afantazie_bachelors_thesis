@@ -1,4 +1,4 @@
-import { MAX_RADIUS, REFERENCE_RADIUS_MULTIPLIER } from "../model/graphConstants";
+import { MAX_RADIUS, REFERENCE_RADIUS_MULTIPLIER } from "../model/graphParameters";
 import { RenderedThought } from "../model/renderedThought"
 
 export const computeSize = (thoughts: RenderedThought[]) => {

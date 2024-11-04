@@ -1,5 +1,5 @@
 import { useGraphStore } from "../GraphStore";
-import { pullForce, linksNumberDivisor, pushForce, SIM_HEIGHT, SIM_WIDTH, PUSH_THRESH, MOMENTUM_DAMPENING_RATE, FRAMES_WITH_OVERLAP, SLOW_SIM_EVERY_N_FRAMES } from "../model/graphConstants";
+import { pullForce, linksNumberDivisor, pushForce, SIM_HEIGHT, SIM_WIDTH, PUSH_THRESH, MOMENTUM_DAMPENING_RATE, FRAMES_WITH_OVERLAP, SLOW_SIM_EVERY_N_FRAMES } from "../model/graphParameters";
 import { RenderedThought } from "../model/renderedThought";
 
 export const get_border_distance = (thought1: RenderedThought, thought2: RenderedThought) => {

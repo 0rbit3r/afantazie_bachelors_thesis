@@ -1,7 +1,7 @@
 import { Application } from 'pixi.js';
 import { pull_and_push } from './pullAndPush';
 import { initGraphics } from '../view/GraphGraphics';
-import { SIMULATION_FRAMES } from '../model/graphConstants';
+import { SIMULATION_FRAMES } from '../model/graphParameters';
 import { useGraphStore } from '../GraphStore';
 
 export default function runGraph(
@@ -14,6 +14,8 @@ export default function runGraph(
     const renderedThoughts = useGraphStore.getState().renderedThoughts; //after dynamic loading this might need to move to ticker.
 
     const renderGraph = initGraphics(app, renderedThoughts, thoughtGrabbed);
+
+    useGraphStore.getState().setFrame(0);
 
     app.ticker.add((_) => {
         // handle zoom input from user

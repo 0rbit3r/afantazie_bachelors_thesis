@@ -1,6 +1,6 @@
 import { Application, Color, Container, Graphics, Text, TextStyle } from "pixi.js";
 import { ARROW_Z, NODES_Z, TEXT_Z } from "./zIndexes";
-import { BASE_RADIUS, SIM_HEIGHT, SIM_WIDTH, ZOOM_TEXT_VISIBLE_THRESHOLD } from "../model/graphConstants";
+import { BASE_RADIUS, SIM_HEIGHT, SIM_WIDTH, ZOOM_TEXT_VISIBLE_THRESHOLD } from "../model/graphParameters";
 import { RenderedThought } from "../model/renderedThought";
 import { addDraggableViewport } from "./ViewportInitializer";
 import { XAndY } from "../model/xAndY";

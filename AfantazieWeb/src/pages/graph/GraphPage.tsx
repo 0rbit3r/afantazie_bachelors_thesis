@@ -3,10 +3,10 @@ import { Stage } from '@pixi/react';
 import { thoughtDto } from '../../api/dto/ThoughtDto';
 import { fetchThoughts } from '../../api/graphClient';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import AudioPlayer from '../../components/AudioPlayer';
 import { LocationState } from '../../interfaces/LocationState';
 import { useGraphStore } from './GraphStore';
 import GraphContainer from './GraphContainer';
+import { MediaContent } from '../../Contexts/MediaContent';
 
 const COLOR_BACKGROUND = 0x020304;
 
@@ -131,11 +131,7 @@ const GraphPage: React.FC = () => {
                             <h2>{highlightedThought?.title}</h2>
                             <h3>{highlightedThought.author} - {highlightedThought.dateCreated}</h3>
                             <p>{renderContentWithReferences(highlightedThought.content)}</p>
-                            {highlightedThought?.id === 46 && <AudioPlayer></AudioPlayer>}
-                            {highlightedThought?.id === 51 && <img src={`${PUBLIC_FOLDER}/GraphSqueezed.jpg`} style={{ maxWidth: "200px" }}></img>}
-                            {highlightedThought?.id === 55 && <img src={`${PUBLIC_FOLDER}/1000_thoughts.png`} style={{ maxWidth: "500px" }}></img>}
-                            {highlightedThought?.id === 64 && <img src={`${PUBLIC_FOLDER}/gephi_cithep.png`} style={{ maxWidth: "500px" }}></img>}
-                            {highlightedThought?.id === 78 && <video src={`${PUBLIC_FOLDER}/data_did_backflip.mp4`} autoPlay={true} controls={true} style={{ maxWidth: "500px" }}></video>}
+                            <MediaContent id={highlightedThought.id}></MediaContent>
                             {/* //todo: better audio/image management */}
                         </div>
                         {!fullscreenPreview && thoughts.filter(t => t.links.includes(highlightedThought?.id)).length > 0 &&
