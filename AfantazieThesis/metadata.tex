@@ -1,83 +1,89 @@
-%%% Vyplňte prosím základní údaje o závěrečné práci (odstraňte \xxx{...}).
-%%% Automaticky se pak vloží na všechna místa, kde jsou potřeba.
+%%% Please fill in basic information on your thesis, which will be automatically
+%%% inserted at the right places. You need to replace \xxx{...} by real data.
 
-% Druh práce:
-%	"bc" pro bakalářskou
-%	"mgr" pro diplomovou
-%	"phd" pro disertační
-%	"rig" pro rigorozní
+% Type of your thesis:
+%	"bc" for Bachelor's
+%	"mgr" for Master's
+%	"phd" for PhD
+%	"rig" for rigorosum
 \def\ThesisType{bc}
 
-% Název práce v jazyce práce (přesně podle zadání)
-\def\ThesisTitle{\xxx{Afantazie - bc.p. (TBD)}}
+% Language of your study programme:
+%	"cs" for Czech
+%	"en" for English
+\def\StudyLanguage{cs}
 
-% Název práce v angličtině
-\def\ThesisTitleEN{\xxx{TBD}}
+% Thesis title in English (exactly as in the official assignment)
+% (Note: \xxx is a "ToDo label" which makes the unfilled visible. Remove it.)
+\def\ThesisTitle{A Tool for Graph Visualisation of Social Networks}
 
-% Jméno autora (vy)
+% Author of the thesis (you)
 \def\ThesisAuthor{Aleš Kakos}
 
-% Rok odevzdání
+% Year when the thesis is submitted
 \def\YearSubmitted{2025}
 
-% Název katedry nebo ústavu, kde byla práce oficiálně zadána
-% (dle Organizační struktury MFF UK:
-% https://www.mff.cuni.cz/cs/fakulta/organizacni-struktura,
-% případně plný název pracoviště mimo MFF)
-\def\Department{\xxx{Název katedry nebo ústavu}}
-\def\DepartmentEN{\xxx{Name of the department}}
+% Name of the department or institute, where the work was officially assigned
+% (according to the Organizational Structure of MFF UK in English,
+% see https://www.mff.cuni.cz/en/faculty/organizational-structure,
+% or a full name of a department outside MFF)
+\def\Department{Department of Software Engineering}
 
-% Jedná se o katedru (department) nebo o ústav (institute)?
-\def\DeptType{Katedra}
-\def\DeptTypeEN{Department}
+% Is it a department (katedra), or an institute (ústav)?
+\def\DeptType{Department}
 
-% Vedoucí práce: Jméno a příjmení s~tituly
+% Thesis supervisor: name, surname and titles
 \def\Supervisor{Doc. RNDr. Irena Holubová, Ph.D.}
 
-% Pracoviště vedoucího (opět dle Organizační struktury MFF)
-\def\SupervisorsDepartment{\xxx{katedra}}
-\def\SupervisorsDepartmentEN{\xxx{department}}
+% Supervisor's department (again according to Organizational structure of MFF)
+\def\SupervisorsDepartment{Department of Software Engineering}
 
-% Studijní program (kromě rigorozních prací)
-\def\StudyProgramme{\xxx{studijní program}}
+% Study programme (does not apply to rigorosum theses)
+\def\StudyProgramme{Informatics}
 
-% Nepovinné poděkování (vedoucímu práce, konzultantovi, tomu, kdo
-% vám nosil pizzu a vařil čaj apod.)
+% An optional dedication: you can thank whomever you wish (your supervisor,
+% consultant, who provided you with tea and pizza, etc.)
 \def\Dedication{%
-\xxx{Poděkování.}
+\xxx{Dedication.}
 }
 
-% Abstrakt (doporučený rozsah cca 80-200 slov; nejedná se o zadání práce)
-\def\Abstract{%
-\xxx{Abstrakt.}
+% Abstract (recommended length around 80-200 words; this is not a copy of your thesis assignment!)
+\def\Abstract{
+\xxx{Toto vyplním, až budu hotov se zbytkem...}
 }
 
-% Anglická verze abstraktu
-\def\AbstractEN{%
-\xxx{Abstract.}
-}
-
-% 3 až 5 klíčových slov (doporučeno) oddělených \sep
-% Hodí se pro nalezení práce podle tématu.
+% 3 to 5 keywords (recommended) separated by \sep
+% Keywords are useful for indexing and searching for the theses by topic.
 \def\ThesisKeywords{%
-\xxx{klíčové slovo\sep složitější fráze}
+graph data\sep visualization\sep Big Data
 }
 
-\def\ThesisKeywordsEN{
-\xxx{key\sep words}
-}
-
-% Pokud některá z položek metadat obsahuje TeXové řídící sekvence, je potřeba
-% dodat i verzi v obyčejném textu, která se objeví v metadatech formátu XMP
-% zabudovaných do výstupního souboru PDF. Pokud si nejste jistí, prohlédněte si
-% vygenerovaný soubor thesis.xmpdata.
+% If any of your metadata strings contains TeX macros, you need to provide
+% a plain-text version for use in XMP metadata embedded in the output PDF file.
+% If you are not sure, check the generated thesis.xmpdata file.
 \def\ThesisAuthorXMP{\ThesisAuthor}
 \def\ThesisTitleXMP{\ThesisTitle}
 \def\ThesisKeywordsXMP{\ThesisKeywords}
 \def\AbstractXMP{\Abstract}
 
-% Máte-li dlouhý abstrakt a nechceme se mu vejít na informační stranu,
-% můžete použít toto nastavení ke zmenšení písma informační strany.
-% (Uvažte nicméně zkrácení abstraktu, to je často lepší.)
+% If your abstracts are long and do not fit in the infopage, you can make the
+% fonts a bit smaller by this setting. (Also, you should try to compress your abstract more.)
 \def\InfoPageFont{}
-%\def\InfoPageFont{\small}  % odkomentujte pro zmenšení písma
+%\def\InfoPageFont{\small}  % uncomment to decrease font size
+
+% If you are studing in a Czech programme, you also need to provide metadata in Czech:
+% (in English programmes, this is not used anywhere)
+
+\def\ThesisTitleCS{Nástroj pro grafickou vizualizaci sociálních sítí}
+\def\DepartmentCS{Katedra softwarového inženýrství}
+\def\DeptTypeCS{Katedra}
+\def\SupervisorsDepartmentCS{Katedra softwarového inženýrství}
+\def\StudyProgrammeCS{Informatika}
+
+\def\ThesisKeywordsCS{%
+grafová data\sep vizualizace\sep velká data
+}
+
+\def\AbstractCS{%
+\xxx{TODO...}
+}

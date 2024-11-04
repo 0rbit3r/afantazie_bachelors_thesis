@@ -1,74 +1,74 @@
-# Šablona pro sazbu závěrečných prací na MFF UK v LaTeXu
+# A template for typesetting thesis at MFF UK in LaTeX
 
-## Úvod
+## Overview
 
-Toto je šablona pro sazbu bakalářských, diplomových, dizertačních
-a rigorozních prací na MFF UK v LaTeXu.
+This is a LaTeX template for typesetting of bachelor, master, dissertation
+(Ph.D.), and rigorosum theses at MFF UK.
 
-Povinné náležitosti úpravy závěrečných prací jsou dány opatřeními děkana
-č. [26/2023](https://www.mff.cuni.cz/cs/vnitrni-zalezitosti/predpisy/opatreni-dekana/opatreni-dekana-c-26-2023)
-a [27/2023](https://www.mff.cuni.cz/cs/vnitrni-zalezitosti/predpisy/opatreni-dekana/opatreni-dekana-c-27-2023)
-a opatřením rektora č. [72/2017](https://cuni.cz/UK-8701.html).
-Mimo to existují ještě další doporučení -- ta najdete v
-[ukázkové úpravě](https://www.mff.cuni.cz/cs/studenti/sablony-studentskych-praci).
-Tento formát pro LaTeX se jimi řídí a snaží se důležité věci připomínat
-komentáři. Přesto si raději celá pravidla přečtěte.
+Requirements on formatting of theses are given by Dean's directives 26/2023
+and 27/2023 and by the Rector's directive 72/2017. Other guidelines can be
+found in [example layout](https://www.mff.cuni.cz/en/students/student-theses-templates).
+This LaTeX template follows the directives; it also tries to emphasize
+important points in comments. Still, we advise you to read the complete rules.
 
-## Jak šablonu použít
+## How to use this template
 
-Základní údaje o práci vyplňte v souboru `metadata.tex`. Odtamtud se automaticky
-vloží na ostatní místa.
+First of all, fill in basic information on your thesis in the `metadata.tex`
+file. From there, they are automatically propagated to other places.
 
-Hlavním souborem práce je `thesis.tex`. Tam najdete nejen nastavení LaTeXu
-(balíčky apod.), ale také příkazy pro vložení souborů s jednotlivými částmi
-práce.
+The main TeX file is `thesis.tex`. Here you find basic settings of LaTeX
+(packages etc.), but also commands inserting individual parts of the thesis
+which live in other files.
 
-Kromě toho můžete přeložením `abstract-cs.tex` a `abstract-en.tex` získat
-PDF se samostatným abstraktem práce, které se spolu s prací odevzdává do SISu.
+In addition to that, you can compile `abstract-en.tex` and `abstract-cs.tex`
+to get a stand-alone abstract of the thesis in English and Czech. The
+abstract is also submitted in SIS together with the thesis.
 
-Pokud LaTeX ještě neznáte, na webu naleznete mnoho úvodních textů.
-Nám se nejvíce osvědčil [návod z Wikibooks](http://en.wikibooks.org/wiki/LaTeX).
+If you are not familiar with LaTeX yet, you can find numerous tutorials on
+the Web. We like [the Wikibook on LaTeX](http://en.wikibooks.org/wiki/LaTeX).
 
-Česká verze šablony obsahuje komentáře a ukázkové kapitoly s popisem doporučené
-úpravy a různými radami pro sazbu v TeXu.
+The [Czech version of the template](https://www.mff.cuni.cz/en/students/student-theses-templates)
+contains example chapters with a description of the recommended layout
+and various hints on typesetting in TeX. It will be hopefully translated
+to English soon.
 
-## Jaká je vhodná verze TeXu
+## Which version of TeX to choose
 
-Doporučujeme instalaci TeXlive ve verzi alespoň 2020. Starší verze TeXlive
-a všechny známé verze MikTeXu jsou problematické. Také je potřeba nainstalovat
-program `biber` pro zpracování bibliografie a pokud možno také `latexmk`;
-obojí je součástí TeXlive.
+We recommend TeXlive in version 2020 or newer. Older versions of TeXlive
+and all versions of MikTeX are known to be problematic. You also need to
+install the `biber` utility for processing bibliography. We recommend to
+install `latexmk`, too. Both are delivered as a part of TeXlive.
 
-Práci doporučujeme překládat pomocí `latexmk`, na UNIXových systémech stačí
-pomocí `make` spustit přiložený `Makefile`. Pokud vaše instalace TeXu neobsahuje
-LuaTeX, zařiďte se podle komentáře v souboru `.latexmkrc`.
+The preferred way of compiling the thesis is using `latexmk`.
+On UNIX systems, you can use the attached `Makefile`.
+If your TeX installation lacks LuaTeX, please follow the comment in `.latexmkrc`.
 
-Elektronická podoba práce, kterou odevzdáváte do SISu, musí být povinně
-ve formátu PDF/A-1a nebo -2u. Tato šablona vytváří PDF/A-2u pomocí balíčku
-[pdfx](https://www.ctan.org/tex-archive/macros/latex/contrib/pdfx). Kdyby
-byl ve vaší instalaci TeXu tento balíček zastaralý nebo nefunkční, stáhněte
-si ho raději samostatně a rozbalte do adresáře `tex/pdfx/`.
+The electronic version of your thesis must be submitted to SIS. It must
+conform to the PDF/A-1a or -2u standard. This template produces PDF/A-2u
+using the [pdfx](https://www.ctan.org/tex-archive/macros/latex/contrib/pdfx)
+LaTeX package. If the version of pdfx in your TeX distribution is too old
+or broken, please download it independently and extract it to `tex/pdfx/`.
 
 ### Overleaf
 
-Matfyz má pro zaměstnance i studenty k dispozici profesionální licenci
-k Overleafu, což je editor TeXu běžící ve webovém prohlížeči. Pokud vás takový
-nástroj láká, přečtěte si
-[fakultní návod](https://www.mff.cuni.cz/cs/vnitrni-zalezitosti/it-a-sluzby/cloudove-sluzby/overleaf-na-mff-uk).
+MFF UK provides a professional license for Overleaf, which is a TeX editor
+running in your web browser. If you consider this appealing, we invite you
+to read the [faculty-wide instructions](https://www.mff.cuni.cz/en/internal-affairs/it-and-services/cloud-services/overleaf-at-cuni-mff).
 
-Šablona v Overleafu funguje, jen je  potřeba v nastaveních projektu zvolit main
-document `thesis.tex` a compiler `LuaLaTeX`.
+You can use this template in Overleaf. You only need to change the project
+settings in Overleaf and set the main document to `thesis.tex` and the compiler
+to `LuaLaTeX`.
 
-## Autoři
+## Authors
 
-Hlavními autory šablony jsou:
+Primary authors of the template are:
 
-- [Martin Mareš](https://mj.ucw.cz/) (<mj@ucw.cz>) -- současný správce šablony
+- [Martin Mareš](https://mj.ucw.cz/) (<mj@ucw.cz>) -- the current maintainer
 - Arnošt Komárek (<komarek@karlin.mff.cuni.cz>)
 - Michal Kulich (<kulich@karlin.mff.cuni.cz>)
 
-Také jsme čerpali inspiraci z alternativní šablony [better-thesis](https://github.com/exaexa/better-mff-thesis),
-na níž se podíleli zejména:
+We also took inspiration from the alternative template [better-thesis](https://github.com/exaexa/better-mff-thesis),
+whose contributors include:
 
 - Vít Kabele
 - Mirek Kratochvíl
@@ -76,26 +76,29 @@ na níž se podíleli zejména:
 - Gabriela Suchopárová
 - Evžen Wybitul
 
-## Licence
+## License
 
-Všechny součásti šablony je možné volně používat a šířit podle licence
-[Creative Commons CC-0](https://creativecommons.org/public-domain/cc0/).
+This package can be freely distributed, used, and modified according to
+the [Creative Commons CC-0](https://creativecommons.org/public-domain/cc0/)
+license.
 
-Výjimkou jsou fakultní loga v adresáři `img`, jejichž použití se řídí směrnicí
-děkana č. 5/2016 a souvisejícími předpisy.
+The only exception are the faculty logos in the `img` directory, whose use
+is governed by the Dean's directive 5/2016 and related regulations.
 
-## Odkazy
+## References
 
-Aktuální verzi šablony najdete v projektech
-[thesis-cs](https://gitlab.mff.cuni.cz/teaching/thesis-templates/thesis-cs) a
+The current version of this template is maintained in the
 [thesis-en](https://gitlab.mff.cuni.cz/teaching/thesis-templates/thesis-en)
-na fakultním GitLabu.
+project at MFF GitLab.
 
-Pokud máte jakékoliv připomínky nebo návrhy na vylepšení, dejte prosím vědět.
-Ideálně je založte jako issues v projektu thesis-en.
+If you have any bug reports or suggestions, please tell us.
+The preferred way is to create an issue in the GitLab project.
 
-Další instrukce k přípravě PDF/A naleznete v ukázkových kapitolách
-a v [PDF/A FAQ](https://mj.ucw.cz/vyuka/bc/pdfaq.html).
+Further instructions on PDF/A creation can be found in the
+[PDF/A FAQ](https://mj.ucw.cz/vyuka/bc/pdfaq.html),
+which is currently available in Czech only. In case of any trouble,
+please contact Martin Mareš directly or create an issue.
 
-Také udržujeme [sbírku materiálů](https://mj.ucw.cz/vyuka/bc/) o psaní
-závěrečných prací a odborných textů vůbec.
+We also maintain [other material](https://mj.ucw.cz/vyuka/bc/)
+on writing of theses and scientific writing in general.
+Again, this still waits for translation to English.

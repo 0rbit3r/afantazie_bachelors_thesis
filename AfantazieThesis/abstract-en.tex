@@ -1,9 +1,9 @@
-%%% Šablona pro samostatný abstrakt práce v angličtině
+%%% A template of a stand-alone abstract in English
 
-% Meta-data o práci (je nutno upravit)
+% Meta-data of your thesis (please edit)
 \input metadata.tex
 
-% Vygenerujeme metadata ve formátu XMP pro použití balíčkem pdfx
+% Generate metadata in XMP format for use by the pdfx package
 \let\OrigThesisTitleXMP=\ThesisTitleXMP
 \def\ThesisTitleXMP{\OrigThesisTitleXMP\space (abstract)}
 \def\AbstractXMP{}
@@ -28,12 +28,12 @@
 
 \pagenumbering{gobble}
 
-% Definice různých užitečných maker (viz popis uvnitř souboru)
+% Definitions of macros (see description inside)
 \input macros.tex
 
 \begin{document}
 
-% Neřeknete-li jinak, abstrakt doplníme podle metadat
-\AbstractEN
+% By default, we create the abstract from the metadata
+\Abstract
 
 \end{document}

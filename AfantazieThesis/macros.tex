@@ -1,7 +1,7 @@
-%%% Tento soubor obsahuje definice různých užitečných maker a prostředí %%%
-%%% Další makra připisujte sem, ať nepřekáží v ostatních souborech.     %%%
+%%% This file contains definitions of various useful macros and environments %%%
+%%% Please add more macros here instead of cluttering other files with them. %%%
 
-%%% Přepínače podle typu práce
+%%% Switches based on thesis type
 
 \def\TypeBc{bc}
 \def\TypeMgr{mgr}
@@ -9,41 +9,44 @@
 \def\TypeRig{rig}
 
 \ifx\ThesisType\TypeBc
-\def\ThesisTypeName{bakalářská}
-\def\ThesisTypeGenitive{bakalářské}
-\def\ThesisTypeAccusative{bakalářskou}
-\def\ThesisTypeTitle{BAKALÁŘSKÁ PRÁCE}
+\def\ThesisTypeName{bachelor}
+\def\ThesisTypeTitle{BACHELOR THESIS}
 \fi
 
 \ifx\ThesisType\TypeMgr
-\def\ThesisTypeName{diplomová}
-\def\ThesisTypeGenitive{diplomové}
-\def\ThesisTypeAccusative{diplomovou}
-\def\ThesisTypeTitle{DIPLOMOVÁ PRÁCE}
+\def\ThesisTypeName{master}
+\def\ThesisTypeTitle{MASTER THESIS}
 \fi
 
 \ifx\ThesisType\TypePhD
-\def\ThesisTypeName{disertační}
-\def\ThesisTypeGenitive{disertační}
-\def\ThesisTypeAccusative{disertační}
-\def\ThesisTypeTitle{DISERTAČNÍ PRÁCE}
+\def\ThesisTypeName{doctoral}
+\def\ThesisTypeTitle{DOCTORAL THESIS}
 \fi
 
 \ifx\ThesisType\TypeRig
-\def\ThesisTypeName{rigorozní}
-\def\ThesisTypeGenitive{rigorozní}
-\def\ThesisTypeAccusative{rigorozní}
-\def\ThesisTypeTitle{RIGOROZNÍ PRÁCE}
+\def\ThesisTypeName{rigorosum}
+\def\ThesisTypeTitle{RIGOROSUM THESIS}
 \fi
 
 \ifx\ThesisTypeName\undefined
-\PackageError{thesis}{Neznámý typ práce.}{Zkontrolujte prosím definici makra ThesisType v souboru metadata.tex.}
+\PackageError{thesis}{Unknown thesis type.}{Please check the definition of ThesisType in metadata.tex.}
 \fi
 
-%%% Drobné úpravy stylu
+%%% Switches based on study program language
 
-% Tato makra přesvědčují mírně ošklivým trikem LaTeX, aby hlavičky kapitol
-% sázel příčetněji a nevynechával nad nimi spoustu místa. Směle ignorujte.
+\def\LangCS{cs}
+\def\LangEN{en}
+
+\ifx\StudyLanguage\LangCS
+\else\ifx\StudyLanguage\LangEN
+\else\PackageError{thesis}{Unknown study language.}{Please check the definition of StudyLanguage in metadata.tex.}
+\fi\fi
+
+%%% Minor tweaks of style
+
+% These macros employ a little dirty trick to convince LaTeX to typeset
+% chapter headings sanely, without lots of empty space above them.
+% Feel free to ignore.
 \makeatletter
 \def\@makechapterhead#1{
   {\parindent \z@ \raggedright \normalfont
@@ -59,37 +62,30 @@
 }}
 \makeatother
 
-% Toto makro definuje kapitolu, která není očíslovaná, ale je uvedena v obsahu.
+% This macro defines a chapter, which is not numbered, but is included
+% in the table of contents.
 \def\chapwithtoc#1{
 \chapter*{#1}
 \addcontentsline{toc}{chapter}{#1}
 }
 
-% Trochu volnější nastavení dělení slov, než je default.
-\lefthyphenmin=2
-\righthyphenmin=2
-
-% Zapne černé "slimáky" na koncích řádků, které přetekly, abychom si
-% jich lépe všimli.
+% Draw black "slugs" whenever a line overflows, so that we can spot it easily.
 \overfullrule=1mm
 
-%%% Makra pro definice, věty, tvrzení, příklady, ... (vyžaduje baliček amsthm)
+%%% Macros for definitions, theorems, claims, examples, ... (requires amsthm package)
 
 \theoremstyle{plain}
-\newtheorem{veta}{Věta}
-\newtheorem{lemma}[veta]{Lemma}
-\newtheorem{tvrz}[veta]{Tvrzení}
-\newtheorem{definice}{Definice}
+\newtheorem{thm}{Theorem}
+\newtheorem{lemma}[thm]{Lemma}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{defn}{Definition}
 
 \theoremstyle{remark}
-\newtheorem*{dusl}{Důsledek}
-\newtheorem*{pozn}{Poznámka}
-\newtheorem*{prikl}{Příklad}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{rem}{Remark}
+\newtheorem*{example}{Example}
 
-% Alias pro prostředí proof s českým názvem
-\newenvironment{dukaz}{\begin{proof}}{\end{proof}}
-
-%%% Styl popisek obrázků
+%%% Style of captions of floating objects (figures etc.)
 
 \ifcsname DeclareCaptionStyle\endcsname
 \DeclareCaptionStyle{thesis}{style=base,font=small,labelfont=bf,labelsep=quad}
@@ -98,12 +94,11 @@
 \captionsetup[listing]{style=thesis,singlelinecheck=off}
 \fi
 
-%%% Prostředí pro sazbu kódu, případně vstupu/výstupu počítačových
-%%% programů.
-
+%%% An environment for typesetting of program code and input/output
+%%% of programs.
 \DefineVerbatimEnvironment{code}{Verbatim}{fontsize=\small, frame=single}
 
-% Nastavení pro lstlisting -- výpisy programů se zvýrazňováním syntaxe
+% Settings for lstlisting -- program listing with syntax highlighting
 \ifcsname lstset\endcsname
 \lstset{
   language=C++,
@@ -116,30 +111,30 @@
   keywordstyle=\color{blue!75!black}}
 \fi
 
-% Plovoucí výpisy kódu, používá se stejně jako figure
+% Floating listings, used in the same way as the figure environment
 \ifcsname DeclareNewFloatType\endcsname
 \DeclareNewFloatType{listing}{}
 \floatsetup[listing]{style=ruled}
 \floatname{listing}{Program}
 \fi
 
-%%% Prostor reálných, resp. přirozených čísel
+%%% The field of all real and natural numbers
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\N}{\mathbb{N}}
 
-%%% Užitečné operátory pro statistiku a pravděpodobnost
+%%% Useful operators for statistics and probability
 \DeclareMathOperator{\pr}{\textsf{P}}
 \DeclareMathOperator{\E}{\textsf{E}}
 \DeclareMathOperator{\var}{\textrm{var}}
 \DeclareMathOperator{\sd}{\textrm{sd}}
 
-%%% Příkaz pro transpozici vektoru/matice
+%%% Transposition of a vector/matrix
 \newcommand{\T}[1]{#1^\top}
 
-%%% Asymptotické "O"
+%%% Asymptotic "O"
 \def\O{\mathcal{O}}
 
-%%% Vychytávky pro matematiku
+%%% Various math goodies
 \newcommand{\goto}{\rightarrow}
 \newcommand{\gotop}{\stackrel{P}{\longrightarrow}}
 \newcommand{\maon}[1]{o(n^{#1})}
@@ -147,42 +142,37 @@
 \newcommand{\dint}{\int_0^\tau\!\!\int_0^\tau}
 \newcommand{\isqr}[1]{\frac{1}{\sqrt{#1}}}
 
-%%% Vychytávky pro tabulky
-\newcommand{\pulrad}[1]{\raisebox{1.5ex}[0pt]{#1}}
-\newcommand{\mc}[1]{\multicolumn{1}{c}{#1}}
-
-%%% Zvýraznění údajů, které je potřeba doplnit: před odevzdáním práce odstraňte :)
+%%% TODO items: remove before submitting :)
 \newcommand{\xxx}[1]{\textcolor{red!}{#1}}
 
-%%% Detailní nastavení bibliografie
+%%% Detailed settings of bibliography
 
 \ifx\citet\undefined\else
 
-% Maximální počet autorů, které uvádíme u jednoho díla (více se uvede pomocí "et al.")
+% Maximum number of authors of a single work. If exceeded, "et al." is used.
 %\ExecuteBibliographyOptions{maxnames=2}
-% Totéž nastavavení specificky pro citace pomocí \citet{...}
+% The same setting specific to citations using \citet{...}
 \ExecuteBibliographyOptions{maxcitenames=2}
-% Totéž nastavavení specificky pro seznam literatury
+% The same settings specific to the list of literature
 %\ExecuteBibliographyOptions{maxbibnames=2}
 
-% Zkracování křestních jmen autorů: "E. A. Poe" místo "Edgar Allan Poe"
+% Shortening first names of authors: "E. A. Poe" instead of "Edgar Allan Poe"
 %\ExecuteBibliographyOptions{giveninits}
-% Totéž bez teček ("EA Poe")
+% The same without dots ("EA Poe")
 %\ExecuteBibliographyOptions{terseinits}
 
-% Pokud máte problémy s lámáním dlouhých položek bibliografie na řádky,
-% zkuste tento režim:
+% If your bibliography entries are hard to break into lines, try this mode:
 %\ExecuteBibliographyOptions{block=ragged}
 
-% Ve stylech, které se neřídí podle ISO 690, můžeme také prohodit jméno a příjmení:
+% Possibly reverse the names of the authors with the non-ISO styles:
 %\DeclareNameAlias{default}{family-given}
 
-% Ve stylech podle ISO 690 vypadá lépe sázet příjmení kapitálkami:
+% Use caps-and-small-caps for family names in ISO 690 style.
 \let\familynameformat=\textsc
 
-% Více jmen autorů chceme v citacích oddělovat čárkami
-% (zatímco v bibliografii norma předepisuje středníky)
+% We want to separate multiple authors in citations by commas
+% (while we use semicolons in the bibliography as per the ISO standard)
 \DeclareDelimFormat[textcite]{multinamedelim}{\addcomma\space}
-\DeclareDelimFormat[textcite]{finalnamedelim}{\space a~}
+\DeclareDelimFormat[textcite]{finalnamedelim}{\space and~}
 
 \fi
