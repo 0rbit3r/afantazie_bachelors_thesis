@@ -20,7 +20,7 @@ export const SIM_HEIGHT = 10000;
 
 export const MAX_ZOOM = 2;
 export const MIN_ZOOM = 0.01;
-export const INITIAL_ZOOM = 0.05;
+export const INITIAL_ZOOM = 0.1;
 export const ZOOM_TEXT_VISIBLE_THRESHOLD = 0.3;
 export const ZOOM_STEP_MULTIPLICATOR_WHEEL = 1.04;
 export const ZOOM_STEP_MULTIPLICATOR_BUTTONS = 1.01;
