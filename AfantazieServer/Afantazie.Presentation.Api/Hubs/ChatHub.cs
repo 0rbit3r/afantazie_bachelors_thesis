@@ -9,13 +9,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Afantazie.Services.Interface.Chat;
 using Afantazie.Presentation.Model.Dto.Chat;
 using Afantazie.Core.Model;
+using Afantazie.Core.Localization.SystemMessages;
 
 namespace Afantazie.Presentation.Api.Hubs
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ChatHub(
         IChatService _service,
+        IChatMessages _localization,
         IUserSettingsService _settings,
+
         ILogger<ChatHub> _logger) : Hub
     {
 
@@ -32,7 +35,7 @@ namespace Afantazie.Presentation.Api.Hubs
                 new MessageResponseDto
                 {
                     Sender = "Systém",
-                    Message = "Úspěšně připojeno!",
+                    Message = _localization.ConnectedSuccessfuly,
                     Color = Colors.System,
                 });
 
@@ -47,8 +50,8 @@ namespace Afantazie.Presentation.Api.Hubs
                     Sender = "Systém",
                     
                     Message = ConnectedIds.Count > 1
-                    ? $"Někdo je tu s tebou :-o"
-                    : "Nikdo tu teď není :-(",
+                    ? _localization.SomebodyIsHere
+                    : _localization.NooneIsHere,
                     Color = Colors.System,
                 });
 
@@ -94,7 +97,7 @@ namespace Afantazie.Presentation.Api.Hubs
             await Clients.Caller.SendAsync("ReceiveMessage",
                 new MessageResponseDto
                 {
-                    Sender = "Já",
+                    Sender = _localization.You,
                     Message = message,
                     Color = color,
                 });

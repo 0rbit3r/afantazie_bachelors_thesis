@@ -9,6 +9,7 @@ using Afantazie.Service.UserSettings;
 using Afantazie.Service.Auth;
 using Afantazie.Service.Chat;
 using Afantazie.Service.SiteActivity;
+using Afantazie.Core.Localization;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +26,7 @@ builder.Services.AddCors(options =>
         builder =>
         {
             //todo - production?
-            builder.WithOrigins("http://localhost:4200", "http://localhost:5173", "https://afantazie.cz", "https://www.afantazie.cz")
+            builder.WithOrigins("http://localhost:4200", "http://localhost:5173", "https://afantazie.cz", "https://www.thoughtweb.net")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
@@ -38,6 +39,8 @@ builder.Services.AddSignalR(opts =>
     if (builder.Environment.IsDevelopment())
         opts.EnableDetailedErrors = true;
 });
+
+builder.Services.AddLanguageLocalization(builder.Configuration);
 
 // Add modules
 builder.Services.AddApiModule();

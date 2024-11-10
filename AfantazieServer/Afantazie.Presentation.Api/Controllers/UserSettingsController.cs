@@ -1,4 +1,5 @@
-﻿using Afantazie.Presentation.Model.Dto;
+﻿using Afantazie.Core.Localization.Errors;
+using Afantazie.Presentation.Model.Dto;
 using Afantazie.Service.Interface.UserSettings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,16 @@ namespace Afantazie.Presentation.Api.Controllers
 {
     [ApiController]
     [Route("api/user-settings")]
-    public class UserSettingsController(
-        IUserSettingsService _service) : ApiControllerBase
+    public class UserSettingsController: ApiControllerBase
     {
+        private readonly IUserSettingsService _service;
+
+        public UserSettingsController(IUserSettingsService service, IAuthValidationMessages errors)
+            : base(errors)
+        {
+            _service = service;
+        }
+
         [Authorize]
         [HttpPost]
         public async Task<ActionResult> UpdateSettings([FromBody] UserSettingsDto dto)

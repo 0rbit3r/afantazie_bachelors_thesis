@@ -1,4 +1,4 @@
-﻿using Afantazie.Core.Localization;
+﻿using Afantazie.Core.Localization.Errors;
 using Afantazie.Core.Model.Results;
 using Afantazie.Core.Model.Results.Errors;
 using Afantazie.Data.Interface.Repository;
@@ -15,7 +15,8 @@ using System.Text;
 namespace Afantazie.Data.Repository
 {
     public partial class UserAuthRepository(
-        DataContextProvider _contextProvider
+        DataContextProvider _contextProvider,
+        IAuthValidationMessages _errorMessages
         ) : IUserAuthRepository
     {
         public async Task<Result<int>> VerifyLoginByEmail(string email, string password)
@@ -25,13 +26,13 @@ namespace Afantazie.Data.Repository
                 var existingUser = await context.Users.FirstOrDefaultAsync(u => u.Email == email);
                 if (existingUser == null)
                 {
-                    return Error.Auth(ErrorMessages.Failed_Login);
+                    return Error.Auth(_errorMessages.FailedLogin);
                 }
 
                 var hashedPassword = HashPassword(password);
                 if (existingUser.Password != hashedPassword)
                 {
-                    return Error.Auth(ErrorMessages.Failed_Login);
+                    return Error.Auth(_errorMessages.FailedLogin);
                 }
 
                 return existingUser.Id;
@@ -44,15 +45,15 @@ namespace Afantazie.Data.Repository
             {
                 if (context.Users.Any(u => u.Username == username))
                 {
-                    return Error.AlreadyExists(ErrorMessages.AlreadyExists_Username);
+                    return Error.AlreadyExists(_errorMessages.Username);
                 }
                 if(context.Users.Any(u => u.Email == email))
                 {
-                    return Error.AlreadyExists(ErrorMessages.AlreadyExists_Email);
+                    return Error.AlreadyExists(_errorMessages.Email);
                 }
 
                 var hashedPassword = HashPassword(password);
-                var newUser = new UserEntity { Username = username, Email = email, Password = hashedPassword, Color = "#ffffff" };
+                var newUser = new UserEntity { Username = username, Email = email, Password = hashedPassword, Color = "#dddddd" };
                 context.Users.Add(newUser);
                 await context.SaveChangesAsync();
 
@@ -68,13 +69,13 @@ namespace Afantazie.Data.Repository
                 var existingUser = await context.Users.FirstOrDefaultAsync(u => u.Username == username);
                 if (existingUser == null)
                 {
-                    return Error.Auth(ErrorMessages.Failed_Login);
+                    return Error.Auth(_errorMessages.FailedLogin);
                 }
 
                 var hashedPassword = HashPassword(password);
                 if (existingUser.Password != hashedPassword)
                 {
-                    return Error.Auth(ErrorMessages.Failed_Login);
+                    return Error.Auth(_errorMessages.FailedLogin);
                 }
 
                 return existingUser.Id;

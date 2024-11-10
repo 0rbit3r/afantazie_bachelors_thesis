@@ -1,4 +1,4 @@
-﻿using Afantazie.Core.Localization;
+﻿using Afantazie.Core.Localization.Errors;
 using Afantazie.Core.Model;
 using Afantazie.Core.Model.Results;
 using Afantazie.Core.Model.Results.Errors;
@@ -18,6 +18,7 @@ namespace Afantazie.Service.Auth
     public class AuthenticationService(
         IUserAuthRepository _userRepository,
         IConfiguration _config,
+        IAuthValidationMessages _errorMessages,
         ILogger<AuthenticationService> _log) : IAuthenticationService
     {
 
@@ -56,20 +57,20 @@ namespace Afantazie.Service.Auth
 
             if (username.Length < 3 || username.Length > 20)
             {
-                errors.Add(Error.Validation(string.Format(ErrorMessages.Validation_Name_Length, 3, 20)));
+                errors.Add(Error.Validation(string.Format(_errorMessages.InvalidUsernameLength, 3, 20)));
             }
             if (!Regex.IsMatch(username, @"^[a-zA-Z ÁáČčĎďÉéĚěÍíŇňÓóŘřŠšŤťÚúŮůÝýŽž]+$"))
             {
-                errors.Add(Error.Validation(ErrorMessages.Validation_Name_Format));
+                errors.Add(Error.Validation(_errorMessages.InvalidUsernameFormat));
             }
             if (!Regex.IsMatch(email, @"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"))
             {
-                errors.Add(Error.Validation(ErrorMessages.Validation_Email));
+                errors.Add(Error.Validation(_errorMessages.InvalidEmail));
             }
             if (password.Length < 8 || password.Length > 20
                 || !Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$"))
             {
-                errors.Add(Error.Validation(string.Format(ErrorMessages.Validation_Password, 8, 20)));
+                errors.Add(Error.Validation(string.Format(_errorMessages.InvalidPassword, 8, 20)));
             }
             if (errors.Any())
             {

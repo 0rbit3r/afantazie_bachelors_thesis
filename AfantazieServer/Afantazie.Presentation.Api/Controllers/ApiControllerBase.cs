@@ -1,4 +1,4 @@
-﻿using Afantazie.Core.Localization;
+﻿using Afantazie.Core.Localization.Errors;
 using Afantazie.Core.Model.Results.Errors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -11,7 +11,9 @@ using System.Threading.Tasks;
 
 namespace Afantazie.Presentation.Api.Controllers
 {
-    public class ApiControllerBase : ControllerBase
+    public class ApiControllerBase (
+        IAuthValidationMessages _errorMessages
+        ): ControllerBase
     {
         protected string? Username
             => User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
@@ -29,13 +31,13 @@ namespace Afantazie.Presentation.Api.Controllers
             }
             if (error is AuthenticationError)
             {
-                return Unauthorized(new { Error = ErrorMessages.AuthorizationError });
+                return Unauthorized(new { Error = _errorMessages.AuthorizationError });
             }
             if (error is AlreadyExistsError existsError)
             {
                 return Conflict(
                     new {
-                        Error = string.Format(ErrorMessages.AlreadyExistsError, existsError.EntityName)
+                        Error = string.Format(_errorMessages.EntityAlreadyExists, existsError.EntityName)
                     });
             }
             if (error is ValidationError validationError)

@@ -1,4 +1,6 @@
-﻿using Afantazie.Core.Model.Results.Errors;
+﻿using Afantazie.Core.Localization.Errors;
+using Afantazie.Core.Localization.ThoughtValidation;
+using Afantazie.Core.Model.Results.Errors;
 using Afantazie.Presentation.Model.Dto.Thought;
 using Afantazie.Service.Interface.Thoughts;
 using Mapster;
@@ -11,10 +13,21 @@ namespace Afantazie.Presentation.Api.Controllers
 {
     [Route("api/thoughts")]
     [ApiController]
-    public class ThoughtController(
-        IThoughtService _thoughtService
-        ): ApiControllerBase
+    public class ThoughtController: ApiControllerBase
     {
+        private readonly IThoughtService _thoughtService;
+        private readonly IThoughtValidationLocalization _localization;
+
+        public ThoughtController(
+            IThoughtService service,
+            IAuthValidationMessages errors,
+            IThoughtValidationLocalization locaization)
+            : base(errors)
+        {
+            _thoughtService = service;
+            _localization = locaization;
+        }
+
         [HttpGet("graph")]
         public async Task<ActionResult<List<ThoughtDto>>> GetEntireGraph()
         {
@@ -61,11 +74,11 @@ namespace Afantazie.Presentation.Api.Controllers
             var errors = new StringBuilder();
             if(thoughtDto.Content.Length > 1000 || thoughtDto.Content.Length < 10)
             {
-                errors.AppendLine("- Obsah myšlenky musí mýt mezi 10 a 1000 znaky");
+                errors.AppendLine(_localization.InvalidContentLength);
             }
             if (thoughtDto.Title.Length > 100 || thoughtDto.Title.Length < 5)
             {
-                errors.AppendLine("- Název myšlenky musí mít mezi 5 a 100 znaky");
+                errors.AppendLine(_localization.InvalidTitleLength);
             }
             if (errors.Length > 0)
             {

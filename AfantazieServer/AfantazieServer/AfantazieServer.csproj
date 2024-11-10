@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Afantazie.Core.Localization\Afantazie.Core.Localization.csproj" />
     <ProjectReference Include="..\Afantazie.Data.Repository\Afantazie.Data.Repository.csproj" />
     <ProjectReference Include="..\Afantazie.Presentation.Api\Afantazie.Presentation.Api.csproj" />
     <ProjectReference Include="..\Afantazie.Service.Authentication\Afantazie.Service.Auth.csproj" />

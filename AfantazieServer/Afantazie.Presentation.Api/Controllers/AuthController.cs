@@ -1,4 +1,5 @@
-﻿using Afantazie.Presentation.Model.Dto.Auth;
+﻿using Afantazie.Core.Localization.Errors;
+using Afantazie.Presentation.Model.Dto.Auth;
 using Afantazie.Service.Interface.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -9,9 +10,15 @@ namespace Afantazie.Presentation.Api.Controllers
 {
     [Route("api/auth")]
     [ApiController]
-    public class AuthController
-        (IAuthenticationService _authService) : ApiControllerBase
+    public class AuthController : ApiControllerBase
     {
+        private readonly IAuthenticationService _authService;
+
+        public AuthController(IAuthenticationService authService, IAuthValidationMessages errorMessages) : base(errorMessages)
+        {
+            _authService = authService;
+        }
+
         [HttpPost("register")]
         public async Task<ActionResult<RegisterResponseDto>> Register(RegisterRequestDto dto)
         {
