@@ -54,4 +54,9 @@
     a:visited {
         color: var(--secondary-color);
     }
+
+    .validation-help-text{
+        color: var(--secondary-color-lighter);
+}
+
 }

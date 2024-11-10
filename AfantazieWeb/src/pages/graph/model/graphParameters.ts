@@ -15,8 +15,8 @@ export const SIMULATION_FRAMES = 10000;
 export const SLOW_SIM_EVERY_N_FRAMES = 2000;
 export const FRAMES_WITH_OVERLAP = 0;
 
-export const SIM_WIDTH = 10000;
-export const SIM_HEIGHT = 10000;
+export const SIM_WIDTH = 13000;
+export const SIM_HEIGHT = 13000;
 
 export const MAX_ZOOM = 2;
 export const MIN_ZOOM = 0.01;

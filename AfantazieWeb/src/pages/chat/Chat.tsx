@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { MessageResponseDto } from "../../api/dto/chat/MessageResponseDto";
 import { connectToChatHub } from "../../api/hubs/ChatHubClient";
+import { Localization } from "../../locales/localization";
 
 function Chat() {
   const [messages, setMessages] = useState<MessageResponseDto[]>([]);
@@ -33,7 +34,7 @@ function Chat() {
 
   return (
     <div className="chat-container">
-      <h1>Chat</h1>
+      <h1>{Localization.Chat}</h1>
 
       <div className="messages-container" style={{ marginBottom: '1rem' }}>
         {messages.map((message, index) => (
@@ -59,7 +60,7 @@ function Chat() {
           className="send-button button-primary"
           disabled={!textBox.trim()}
           onClick={handleSendMessage}>
-          Odeslat
+          {Localization.Send}
         </button>
       </div>
     </div>

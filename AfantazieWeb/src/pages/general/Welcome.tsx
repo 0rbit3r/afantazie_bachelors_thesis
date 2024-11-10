@@ -1,11 +1,12 @@
 import { NavLink } from "react-router-dom"
 import LogViewer from "../../components/log/LogViewer";
+import { Localization } from "../../locales/localization";
 
 
 function Welcome() {
     return (
         <div className="content-container home-container">
-            <h1>Vítej na Afantázii</h1>
+            <h1>{Localization.Title}</h1>
             <div className="hero">
                 {/* <div>
                     <img className="map" src="map.png" alt="mapa" />
@@ -14,29 +15,29 @@ function Welcome() {
                 <LogViewer></LogViewer>
                 <div className="hero-text">
                     <p>
-                        Pojďme spolu grafovat.
+                        {Localization.HeroText}
                     </p>
                 </div>
             </div>
             {/* <Rules></Rules> */}
             <div className="center">
                 <NavLink to="/graph">
-                    <button className="button-primary home-action-button">Graf</button>
+                    <button className="button-primary home-action-button">{Localization.Graph}</button>
                 </NavLink>
             </div>
             <div className="center">
                 <NavLink to="/login">
-                    <button className="button-primary home-action-button">Přihlásit se</button>
+                    <button className="button-primary home-action-button">{Localization.LoginButton}</button>
                 </NavLink>
             </div>
             <div className="center">
                 <NavLink to="/about">
-                    <button className="button-secondary home-action-button">O co tu vlastně jde?</button>
+                    <button className="button-secondary home-action-button">{Localization.WhatsThisAbout}</button>
                 </NavLink>
             </div>
             <div className="center">
                 <NavLink to="/register">
-                    <button className="button-secondary home-action-button">Zaregistrovat se</button>
+                    <button className="button-secondary home-action-button">{Localization.RegisterButton}</button>
                 </NavLink>
             </div>
         </div>

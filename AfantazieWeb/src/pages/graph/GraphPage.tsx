@@ -7,6 +7,7 @@ import { LocationState } from '../../interfaces/LocationState';
 import { useGraphStore } from './GraphStore';
 import GraphContainer from './GraphContainer';
 import { MediaContent } from '../../Contexts/MediaContent';
+import { Localization } from '../../locales/localization';
 
 const COLOR_BACKGROUND = 0x020304;
 
@@ -136,7 +137,7 @@ const GraphPage: React.FC = () => {
                         </div>
                         {!fullscreenPreview && thoughts.filter(t => t.links.includes(highlightedThought?.id)).length > 0 &&
                             <div className='responses-container-half-screen'>
-                                <p className='responses-header'><b>Odpovědi</b></p>
+                                <p className='responses-header'><b>{Localization.Replies}</b></p>
                                 <div>
                                     {thoughts.filter(t => t.links.includes(highlightedThought?.id)).map(t =>
                                         <span key={`back-link-${t.id}`} className='search-result-item' style={{ borderColor: t.color }}
@@ -148,7 +149,7 @@ const GraphPage: React.FC = () => {
                     </div>}
                 {fullscreenPreview && highlightedThought !== null && thoughts.filter(t => t.links.includes(highlightedThought?.id)).length > 0 &&
                     <>
-                        <p><b>Odpovědi</b></p>
+                        <p><b>{Localization.Replies}</b></p>
                         <div className='responses-container'>
                             {thoughts.filter(t => t.links.includes(highlightedThought?.id)).map(t =>
                                 <span key={`back-link-${t.id}`} className='search-result-item' style={{ borderColor: t.color }}
@@ -167,7 +168,7 @@ const GraphPage: React.FC = () => {
                                 unsetHighlightedThought();
                             }
                         }}>
-                        Odpovědět
+                        {Localization.ReplyButton}
                     </button>
                     {!fullscreenPreview && <button className='button-secondary' onClick={handleDownButtonOverlay}>▼</button>}
                 </p>
@@ -197,7 +198,7 @@ I suspect it might be because of different references to viewport? (second initi
                             src={PUBLIC_FOLDER + '/icons/zoom-out.svg'}></img>}
                     </button>
                 </div>
-                <Link to='/create-thought' className='button-primary center link-button'>Nová myšlenka</Link>
+                <Link to='/create-thought' className='button-primary center link-button'>{Localization.NewThought}</Link>
             </div>
         </>
     );

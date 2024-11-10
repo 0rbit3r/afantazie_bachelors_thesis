@@ -3,7 +3,11 @@ import { MessageResponseDto } from "../dto/chat/MessageResponseDto";
 
 
 export function connectToChatHub(handleMessage: (message: MessageResponseDto) => void) {
-    const hubUrl = import.meta.env.VITE_HUB_URL + '/chat';
+    
+    const hubUrl = import.meta.env.VITE_LANGUAGE === 'cz'
+        ? import.meta.env.VITE_AFANTAZIE_URL + import.meta.env.VITE_HUB_PATH + "/chat"
+        : import.meta.env.VITE_THOUGHTWEB_URL + import.meta.env.VITE_HUB_PATH + "/chat";
+
     const token = localStorage.getItem('token');
 
     // console.log("connecting to hubUrl: ", hubUrl);
@@ -20,7 +24,7 @@ export function connectToChatHub(handleMessage: (message: MessageResponseDto) =>
     connection.on("ReceiveMessage", data => {
         handleMessage(data as MessageResponseDto);
     });
-    
+
     connection.start();
 
     function sendMessage(message: string) {

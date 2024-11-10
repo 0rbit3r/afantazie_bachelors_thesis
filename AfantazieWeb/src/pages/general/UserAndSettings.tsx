@@ -1,6 +1,7 @@
 // User.tsx
 import { useEffect, useState } from 'react';
 import { getUserSettings, postUserSettings } from '../../api/UserSettingsApiClient';
+import { Localization } from '../../locales/localization';
 
 const colors = [
     // First Set
@@ -96,11 +97,11 @@ function UserAndSettings() {
 
     return (
         <div className="content-container settings-container" style={{ padding: '20px', borderRadius: '8px', border: '1px solid #ccc' }}>
-            <h1>Účet a nastavení</h1>
+            <h1>{Localization.UserSettings}</h1>
             {errorMessage && <pre className='red-text'>{errorMessage}</pre>}
             {successMessage && <pre className='green-text'>{successMessage}</pre>}
             <hr></hr>
-            <label className='settings-label'>Barva: </label>
+            <label className='settings-label'>{Localization.ColorLabel} </label>
             <span className='username' style={{ color: colors[selectedColor] }}
                 onClick={openColorPicker}
             >{username}</span>
@@ -120,8 +121,8 @@ function UserAndSettings() {
             )}
             <hr></hr>
             <div>
-                <button className='button-primary' onClick={saveSettings}>Uložit</button>
-                <button className='button-secondary' onClick={logOut}>Odhlásit se</button>
+                <button className='button-primary' onClick={saveSettings}>{Localization.SaveButton}</button>
+                <button className='button-secondary' onClick={logOut}>{Localization.LogoutButton}</button>
             </div>
         </div>
     );

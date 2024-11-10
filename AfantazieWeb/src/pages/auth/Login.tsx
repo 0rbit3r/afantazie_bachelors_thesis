@@ -3,6 +3,7 @@ import { LocationState } from '../../interfaces/LocationState';
 import { useState } from 'react';
 import { useAuth } from '../../Contexts/AuthContext';
 import { loginUser } from '../../api/AuthApiClient';
+import { Localization } from '../../locales/localization';
 
 function Login() {
     const [formData, setFormData] = useState({ email: '', password: '' });
@@ -24,7 +25,7 @@ function Login() {
         }
         else {
             setAccessToken(response.data?.token as string);
-            navigate('/', { state: { message: 'Vítej zpět.' } as LocationState })// Todo a set of quips.
+            navigate('/', { state: { message: Localization.WelcomeBack } as LocationState })// Todo a set of quips.
         }
     }
 
@@ -32,21 +33,21 @@ function Login() {
         <div className="content-container">
 
             <div className='auth-form'>
-                <h1>Přihlášení</h1>
+                <h1>{Localization.LoginTitle}</h1>
 
                 {topmessage && <div className="alert">{topmessage}</div>}
                 <form onSubmit={handleSubmit}>
                     <p>
-                        <input placeholder='Jméno nebo email' type="text" name="email" value={formData.email} onChange={handleChange} />
+                        <input placeholder={Localization.NameOrEmail} type="text" name="email" value={formData.email} onChange={handleChange} />
                     </p>
                     <p>
-                        <input placeholder='Heslo' type="password" name="password" value={formData.password} onChange={handleChange} />
+                        <input placeholder={Localization.Password} type="password" name="password" value={formData.password} onChange={handleChange} />
                     </p>
                     <p>
-                        <button type="submit" className='button-primary'>Přihlásit se</button>
+                        <button type="submit" className='button-primary'>{Localization.LoginButton}</button>
                     </p>
                 </form>
-                <p>Nemáš účet? <Link to="/register">Zaregistrovat se</Link></p>
+                <p>{Localization.DontHaveAnAccount} <Link to="/register">{Localization.RegisterLink}</Link></p>
                 {validationMessage && <pre className='red-text'>{validationMessage}</pre>}
             </div>
         </div>

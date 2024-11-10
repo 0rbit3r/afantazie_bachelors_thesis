@@ -1,6 +1,8 @@
 import { apiResponse, apiResponseWithBody } from './dto/ApiResponse';
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_LANGUAGE === 'cz'
+    ? import.meta.env.VITE_AFANTAZIE_URL + import.meta.env.VITE_API_PATH
+    : import.meta.env.VITE_THOUGHTWEB_URL + import.meta.env.VITE_API_PATH;
 
 async function sendAndExpectBody<T_Body>(url: string, options: RequestInit): Promise<apiResponseWithBody<T_Body>> {
 

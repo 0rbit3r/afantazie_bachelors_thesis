@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { fetchThought, fetchThoughtTitles, postNewThought } from '../../api/graphClient';
 import { thoughtDto, thoughtTitleDto } from '../../api/dto/ThoughtDto';
 import { LocationState } from '../../interfaces/LocationState';
+import { LocalizedCreateThoughtHint } from '../../locales/LocalizedCreateThoughtHint';
+import { Localization } from '../../locales/localization';
 
 const PUBLIC_FOLDER = import.meta.env.VITE_PUBLIC_FOLDER;
 
@@ -50,7 +52,7 @@ function CreateThought() {
         if (thoughtTitles.length > 0 && location.state && (location.state as LocationState).thoughtId) {
             const id = (location.state as LocationState).thoughtId;
             const thought = thoughtTitles.find(t => t.id === id);
-            setFormData({ ...formData, content: `Odpověď na [${id}](${thought?.title});\n` });
+            setFormData({ ...formData, content: `${Localization.RepliesTo} [${id}](${thought?.title});\n` });
         }
     }, [location, thoughtTitles]);
 
@@ -236,7 +238,7 @@ function CreateThought() {
                         ))}
                     </div>
                 </div>
-                <button className='button-secondary' onClick={() => setSearchOverlayVisible(false)}>Zavřít</button>
+                <button className='button-secondary' onClick={() => setSearchOverlayVisible(false)}>{Localization.Close}</button>
             </div>}
 
             {previewOverlayVisible && previewedThought &&
@@ -249,55 +251,22 @@ function CreateThought() {
                             {/* //todo: single previewer to use in graph page and here (and elsewhere?)*/}
                         </div>
                     </div>
-                    <button className='button-secondary' onClick={() => setPreviewOverlayVisible(false)}>Zavřít náhled</button>
+                    <button className='button-secondary' onClick={() => setPreviewOverlayVisible(false)}>{Localization.Close}</button>
                 </div>}
             {tutorialOverlayVisible && <div className='tutorial-overlay'>
                 <div className='scroll-view'>
-                    <h1>Nápověda</h1>
-                    <h2>Odkazy</h2>
-                    <p>
-                        Komentář, odpověď, otázka, pokračování nebo kritika jiné myšlenky - to vše a víc může být důvod, proč chceš ve své myšlence odkázat na jinou.
-                    </p>
-                    <p>
-                        Myšlenky, které na sebe odkazují, se navzájem přitahují a díky tomu můžeš ovlivnit, kde se v grafu bude nacházet jak tvá nová myšlenka tak
-                        do jisté míry i její odkazy.
-                    </p>
-                    <h2>Používání</h2>
-                    <p>
-                        Nejjednodušší je použít tlačítko <b>Přidat odkaz</b> a vybrat si myšlenku, na kterou chceš odkázat. Můžeš jí vložit kamkoliv do textu pomocí pozice kurzoru.
-                    </p>
-                    <p>
-                        Odkaz ale můžeš přidat a upravit i manuálně a to pomocí tvaru: <br />
-                        <b>[ID MYŠLENKY](TEXT)</b>.
-                    </p>
-                    <p>
-                        <b>ID MYŠLENKY</b> musí odkazovat na nějakou již existující myšlenku.<br />
-                        <b>TEXT</b> může být libovolný a je to právě to, co se zobrazí ve výsledném odkazu.<br />
-                    </p>
-                    <p>
-                        To se hodí hlavně, když je název odkazované myšlenky dlouhý nebo se jinak nehodí to tvého textu.
-                    </p>
-                    <p>
-                        Například místo<br />
-                        "První myšlenka na Afantázi je: <b>[1](Hello World!)</b>"<br />
-                        můžeš napsat<br />
-                        "První myšlenka na Afantázii je <b>[1](tato)</b>."
-                    </p>
-                    <p>
-                        Jedna myšlenka může obsahovat až pět odkazů.
-                        {/* Ale pozor! Čím víc odkazů, tím slabší bude síla, kterou tvoje myšlenka přitahuje ostatní.  */}
-                    </p>
-                    <button className='button-secondary' onClick={() => setTutorialOverlayVisible(false)}>Zpět</button>
+                    <LocalizedCreateThoughtHint />
+                    <button className='button-secondary' onClick={() => setTutorialOverlayVisible(false)}>{Localization.Close}</button>
                 </div>
             </div>}
             <div className='new-thought-form'>
-                <h1>Nová myšlenka</h1>
+                <h1>{Localization.NewThought}</h1>
 
                 <form onSubmit={handleSubmit}>
                     <div>
                         <input
                             className='title-input'
-                            placeholder='Nadpis'
+                            placeholder={Localization.NewThoughtTitle}
                             type="text"
                             name="title"
                             value={formData.title}
@@ -307,7 +276,7 @@ function CreateThought() {
                     </div>
                     <textarea
                         id="text-area-editor"
-                        placeholder='Obsah'
+                        placeholder={Localization.Content}
                         name="content"
                         className='content-input'
                         value={formData.content}
@@ -315,10 +284,11 @@ function CreateThought() {
                     />
                     <p className='bottom-row-buttons'>
                         <span className='character-limit'>{formData.content.length} / {CONTENT_LENGTH_LIMIT}</span>
-                        <button className='button-secondary' type="button" onClick={() => setSearchOverlayVisible(true)}>Přidat odkaz</button>
+                        <button className='button-secondary' type="button"
+                        onClick={() => setSearchOverlayVisible(true)}>{Localization.AddReference}</button>
                     </p>
                     {notFoundThoughtIds.map((id) => (
-                        <p key={id} className='red-text'>Myšlenka s ID <b>{id}</b> neexistuje.</p>
+                        <p key={id} className='red-text'>{Localization.ThoughtId} <b>{id}</b> {Localization.NotFound}</p>
                     ))}
                     {validThoughtReferences.map((ref) => (
                         <p key={ref.id} className='thought-reference-row'>
@@ -345,7 +315,7 @@ function CreateThought() {
                     {validationMessage && <pre className='red-text'>{validationMessage}</pre>}
 
                     <p className='bottom-row-buttons'>
-                        <button type="button" className='button-secondary' onClick={() => navigate('/graph')}>Zpět</button>
+                        <button type="button" className='button-secondary' onClick={() => navigate('/graph')}>{Localization.BackButton}</button>
                         <span className={`references-num ${validThoughtReferences.length > REFERENCES_LIMIT ? 'references-num-over-limit' : ''}`}>
                             {validThoughtReferences.length} / {REFERENCES_LIMIT}
                             {validThoughtReferences.length > REFERENCES_LIMIT && ' !!!'}
@@ -353,9 +323,9 @@ function CreateThought() {
                         <button
                             type="submit"
                             className={`button-primary ${createButtonEnabled ? '' : 'button-primary-disabled'}`}
-                            disabled={!createButtonEnabled}>Vytvořit</button>
+                            disabled={!createButtonEnabled}>{Localization.CreateButton}</button>
                     </p>
-                    <button className='button-secondary tutorial-button' type="button" onClick={() => setTutorialOverlayVisible(true)}>Nápověda</button>
+                    <button className='button-secondary tutorial-button' type="button" onClick={() => setTutorialOverlayVisible(true)}>{Localization.Hint}</button>
                 </form>
             </div>
         </div>

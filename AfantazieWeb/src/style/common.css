@@ -1,5 +1,3 @@
-
-
 :root {
     --primary-color: #098C09;
     --primary-color-light: #16A916;
@@ -20,7 +18,7 @@
     --white-color: #eeeeee;
     --black-color: #000000;
     --black-color-light: #1C1C1C;
-  }
+}
 
 * {
     box-sizing: border-box;
@@ -48,4 +46,12 @@ body {
 
 .username {
     font-weight: bold;
+}
+
+.simple-link {
+    color: var(--secondary-color);
+}
+
+.simple-link:visited {
+    color: var(--secondary-color);
 }

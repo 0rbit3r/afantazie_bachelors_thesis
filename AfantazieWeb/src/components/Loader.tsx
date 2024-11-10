@@ -1,8 +1,9 @@
+import { Localization } from "../locales/localization"
 
 
 function Loader() {
     return (
-        <div>Načítám...</div>
+        <div>{Localization.Loading}</div>
     )
 }
 

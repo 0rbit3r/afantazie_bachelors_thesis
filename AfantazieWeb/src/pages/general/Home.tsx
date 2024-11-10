@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom"
 import { LocationState } from "../../interfaces/LocationState";
 import LogViewer from "../../components/log/LogViewer";
+import { Localization } from "../../locales/localization";
 
 
 function Home() {
@@ -9,22 +10,19 @@ function Home() {
 
     return (
         <div className="content-container home-container">
-            <h1>Afantázie</h1>
+            <h1>{Localization.Title}</h1>
             <h2>{message}</h2>
             <div className="hero">
-                {/* <div>
-                    <img className="map" src="map.png" alt="mapa" />
-                </div> */}
                 <LogViewer></LogViewer>
                 <div className="hero-text">
                     <p>
-                        Když myšlenka vede k myšlence...
+                        {Localization.HeroText}
                     </p>
                 </div>
             </div>
             <div className="center">
                 <NavLink to="/graph">
-                    <button className="button-primary home-action-button">Graf</button>
+                    <button className="button-primary home-action-button">{Localization.Graph}</button>
                 </NavLink>
             </div>
             <div className="center">
@@ -34,7 +32,7 @@ function Home() {
             </div>
             <div className="center">
                 <NavLink to="/user">
-                    <button className="button-secondary home-action-button">Uživatelské nastavení</button>
+                    <button className="button-secondary home-action-button">{Localization.UserSettings}</button>
                 </NavLink>
             </div>
         </div>
