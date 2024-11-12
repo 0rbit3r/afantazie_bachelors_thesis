@@ -20,7 +20,7 @@ export async function fetchThoughtTitles(): Promise<ApiResponseWithBody<thoughtT
         headers: {
             'Content-Type': 'application/json',
         },
-        // credentials: 'include'
+        credentials: 'include'
     });
 
     return response;
@@ -32,7 +32,7 @@ export async function fetchThought(id: number): Promise<ApiResponseWithBody<thou
         headers: {
             'Content-Type': 'application/json',
         },
-        // credentials: 'include'
+        credentials: 'include'
     });
 
     return response;
@@ -47,6 +47,18 @@ export async function postNewThought(thought: createThoughtDto): Promise<ApiResp
         },
         credentials: 'include',
         body: JSON.stringify(thought)
+    });
+
+    return response;
+}
+
+export async function  getTotalThoughtsCount(): Promise<ApiResponseWithBody<number>> {
+    const response = await sendAndExpectBody<number>(`${API_URL}/thoughts/total-count`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        // credentials: 'include'
     });
 
     return response;

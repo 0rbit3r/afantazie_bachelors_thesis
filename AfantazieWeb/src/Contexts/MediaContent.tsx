@@ -18,6 +18,7 @@ export const MediaContent = (props: MediaContentProps) => {
                     {props.id === 64 && <img src={`${CONTENT_FOLDER}/gephi_cithep.png`} style={{ maxWidth: "500px" }}></img>}
                     {props.id === 78 && <video src={`${CONTENT_FOLDER}/data_did_backflip.mp4`} autoPlay={true} controls={true} style={{ maxWidth: "500px" }}></video>}
                     {props.id === 80 && <AudioPlayer path={`${CONTENT_FOLDER}/2.wav`}></AudioPlayer>}
+                    {props.id === 244 && <AudioPlayer path={`${CONTENT_FOLDER}/BendzaM.wav`}></AudioPlayer>}
                 </>
             }
         </>

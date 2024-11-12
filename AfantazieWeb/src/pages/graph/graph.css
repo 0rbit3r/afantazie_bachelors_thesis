@@ -151,3 +151,8 @@
   flex-direction: column;
   align-items: center;
 }
+
+/* todo - this is used in createThought preview overlay as well - css refactoring will be necessary soon */
+.thought-content {
+  word-break: break-word;
+}

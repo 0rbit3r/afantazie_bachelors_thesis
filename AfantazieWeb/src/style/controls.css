@@ -20,6 +20,14 @@
     user-select: none; /* Standard syntax */
 }
 
+.button-primary:disabled{
+    background-color: var(--primary-color-darker);
+    color: var(--primary-color-dark);
+}
+.button-primary:disabled:hover{
+    cursor: not-allowed;
+}
+
 .button-secondary {
     background-color: var(--secondary-color);
     color: var(--white-color);

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom"
-import LogViewer from "../../components/log/LogViewer";
+import ThoughtLogViewer from "../../components/log/LogViewer";
 import { Localization } from "../../locales/localization";
 
 
@@ -12,7 +12,7 @@ function Welcome() {
                     <img className="map" src="map.png" alt="mapa" />
                 </div>
                     <div>Online: {onlineUsers}</div> */}
-                <LogViewer></LogViewer>
+                <ThoughtLogViewer></ThoughtLogViewer>
                 <div className="hero-text">
                     <p>
                         {Localization.HeroText}

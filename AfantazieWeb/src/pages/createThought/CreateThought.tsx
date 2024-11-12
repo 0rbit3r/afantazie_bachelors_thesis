@@ -247,7 +247,7 @@ function CreateThought() {
                         <div className='text-flex-container'>
                             <h2>{previewedThought.title}</h2>
                             <h3>{previewedThought.author} - {previewedThought.dateCreated}</h3>
-                            <p>{previewedThought.content}</p>
+                            <p className='thought-content'>{previewedThought.content}</p>
                             {/* //todo: single previewer to use in graph page and here (and elsewhere?)*/}
                         </div>
                     </div>

@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom"
 import { LocationState } from "../../interfaces/LocationState";
-import LogViewer from "../../components/log/LogViewer";
+import ThoughtLogViewer from "../../components/log/LogViewer";
 import { Localization } from "../../locales/localization";
 
 
@@ -13,7 +13,7 @@ function Home() {
             <h1>{Localization.Title}</h1>
             <h2>{message}</h2>
             <div className="hero">
-                <LogViewer></LogViewer>
+                <ThoughtLogViewer></ThoughtLogViewer>
                 <div className="hero-text">
                     <p>
                         {Localization.HeroText}

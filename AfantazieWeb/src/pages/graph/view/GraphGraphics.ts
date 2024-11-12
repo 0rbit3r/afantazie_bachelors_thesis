@@ -166,21 +166,21 @@ export const initGraphics = (
                 // handle dynamic edge appearance based on highlighted thought
                 if (referencedThought) {
                     const arrowColor = highlightedThought === null
-                        ? thought.color
+                        ? referencedThought.color
                         : highlightedThought === thought || highlightedThought === referencedThought
-                            ? tinycolor(thought.color).lighten(5).toString()
-                            : tinycolor(thought.color).darken(10).toString();
+                            ? tinycolor(referencedThought.color).lighten(5).toString()
+                            : tinycolor(referencedThought.color).darken(10).toString();
                     const arrowThickness = highlightedThought === null
-                        ? 3
+                        ? 4
                         : highlightedThought === thought || highlightedThought === referencedThought
-                            ? 4
-                            : 2;
+                            ? 5
+                            : 3;
                     const arrowAlpha = highlightedThought === null
                         ? 0.8
                         : highlightedThought === thought || highlightedThought === referencedThought
                             ? 1
                             : 0.6;
-                    draw_arrow(
+                    draw_edge(
                         nodeContainer,
                         graphStore.viewport.toViewportCoordinates({ x: referencedThought.position.x, y: referencedThought.position.y }),
                         graphStore.viewport.toViewportCoordinates({ x: thought.position.x, y: thought.position.y }),
@@ -207,7 +207,7 @@ export const initGraphics = (
     return renderGraph;
 };
 
-const draw_arrow = (
+const draw_edge = (
     graphics: Graphics,
     from: XAndY,
     to: XAndY,
@@ -223,7 +223,7 @@ const draw_arrow = (
     const y2 = to.y;
 
     // Arrowhead properties
-    const arrowLength = 12 * zoom;
+    const arrowLength = 25 * zoom;
     const arrowAngle = Math.PI / 5;
 
     // Calculate the angle of the arrow line

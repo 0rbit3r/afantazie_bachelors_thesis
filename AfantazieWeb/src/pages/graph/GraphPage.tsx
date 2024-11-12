@@ -131,7 +131,7 @@ const GraphPage: React.FC = () => {
                         <div className='text-flex-container'>
                             <h2>{highlightedThought?.title}</h2>
                             <h3>{highlightedThought.author} - {highlightedThought.dateCreated}</h3>
-                            <p>{renderContentWithReferences(highlightedThought.content)}</p>
+                            <p className='thought-content'>{renderContentWithReferences(highlightedThought.content)}</p>
                             <MediaContent id={highlightedThought.id}></MediaContent>
                             {/* //todo: better audio/image management */}
                         </div>

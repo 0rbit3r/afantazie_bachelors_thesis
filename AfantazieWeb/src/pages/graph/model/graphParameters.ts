@@ -1,18 +1,18 @@
 export const BASE_RADIUS = 19;
-export const REFERENCE_RADIUS_MULTIPLIER = 2;
+export const REFERENCE_RADIUS_MULTIPLIER = 1.5;
 
-export const MAX_RADIUS = 300;
+export const MAX_RADIUS = 400;
 
 export const IDEAL_LINKED_DISTANCE = 100;
 export const EDGE_COMPRESSIBILITY_FACTOR = 3;
-export const PUSH_THRESH = 1800;
+export const PUSH_THRESH = 1500;
 
 export const MOMENTUM_DAMPENING_RATE = 1.8;
 export const MAX_PULL_FORCE = 100;
 export const MAX_PUSH_FORCE = 100;
 
 export const SIMULATION_FRAMES = 10000;
-export const SLOW_SIM_EVERY_N_FRAMES = 2000;
+export const SLOW_SIM_EVERY_N_FRAMES = 3000;
 export const FRAMES_WITH_OVERLAP = 0;
 
 export const SIM_WIDTH = 13000;

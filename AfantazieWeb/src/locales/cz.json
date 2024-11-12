@@ -39,5 +39,13 @@
     "ReplyButton": "Odpovědět",
     "Loading": "Načítám...",
     "Before": "před",
-    "RepliesTo": "Odpověď na"
+    "RepliesTo": "Odpověď na",
+    "ThoughtList": "Seznam myšlenek",
+    "SettingsSaved": "Nastavení bylo uloženo",
+    "ColorValidation": "Barva musí být ve formátu #RRGGBB",
+    "MaxThoughtsLabel": "Maximální počet vykreslených myšlenek:",
+    "ClickHere": "<- klikni sem",
+    "MaxThoughtsValidation": "Maximální počet myšlenek musí být alespoň 10",
+    "MaxThoughtsHint": "Pokud se ti graf seká, zmenšení tohoto čísla pomůže. Pokud máš výkonnější stroj, můžeš číslo zvětšit. Budou se ti zobrazovat vždy jen nejnovější myšlenky v rámci limitu. Výchozí hodnota je 300.",
+    "CurrentNumberOfThoughtsLabel": "Současný počet myšlenek na Afantázii: "
 }

@@ -1,4 +1,6 @@
 .settings-container {
+    background-color: var(--black-color-light);
+
     .color-picker-overlay {
         position: fixed;
         top: 20vh;
@@ -29,7 +31,7 @@
     }
 
     .color-dot.selected {
-        border: 2px solid white;
+        border: 6px solid black;
     }
 
     .username {
@@ -40,5 +42,31 @@
     .settings-label {
         font-size: large;
         margin: 0.8rem;
+    }
+
+    .color-hex-input{
+        background-color: var(--black-color);
+        color: white;
+        border: 0;
+        border-radius: 5px;
+        font-size: 1em;
+        margin: 10px;
+    }
+    .color-hex-input:focus {
+        outline-color: var(--primary-color);
+        outline-style: solid;
+    }
+
+    .max-thoughts-input{
+        background-color: var(--black-color);
+        color: white;
+        border: 0;
+        border-radius: 5px;
+        font-size: 1em;
+        margin: 10px;
+    }
+    .max-thoughts-input:focus {
+        outline-color: var(--primary-color);
+        outline-style: solid;
     }
 }

@@ -1,7 +1,8 @@
 // User.tsx
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { getUserSettings, postUserSettings } from '../../api/UserSettingsApiClient';
 import { Localization } from '../../locales/localization';
+import { getTotalThoughtsCount } from '../../api/graphClient';
 
 const colors = [
     // First Set
@@ -42,31 +43,45 @@ const colors = [
 ];
 
 
-
 function UserAndSettings() {
     const [username, setUsername] = useState<string>("");
-    const [selectedColor, setSelectedColor] = useState<number>(0);
+    const [selectedColor, setSelectedColor] = useState<string>("#dddddd");
     const [isPickerOpen, setIsPickerOpen] = useState<boolean>(false);
-    const [errorMessage, setValidationMessage] = useState<string | null>(null);
+    const [ColorValidationMessage, setColorValidationMessage] = useState<string | null>(null);
+    const [maxThoughtsValidationMessage, setMaxThoughtsValidationMessage] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const [maxThoughtsInput, setMaxThoughtsInput] = useState<number>(0);
+    const [thoughtsCount, setThoughtsCount] = useState<number>(0);
 
     useEffect(() => {
         const getSettings = async () => {
             const response = await getUserSettings();
             if (response.ok) {
-                setSelectedColor(colors.indexOf(response.data?.color ?? ""));
+                setSelectedColor(response.data?.color!);
+                setMaxThoughtsInput(response.data?.maxThoughts!);
                 setUsername(response.data?.username!)
             }
-            else{
-                setValidationMessage(response.error!);
+            else {
+                setColorValidationMessage(response.error!);
             }
         }
-
         getSettings();
+
+        const getThoughtsCount = async () => {
+            const response = await getTotalThoughtsCount();
+            if (response.ok) {
+                console.log(response.data);
+                setThoughtsCount(response.data!);
+            }
+            else {
+                setColorValidationMessage(response.error!);
+            }
+        }
+        getThoughtsCount();
     }, []);
 
-    function handleColorChange(index: number) {
-        setSelectedColor(index);
+    function handlePaletteColorChoice(index: number) {
+        setSelectedColor(colors[index]);
         setIsPickerOpen(false);
     }
 
@@ -79,14 +94,14 @@ function UserAndSettings() {
     }
 
     async function saveSettings() {
-        setValidationMessage(null);
+        setColorValidationMessage(null);
         setSuccessMessage(null);
-        var result = await postUserSettings({color: colors[selectedColor], username: username});
+        var result = await postUserSettings({ color: selectedColor, username: username, maxThoughts: maxThoughtsInput });
         if (result.ok) {
-            setSuccessMessage("Nastavení bylo uloženo.");
+            setSuccessMessage(Localization.SettingsSaved);
         }
-        else{
-            setValidationMessage(result.error!);
+        else {
+            setColorValidationMessage(result.error!);
         }
     }
 
@@ -95,35 +110,74 @@ function UserAndSettings() {
         window.location.href = '/login';
     }
 
+    function handleHexInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
+
+        setSelectedColor(_ => e.target.value);
+
+        const hexColorRegexp = /^#([A-Fa-f0-9]{6})$/;
+        if (!hexColorRegexp.test(e.target.value)) {
+            setMaxThoughtsValidationMessage(Localization.ColorValidation);
+        }
+        else {
+            setMaxThoughtsValidationMessage(null);
+        }
+    }
+
+    function handleaxThoughtsChange(e: ChangeEvent<HTMLInputElement>): void {
+        const number = parseInt(e.target.value)
+            ? parseInt(e.target.value)
+            : 0;
+
+        setMaxThoughtsInput(number);
+
+        if (number < 10) {
+            setColorValidationMessage(Localization.MaxThoughtsValidation);
+        }
+        else {
+            setColorValidationMessage(null);
+        }
+    }
+
     return (
         <div className="content-container settings-container" style={{ padding: '20px', borderRadius: '8px', border: '1px solid #ccc' }}>
             <h1>{Localization.UserSettings}</h1>
-            {errorMessage && <pre className='red-text'>{errorMessage}</pre>}
+            {ColorValidationMessage && <pre className='red-text'>{ColorValidationMessage}</pre>}
+            {maxThoughtsValidationMessage && <pre className='red-text'>{maxThoughtsValidationMessage}</pre>}
             {successMessage && <pre className='green-text'>{successMessage}</pre>}
             <hr></hr>
             <label className='settings-label'>{Localization.ColorLabel} </label>
-            <span className='username' style={{ color: colors[selectedColor] }}
+            <span className='username' style={{ color: selectedColor }}
                 onClick={openColorPicker}
-            >{username}</span>
+            >{username}</span><span> {Localization.ClickHere}</span>
             {isPickerOpen && (
                 <div className="color-picker-overlay" onClick={closeColorPicker}>
                     <div className="color-picker-popup" onClick={(e) => e.stopPropagation()}>
                         {colors.map((color, index) => (
                             <div
                                 key={index}
-                                className={`color-dot ${index === selectedColor ? 'selected' : ''}`}
+                                className={`color-dot ${color === selectedColor ? 'selected' : ''}`}
                                 style={{ backgroundColor: color, cursor: 'pointer', width: '24px', height: '24px', borderRadius: '50%', margin: '5px' }}
-                                onClick={() => handleColorChange(index)}
+                                onClick={() => handlePaletteColorChoice(index)}
                             />
                         ))}
                     </div>
                 </div>
             )}
+            <br></br>
+            <input className='color-hex-input' type='text' value={selectedColor} onChange={(e) => handleHexInputChange(e)}></input>
             <hr></hr>
-            <div>
-                <button className='button-primary' onClick={saveSettings}>{Localization.SaveButton}</button>
-                <button className='button-secondary' onClick={logOut}>{Localization.LogoutButton}</button>
-            </div>
+
+            <p>
+                <label className='settings-label'>{Localization.MaxThoughtsLabel}</label><br />
+                <input className='max-thoughts-input' type='number' value={maxThoughtsInput} onChange={e => handleaxThoughtsChange(e)}></input><br />
+                <label>{Localization.MaxThoughtsHint}</label><br/>
+                <label>{Localization.CurrentNumberOfThoughtsLabel} {thoughtsCount}</label>
+            </p>
+
+            <hr/>
+            <button className='button-primary' disabled={ColorValidationMessage !== null} onClick={saveSettings}>{Localization.SaveButton}</button> <br />
+
+            <button className='button-secondary' onClick={logOut}>{Localization.LogoutButton}</button>
         </div>
     );
 }

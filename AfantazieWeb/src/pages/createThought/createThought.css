@@ -250,7 +250,7 @@
     justify-content: space-between;
 
     .text-scroll-container {
-        width: 70%;
+        width: 85%;
         height: 100%;
         overflow-y: auto;
 

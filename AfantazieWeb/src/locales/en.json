@@ -39,6 +39,13 @@
     "ReplyButton": "Reply",
     "Loading": "Loading...",
     "Before": "ago",
-    "RepliesTo": "Replies to"
-
+    "RepliesTo": "Replies to",
+    "ThoughtList": "Thought List",
+    "SettingsSaved": "Settings saved",
+    "ColorValidation": "Color must be in format #RRGGBB",
+    "MaxThoughtsLabel": "Maximum amount of rendered thoughts:",
+    "ClickHere": "<- click here",
+    "MaxThoughtsValidation": "Maximum thoughts must be at least 10",
+    "MaxThoughtsHint": "TODO",
+    "CurrentNumberOfThoughtsLabel": "Current number of thoughts on Thought Web: "
 }
