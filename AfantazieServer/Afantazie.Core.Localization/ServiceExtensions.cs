@@ -3,6 +3,7 @@ using Afantazie.Core.Localization.SystemMessages;
 using Afantazie.Core.Localization.ThoughtValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Afantazie.Core.Localization
 {
@@ -12,7 +13,8 @@ namespace Afantazie.Core.Localization
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            var language = configuration.GetValue<string>("Language");
+
+            var language = configuration.GetValue<string>("ApplicationLanguage");
 
             if (language == "cz")
             {

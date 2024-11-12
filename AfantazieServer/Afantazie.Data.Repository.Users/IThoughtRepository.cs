@@ -5,7 +5,7 @@ namespace Afantazie.Data.Interface.Repository
 {
     public interface IThoughtRepository
     {
-        Task<Result<List<Thought>>> GetAllThoughts();
+        Task<Result<List<Thought>>> GetLastThoughtsAsync(int count);
 
         Task<Result<List<Thought>>> GetLatestMetaData(int amount);
 
@@ -14,5 +14,7 @@ namespace Afantazie.Data.Interface.Repository
         Task<Result<IEnumerable<Thought>>> GetThoughtsByOwner(int ownerId);
 
         Task<Result<int>> InserertThoughtAsync(string title, string content, int authorId, IEnumerable<int> references);
+
+        Task<Result<int>> GetTotalThoughtsCount();
     }
 }

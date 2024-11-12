@@ -16,7 +16,7 @@ namespace Afantazie.Data.Repository
 {
     public class UserRepository (
         DataContextProvider _contextProvider
-        ): IUserRepository
+        ) : IUserRepository
     {
         public async Task<Result> AssignColor(int userId, string color)
         {
@@ -57,6 +57,20 @@ namespace Afantazie.Data.Repository
             }
         }
 
+        public async Task<Result<int>> GetMaxThoughts(int userId)
+        {
+            using (var context = _contextProvider.GetDataContext())
+            {
+                var user = await context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+                if (user == null)
+                {
+                    return Error.NotFound();
+                }
+
+                return user.MaxThoughts;
+            }
+        }
+
         public async Task<Result<User>> GetUserByIdAsync(int id)
         {
             using (var context = _contextProvider.GetDataContext())
@@ -68,6 +82,31 @@ namespace Afantazie.Data.Repository
                 }
 
                 return user.Adapt<User>();
+            }
+        }
+
+        public async Task<Result> UpdateMaxThoughts(int userId, int maxThoughts)
+        {
+            using (var context = _contextProvider.GetDataContext())
+            {
+                var user = await context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+                if (user == null)
+                {
+                    return Error.NotFound();
+                }
+
+                if (user.MaxThoughts == maxThoughts)
+                {
+                    return Result.Success();
+                }
+
+                user.MaxThoughts = maxThoughts;
+
+                var rowsAffected = context.SaveChanges();
+
+                return rowsAffected > 0
+                    ? Result.Success()
+                    : Error.General(500, "Failed to save database changes.");
             }
         }
     }

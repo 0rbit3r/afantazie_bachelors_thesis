@@ -21,5 +21,7 @@ namespace Afantazie.Data.Model.Entity
         public required string Password { get; set; }
 
         public required string Color { get; set; }
+
+        public int MaxThoughts { get; set; }
     }
 }

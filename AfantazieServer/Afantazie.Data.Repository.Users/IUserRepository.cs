@@ -10,10 +10,11 @@ namespace Afantazie.Data.Interface.Repository
 {
     public interface IUserRepository
     {
-        public Task<Result> AssignColor(int userId, string color);
+        Task<Result> AssignColor(int userId, string color);
 
-        public Task<Result<string>> GetColor(int userId);
-
-        public Task<Result<User>> GetUserByIdAsync(int id);
+        Task<Result<string>> GetColor(int userId);
+        Task<Result<int>> GetMaxThoughts(int userId);
+        Task<Result<User>> GetUserByIdAsync(int id);
+        Task<Result> UpdateMaxThoughts(int userId, int maxThoughts);
     }
 }

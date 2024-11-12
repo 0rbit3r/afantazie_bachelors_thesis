@@ -27,5 +27,17 @@ namespace Afantazie.Service.UserSettings
             _logger.LogInformation("Getting color for userId: {userId}", userId);
             return await _repo.GetColor(userId);
         }
+
+        public Task<Result<int>> GetMaxThoughts(int userId)
+        {
+            _logger.LogInformation("Getting max thoughts for userId: {userId}", userId);
+            return _repo.GetMaxThoughts(userId);
+        }
+
+        public Task<Result> UpdateMaxThoughts(int userId, int maxThoughts)
+        {
+            _logger.LogInformation("Updating max thoughts for userId {userId} to {value}", userId, maxThoughts);
+            return _repo.UpdateMaxThoughts(userId, maxThoughts);
+        }
     }
 }

@@ -31,14 +31,21 @@ namespace Afantazie.Presentation.Api.Controllers
             {
                 return Unauthorized();
             }
-            var result = await _service.UpdateColor(UserId.Value, dto.Color);
+            var colorResult = await _service.UpdateColor(UserId.Value, dto.Color);
 
-            if (result.IsSuccess)
+            if (!colorResult.IsSuccess)
+            {
+                return ResponseFromError(colorResult.Error!);
+            }
+
+            var maxThoughtsResult = await _service.UpdateMaxThoughts(UserId.Value, dto.MaxThoughts);
+
+            if (maxThoughtsResult.IsSuccess)
             {
                 return Ok();
             }
 
-            return ResponseFromError(result.Error!);
+            return ResponseFromError(colorResult.Error!);
         }
 
         [Authorize]
@@ -49,18 +56,20 @@ namespace Afantazie.Presentation.Api.Controllers
             {
                 return Unauthorized();
             }
-            var result = await _service.GetColor(UserId.Value);
+            var colorResult = await _service.GetColor(UserId.Value);
+            var maxThoughtsResult = await _service.GetMaxThoughts(UserId.Value);
 
-            if (result.IsSuccess)
+            if (colorResult.IsSuccess)
             {
                 return new UserSettingsDto
                 {
-                    Color = result.Payload!,
-                    Username = User.Identity?.Name ?? "Unknown"
+                    Color = colorResult.Payload!,
+                    Username = User.Identity?.Name ?? "Unknown",
+                    MaxThoughts = maxThoughtsResult.Payload!
                 };
             }
 
-            return ResponseFromError(result.Error!);
+            return ResponseFromError(colorResult.Error!);
         }
     }
 }

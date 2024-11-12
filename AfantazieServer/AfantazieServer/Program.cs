@@ -26,7 +26,9 @@ builder.Services.AddCors(options =>
         builder =>
         {
             //todo - production?
-            builder.WithOrigins("http://localhost:4200", "http://localhost:5173", "https://afantazie.cz", "https://www.thoughtweb.net")
+            builder.WithOrigins("http://localhost:4200", 
+                "http://localhost:5173", "https://afantazie.cz", 
+                "https://www.afantazie.cz", "https://www.thoughtweb.net")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
@@ -63,6 +65,8 @@ EntityMappingConfiguration.ConfigureEntityMapping();
 DtoMappingConfiguration.ConfigureDtoMapping();
 
 var app = builder.Build();
+
+app.Logger.LogInformation("Aplication built with language {language}", builder.Configuration.GetValue<string>("ApplicationLanguage"));
 
 //app.UseHttpsRedirection();
 

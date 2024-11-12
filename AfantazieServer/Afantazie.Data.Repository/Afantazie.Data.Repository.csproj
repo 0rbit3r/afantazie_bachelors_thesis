@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Afantazie.Core.Constants\Afantazie.Core.Constants.csproj" />
     <ProjectReference Include="..\Afantazie.Core.Localization\Afantazie.Core.Localization.csproj" />
     <ProjectReference Include="..\Afantazie.Data.Core\Afantazie.Data.Model.csproj" />
     <ProjectReference Include="..\Afantazie.Data.Repository.Users\Afantazie.Data.Interface.Repository.csproj" />

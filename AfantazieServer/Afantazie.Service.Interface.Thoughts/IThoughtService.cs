@@ -7,7 +7,12 @@ namespace Afantazie.Service.Interface.Thoughts
     {
        Task<Result<int>> CreateThoughtAsync(int creatorId, string title, string content, List<int> thoughtIdReferences);
 
-       Task<Result<List<Thought>>> GetAllThoughtsAsync();
+        /// <summary>
+        /// Gets last thoughts and limits them based on user - selected maximum thoughts.
+        /// </summary>
+       Task<Result<List<Thought>>> GetLastThoughtsForUserAsync(int? userId);
        Task<Result<Thought>> GetThoughtByIdAsync(int id);
+
+       Task<Result<int>> GetTotalThoughtCount();
     }
 }

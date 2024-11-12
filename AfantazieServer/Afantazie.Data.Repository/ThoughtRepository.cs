@@ -38,7 +38,15 @@ namespace Afantazie.Data.Repository
             }
         }
 
-        public async Task<Result<List<Thought>>> GetAllThoughts()
+        public async Task<Result<int>> GetTotalThoughtsCount()
+        {
+            using (var db = _contextProvider.GetDataContext())
+            {
+                return await db.Thoughts.CountAsync();
+            }
+        }
+
+        public async Task<Result<List<Thought>>> GetLastThoughtsAsync(int count)
         {
             using (var db = _contextProvider.GetDataContext())
             {
@@ -59,6 +67,7 @@ namespace Afantazie.Data.Repository
                     .ToListAsync();
 
                 return thoughtsWithBoth
+                    .TakeLast(count)
                     .Adapt<List<Thought>>();
             }
         }

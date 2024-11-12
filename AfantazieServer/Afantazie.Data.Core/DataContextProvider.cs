@@ -12,8 +12,9 @@ namespace Afantazie.Data.Model
     {
         public AfantazieDataContext GetDataContext()
         {
+            string connection = _config.GetConnectionString("DefaultConnection");
             DbContextOptions<AfantazieDataContext> options = new DbContextOptionsBuilder<AfantazieDataContext>()
-                .UseNpgsql(_config.GetConnectionString("DefaultConnection"))
+                .UseNpgsql(connection)
                 .Options;
 
             return new AfantazieDataContext(options);

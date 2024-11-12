@@ -1,4 +1,5 @@
-﻿using Afantazie.Core.Localization.Errors;
+﻿using Afantazie.Core.Constants;
+using Afantazie.Core.Localization.Errors;
 using Afantazie.Core.Model.Results;
 using Afantazie.Core.Model.Results.Errors;
 using Afantazie.Data.Interface.Repository;
@@ -47,13 +48,13 @@ namespace Afantazie.Data.Repository
                 {
                     return Error.AlreadyExists(_errorMessages.Username);
                 }
-                if(context.Users.Any(u => u.Email == email))
+                if (context.Users.Any(u => u.Email == email))
                 {
                     return Error.AlreadyExists(_errorMessages.Email);
                 }
 
                 var hashedPassword = HashPassword(password);
-                var newUser = new UserEntity { Username = username, Email = email, Password = hashedPassword, Color = "#dddddd" };
+                var newUser = new UserEntity { Username = username, Email = email, Password = hashedPassword, Color = "#dddddd", MaxThoughts = Constants.DefaultMaximumThoughts };
                 context.Users.Add(newUser);
                 await context.SaveChangesAsync();
 

@@ -1,4 +1,5 @@
-﻿using Afantazie.Core.Model;
+﻿using Afantazie.Core.Constants;
+using Afantazie.Core.Model;
 using Afantazie.Core.Model.Results;
 using Afantazie.Data.Interface.Repository;
 using Afantazie.Service.Interface.Thoughts;
@@ -13,6 +14,7 @@ namespace Afantazie.Service.Thoughts
 {
     public class ThoughtService(
         IThoughtRepository _repo,
+        IUserRepository _userRepo,
         ILogger<ThoughtService> _logger
         ) : IThoughtService
     {
@@ -27,16 +29,27 @@ namespace Afantazie.Service.Thoughts
                 : result.Error!;
         }
 
-        public Task<Result<List<Thought>>> GetAllThoughtsAsync()
+        public async Task<Result<List<Thought>>> GetLastThoughtsForUserAsync(int? userId)
         {
             _logger.LogInformation("Requested thought graph.");
-            return _repo.GetAllThoughts();
+
+            var takeLast = userId.HasValue
+                ? (await _userRepo.GetMaxThoughts(userId.Value)).Payload!
+                : Constants.DefaultMaximumThoughts;
+
+            return await _repo.GetLastThoughtsAsync(takeLast);
         }
 
         public Task<Result<Thought>> GetThoughtByIdAsync(int id)
         {
             _logger.LogInformation("Requested thought with id: {id}", id);
             return _repo.GetThoughtById(id);
+        }
+
+        public Task<Result<int>> GetTotalThoughtCount()
+        {
+            _logger.LogDebug("Requested total thought count.");
+            return _repo.GetTotalThoughtsCount();
         }
     }
 }

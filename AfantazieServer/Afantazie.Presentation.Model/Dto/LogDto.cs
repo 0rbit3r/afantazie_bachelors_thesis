@@ -16,6 +16,7 @@ namespace Afantazie.Presentation.Model.Dto
             Color = color;
             Author = author;
         }
+
         public int ThoughtId { get; set; }
 
         public string Title { get; set; }

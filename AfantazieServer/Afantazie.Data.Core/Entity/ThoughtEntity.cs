@@ -30,7 +30,5 @@ namespace Afantazie.Data.Model.Entity
         // Incoming links (links from others to this Thought)
         public virtual ICollection<ThoughtReferenceEntity> Backlinks { get; set; }
             = new List<ThoughtReferenceEntity>();
-
-
     }
 }

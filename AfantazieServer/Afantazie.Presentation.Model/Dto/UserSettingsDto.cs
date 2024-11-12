@@ -11,5 +11,7 @@ namespace Afantazie.Presentation.Model.Dto
         public required string Username { get; set; }
 
         public required string Color { get; set; }
+
+        public int MaxThoughts { get; set; }
     }
 }
