@@ -6,8 +6,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { LocationState } from '../../interfaces/LocationState';
 import { useGraphStore } from './GraphStore';
 import GraphContainer from './GraphContainer';
-import { MediaContent } from '../../Contexts/MediaContent';
+import { MediaContent } from '../../components/MediaContent';
 import { Localization } from '../../locales/localization';
+import { getUserSettings } from '../../api/UserSettingsApiClient';
 
 const COLOR_BACKGROUND = 0x020304;
 
@@ -18,29 +19,42 @@ const landscapeMode = initialStageSize.width > initialStageSize.height;
 
 
 const GraphPage: React.FC = () => {
-    const [overlayVisible, setOverlayVisible] = useState(false);
-    const [thoughts, setThoughts] = useState<thoughtDto[]>([]);
-    const [stageSize, setStageSize] = useState(initialStageSize);
-    const [zoomingHeld, setZoomingHeld] = useState(0);
-    const [fullscreenPreview, setFullscreenPreview] = useState(false);
+    // navigation
     const navigate = useNavigate();
+    const [initialHighlightedThoughtId, setInitialHighlightedThoughtId] = useState(0);
+    const { urlThoughtId } = useParams();
 
+    // data, 
+    const [thoughts, setThoughts] = useState<thoughtDto[]>([]);
+
+    // screen state
+    const [overlayVisible, setOverlayVisible] = useState(false);
+    const [stageSize, setStageSize] = useState(initialStageSize);
+    const [fullscreenPreview, setFullscreenPreview] = useState(false);
+    const viewport = useGraphStore((state) => state.viewport);
+
+    // controls
+    const [zoomingHeld, setZoomingHeld] = useState(0);
     const setZoomingControl = useGraphStore((state) => state.setZoomingControl);
+    
     const highlightedThought = useGraphStore((state) => state.highlightedThought);
     const setHighlightedThoughtId = useGraphStore((state) => state.setHighlightedThoughtId);
     const unsetHighlightedThought = useGraphStore((state) => state.unsetHighlightedThought);
-    const viewport = useGraphStore((state) => state.viewport);
 
-    const { urlThoughtId } = useParams();
-    const [initialHighlightedThoughtId, setInitialHighlightedThoughtId] = useState(0);
+    const timeShift = useGraphStore((state) => state.timeShift);
+    const timeShiftControl = useGraphStore((state) => state.timeShiftControl);
+    const setTimeShiftControl = useGraphStore((state) => state.setTimeShiftControl);
 
-    const setGraphStageSizeHalfOpen = () => setStageSize({ width: initialStageSize.width, height: Math.floor(initialStageSize.height / 2) });
-    const setGraphStageFullScreen = () => setStageSize(_ => ({ width: window.innerWidth, height: window.innerHeight - 60 }));
-    const setGraphStageCollapsed = () => setStageSize({ width: initialStageSize.width, height: 20 });
+    const setMaxThoughtsOnScreen = useGraphStore((state) => state.setMaxThoughtsOnScreen);
 
     // Fetch thoughts from the server
     useEffect(() => {
         const fetchAndSetAsync = async () => {
+            const userSettings = await getUserSettings();
+            if (userSettings.ok) {
+                setMaxThoughtsOnScreen(userSettings.data?.maxThoughts!);
+            }
+
             const response = await fetchThoughts();
             if (response.ok) {
                 setThoughts(response.data!);
@@ -61,19 +75,22 @@ const GraphPage: React.FC = () => {
             return;
         if (highlightedThought === null) {
             window.history.pushState(null, '', '/graph');
-            setGraphStageFullScreen();
+            setStageSize(_ => ({ width: window.innerWidth, height: window.innerHeight - 60 }));
             setOverlayVisible(false);
             return;
         }
         window.history.pushState(null, '', `/graph/${highlightedThought.id}`);
-        setGraphStageSizeHalfOpen();
+        //set stage size half open
+        setStageSize({ width: initialStageSize.width, height: Math.floor(initialStageSize.height / 2) });
         setOverlayVisible(true);
     }, [highlightedThought]);
 
+    // zooming effect
     useEffect(() => {
         setZoomingControl(zoomingHeld);
     }, [zoomingHeld]);
 
+    //
     useEffect(() => {
         viewport.width = stageSize.width;
         viewport.height = stageSize.height;
@@ -82,7 +99,8 @@ const GraphPage: React.FC = () => {
     const handleUpButtonOverlay = () => {
         if (fullscreenPreview) {
             setFullscreenPreview(false);
-            setGraphStageSizeHalfOpen();
+            //set stage size half open
+            setStageSize({ width: initialStageSize.width, height: Math.floor(initialStageSize.height / 2) });
         }
         else {
             unsetHighlightedThought();
@@ -92,10 +110,11 @@ const GraphPage: React.FC = () => {
     const handleDownButtonOverlay = () => {
         if (!fullscreenPreview) {
             setFullscreenPreview(true);
-            setGraphStageCollapsed();
+            setStageSize({ width: initialStageSize.width, height: 20 });
         }
     }
 
+    // renders thoiught content including colorful clickable references
     const renderContentWithReferences = (text: string) => {
         const parts = text.split(/\[(.*?)\]\((.*?)\)/g);
         const result = [];
@@ -133,7 +152,6 @@ const GraphPage: React.FC = () => {
                             <h3>{highlightedThought.author} - {highlightedThought.dateCreated}</h3>
                             <p className='thought-content'>{renderContentWithReferences(highlightedThought.content)}</p>
                             <MediaContent id={highlightedThought.id}></MediaContent>
-                            {/* //todo: better audio/image management */}
                         </div>
                         {!fullscreenPreview && thoughts.filter(t => t.links.includes(highlightedThought?.id)).length > 0 &&
                             <div className='responses-container-half-screen'>
@@ -182,10 +200,17 @@ I suspect it might be because of different references to viewport? (second initi
                         <GraphContainer Thoughts={thoughts} initialHighlightedThoughtId={initialHighlightedThoughtId}></GraphContainer>
                     </Stage>
 
-                    {false && <button className='graph-ui-button rewind-button' >
-                        <img draggable='false' src={PUBLIC_FOLDER + '/icons/rewind.svg'}>
-                        </img>
-                    </button>}
+                    {timeShift && <div className='time-shift-label'>{-timeShift}</div> || <div className='time-shift-label'>0</div> //todo - why is timeshift undefined when zero?
+                    } 
+                    <button className='graph-ui-button rewind-button'
+                        onPointerDown={_ => setTimeShiftControl(1)} onPointerUp={_ => setTimeShiftControl(0)} onPointerLeave={_ => setTimeShiftControl(0)} onPointerOut={_ => setTimeShiftControl(0)}>
+                        {timeShiftControl != 1 && <img draggable='false' src={PUBLIC_FOLDER + '/icons/rewind.svg'}></img>}
+                    </button>
+                    
+                    <button className='graph-ui-button play-forward-button' 
+                        onPointerDown={_ => setTimeShiftControl(-1)} onPointerUp={_ => setTimeShiftControl(0)} onPointerLeave={_ => setTimeShiftControl(0)} onPointerOut={_ => setTimeShiftControl(0)}>
+                        {timeShiftControl != -1 && <img draggable='false' src={PUBLIC_FOLDER + '/icons/play-forward.svg'}></img>}
+                    </button>
                     <button className='graph-ui-button zoom-in-button'
                         onPointerDown={_ => setZoomingHeld(1)} onPointerUp={_ => setZoomingHeld(_ => 0)} onPointerLeave={_ => setZoomingHeld(0)} onPointerOut={_ => setZoomingHeld(0)}>
                         {zoomingHeld != 1 && <img draggable='false'

@@ -138,6 +138,19 @@
   left: 10px;
 }
 
+.play-forward-button {
+  bottom: 60px;
+  left: 70px;
+}
+
+.time-shift-label {
+  font-size: larger;
+  position: absolute;
+  bottom: 60px;
+  left: 140px;
+  color: var(--secondary-color-lighter);
+}
+
 .responses-container {
   /* background-color: aqua; */
   /* todo - here nd overall look into heights and url bars and such... */

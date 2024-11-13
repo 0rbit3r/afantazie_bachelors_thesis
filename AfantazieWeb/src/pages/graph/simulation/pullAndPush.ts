@@ -1,6 +1,7 @@
 import { useGraphStore } from "../GraphStore";
-import { pullForce, linksNumberDivisor, pushForce, SIM_HEIGHT, SIM_WIDTH, PUSH_THRESH, MOMENTUM_DAMPENING_RATE, FRAMES_WITH_OVERLAP, SLOW_SIM_EVERY_N_FRAMES } from "../model/graphParameters";
+import { pullForce, linksNumberDivisor, pushForce, SIM_HEIGHT, SIM_WIDTH, PUSH_THRESH, MOMENTUM_DAMPENING_RATE, FRAMES_WITH_OVERLAP, SLOW_SIM_EVERY_N_FRAMES, NODE_MASS_ON, MAX_MASS_DIFFERENCE_FORCE_MULTIPLIER, MIN_MASS_DIFFERENCE_FORCE_MULTIPLIER } from "../model/graphParameters";
 import { RenderedThought } from "../model/renderedThought";
+import { getThoughtsInTimeWindow } from "../model/temporalThoughtsProvider";
 
 export const get_border_distance = (thought1: RenderedThought, thought2: RenderedThought) => {
     const x1 = thought1.position.x;
@@ -12,7 +13,7 @@ export const get_border_distance = (thought1: RenderedThought, thought2: Rendere
     // if (borderDistance > centerDistance) {
     //     return borderDistance - 
     // }
-    
+
     return borderDistance;
 }
 
@@ -25,31 +26,33 @@ const get_center_distance = (thought1: RenderedThought, thought2: RenderedThough
 }
 
 export const pull_and_push = () => {
-    const thoughts = useGraphStore.getState().renderedThoughts;
+    const thoughts = getThoughtsInTimeWindow();
 
-    thoughts.forEach(thought => {
+    for (let i = 0; i < thoughts.length; i++) {
+        const thought = thoughts[i];
         handleOutOfBounds(thought);
 
-        thoughts.forEach(otherThought => {
+        for (let j = 0; j < i; j++) {
+            const otherThought = thoughts[j];
             if (thought.id > otherThought.id) { //This relies on the fact that thoughts can only reference older ones...
                 const borderDistance = get_border_distance(thought, otherThought);
 
                 if (thought.links.includes(otherThought.id)) {
-                    pull_or_push_connected(thought, otherThought);
+                    pull_or_push_connected_to_ideal_distance(thought, otherThought);
                 } else if (borderDistance < PUSH_THRESH) {
                     push_unconnected(thought, otherThought);
                 }
             }
-        });
-    });
+        }
+    }
 
     const frame = useGraphStore.getState().frame;
     thoughts.forEach(thought => {
 
-        if (Math.abs(thought.momentum.x) < Math.abs(thought.forces.x)){
+        if (Math.abs(thought.momentum.x) < Math.abs(thought.forces.x)) {
             thought.momentum.x = Math.abs(thought.momentum.x) * Math.sign(thought.forces.x);
         }
-        if (Math.abs(thought.momentum.y) < Math.abs(thought.forces.y)){
+        if (Math.abs(thought.momentum.y) < Math.abs(thought.forces.y)) {
             thought.momentum.y = Math.abs(thought.momentum.y) * Math.sign(thought.forces.y);
         }
 
@@ -71,7 +74,7 @@ export const pull_and_push = () => {
 
 }
 
-export const pull_or_push_connected = (sourceThought: RenderedThought, targetThought: RenderedThought) => {
+export const pull_or_push_connected_to_ideal_distance = (sourceThought: RenderedThought, targetThought: RenderedThought) => {
     const dx = targetThought.position.x - sourceThought.position.x;
     const dy = targetThought.position.y - sourceThought.position.y;
     const centerDistance = get_center_distance(sourceThought, targetThought);
@@ -82,10 +85,23 @@ export const pull_or_push_connected = (sourceThought: RenderedThought, targetTho
     // }
     const force = pullForce(borderDistance) / linksNumberDivisor(sourceThought.links.length)
 
-    sourceThought.forces.x += sourceThought.held ? 0 : (dx / centerDistance) * force;
-    sourceThought.forces.y += sourceThought.held ? 0 : (dy / centerDistance) * force;
-    targetThought.forces.x -= targetThought.held ? 0 : (dx / centerDistance) * force;
-    targetThought.forces.y -= targetThought.held ? 0 : (dy / centerDistance) * force;
+    // get the x / y component of the force vector and multiply by the scalar compponent;
+    sourceThought.forces.x += (sourceThought.held ? 0 : (dx / centerDistance) * force)
+        * (NODE_MASS_ON
+            ? Math.min(Math.max(targetThought.radius / sourceThought.radius, MIN_MASS_DIFFERENCE_FORCE_MULTIPLIER), MAX_MASS_DIFFERENCE_FORCE_MULTIPLIER)
+            : 1);
+    sourceThought.forces.y += (sourceThought.held ? 0 : (dy / centerDistance) * force)
+        * (NODE_MASS_ON
+            ? Math.min(Math.max(targetThought.radius / sourceThought.radius, MIN_MASS_DIFFERENCE_FORCE_MULTIPLIER), MAX_MASS_DIFFERENCE_FORCE_MULTIPLIER)
+            : 1);
+    targetThought.forces.x -= (targetThought.held ? 0 : (dx / centerDistance) * force)
+        * (NODE_MASS_ON
+            ? Math.min(Math.max(sourceThought.radius / targetThought.radius, MIN_MASS_DIFFERENCE_FORCE_MULTIPLIER), MAX_MASS_DIFFERENCE_FORCE_MULTIPLIER)
+            : 1);
+    targetThought.forces.y -= (targetThought.held ? 0 : (dy / centerDistance) * force)
+        * (NODE_MASS_ON
+            ? Math.min(Math.max(sourceThought.radius / targetThought.radius, MIN_MASS_DIFFERENCE_FORCE_MULTIPLIER), MAX_MASS_DIFFERENCE_FORCE_MULTIPLIER)
+            : 1);
 }
 
 export const push_unconnected = (sourceThought: RenderedThought, targetThought: RenderedThought) => {
@@ -102,10 +118,22 @@ export const push_unconnected = (sourceThought: RenderedThought, targetThought: 
         ? pushForce(borderDistance)
         : 0;
 
-    sourceThought.forces.x -= sourceThought.held ? 0 : (dx / centerDistance) * force;
-    sourceThought.forces.y -= sourceThought.held ? 0 : (dy / centerDistance) * force;
-    targetThought.forces.x += targetThought.held ? 0 : (dx / centerDistance) * force;
-    targetThought.forces.y += targetThought.held ? 0 : (dy / centerDistance) * force;
+    sourceThought.forces.x -= (sourceThought.held ? 0 : (dx / centerDistance) * force)
+        * (NODE_MASS_ON
+            ? Math.min(Math.max(targetThought.radius / sourceThought.radius, MIN_MASS_DIFFERENCE_FORCE_MULTIPLIER), MAX_MASS_DIFFERENCE_FORCE_MULTIPLIER)
+            : 1);
+    sourceThought.forces.y -= (sourceThought.held ? 0 : (dy / centerDistance) * force)
+        * (NODE_MASS_ON
+            ? Math.min(Math.max(targetThought.radius / sourceThought.radius, MIN_MASS_DIFFERENCE_FORCE_MULTIPLIER), MAX_MASS_DIFFERENCE_FORCE_MULTIPLIER)
+            : 1);
+    targetThought.forces.x += (targetThought.held ? 0 : (dx / centerDistance) * force)
+        * (NODE_MASS_ON
+            ? Math.min(Math.max(sourceThought.radius / targetThought.radius, MIN_MASS_DIFFERENCE_FORCE_MULTIPLIER), MAX_MASS_DIFFERENCE_FORCE_MULTIPLIER)
+            : 1);
+    targetThought.forces.y += (targetThought.held ? 0 : (dy / centerDistance) * force)
+        * (NODE_MASS_ON
+            ? Math.min(Math.max(sourceThought.radius / targetThought.radius, MIN_MASS_DIFFERENCE_FORCE_MULTIPLIER), MAX_MASS_DIFFERENCE_FORCE_MULTIPLIER)
+            : 1);
 }
 
 const handleOutOfBounds = (thought: RenderedThought) => {

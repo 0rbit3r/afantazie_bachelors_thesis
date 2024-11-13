@@ -70,7 +70,7 @@ function UserAndSettings() {
         const getThoughtsCount = async () => {
             const response = await getTotalThoughtsCount();
             if (response.ok) {
-                console.log(response.data);
+                // console.log(response.data);
                 setThoughtsCount(response.data!);
             }
             else {
@@ -123,7 +123,9 @@ function UserAndSettings() {
         }
     }
 
-    function handleaxThoughtsChange(e: ChangeEvent<HTMLInputElement>): void {
+    function handleMaxThoughtsChange(e: ChangeEvent<HTMLInputElement>): void {
+
+        console.log(e.target.value);
         const number = parseInt(e.target.value)
             ? parseInt(e.target.value)
             : 0;
@@ -169,7 +171,7 @@ function UserAndSettings() {
 
             <p>
                 <label className='settings-label'>{Localization.MaxThoughtsLabel}</label><br />
-                <input className='max-thoughts-input' type='number' value={maxThoughtsInput} onChange={e => handleaxThoughtsChange(e)}></input><br />
+                <input className='max-thoughts-input' type='number' value={maxThoughtsInput} onChange={e => handleMaxThoughtsChange(e)}></input><br />
                 <label>{Localization.MaxThoughtsHint}</label><br/>
                 <label>{Localization.CurrentNumberOfThoughtsLabel} {thoughtsCount}</label>
             </p>

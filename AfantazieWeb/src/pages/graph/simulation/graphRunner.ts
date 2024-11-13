@@ -1,8 +1,9 @@
 import { Application } from 'pixi.js';
 import { pull_and_push } from './pullAndPush';
 import { initGraphics } from '../view/GraphGraphics';
-import { SIMULATION_FRAMES } from '../model/graphParameters';
+import { SIMULATION_FRAMES, THOUGHTS_CACHE_FRAME } from '../model/graphParameters';
 import { useGraphStore } from '../GraphStore';
+import { ThoughtPositionCache } from '../model/thoughtPositionCache';
 
 export default function runGraph(
     app: Application) {
@@ -11,17 +12,44 @@ export default function runGraph(
         useGraphStore.getState().setFrame(1);
     };
 
-    const renderedThoughts = useGraphStore.getState().renderedThoughts; //after dynamic loading this might need to move to ticker.
+    const allRenderedThoughts = useGraphStore.getState().allRenderedThoughts; //after dynamic loading this might need to move to ticker.
 
-    const renderGraph = initGraphics(app, renderedThoughts, thoughtGrabbed);
+    // console.log(allRenderedThoughts);
+
+    const renderGraph = initGraphics(app, allRenderedThoughts, thoughtGrabbed);
 
     useGraphStore.getState().setFrame(0);
 
     app.ticker.add((_) => {
+        
+        // cache thoughts
+        if (useGraphStore.getState().frame === THOUGHTS_CACHE_FRAME){
+            // console.log('caching thoughts positions');
+            localStorage.removeItem('thoughts-cache');
+            // console.log(useGraphStore.getState().allRenderedThoughts);
+
+            localStorage.setItem('thoughts-cache',
+                JSON.stringify(useGraphStore.getState()
+                    .allRenderedThoughts.map<ThoughtPositionCache>(t => ({
+                        id: t.id,
+                        position: t.position,
+                    }))));
+        }
+
         // handle zoom input from user
         const zoomingControl = useGraphStore.getState().zoomingControl;
         if (zoomingControl !== 0) {
             useGraphStore.getState().viewport.zoomByButtonDelta(zoomingControl);
+        }
+        // handle TimeShift  control input from user
+        const timeShiftControl = useGraphStore.getState().timeShiftControl;
+        const timeShift = useGraphStore.getState().timeShift; 
+        const maxThoughtsOnScreen = useGraphStore.getState().maxThoughtsOnScreen;
+
+        if ((timeShiftControl > 0 && timeShift < allRenderedThoughts.length)
+              || (timeShiftControl < 0 && timeShift > -maxThoughtsOnScreen)) { //todo check the one
+            useGraphStore.getState().setTimeShift(timeShift + timeShiftControl); //todo move this in store
+            useGraphStore.getState().setFrame(1);
         }
 
         //move the viewport to the highlighted thought

@@ -6,6 +6,7 @@ import { thoughtDto } from '../../api/dto/ThoughtDto';
 import { BASE_RADIUS, INITIAL_POSITIONS_RADIUS, SIM_HEIGHT, SIM_WIDTH } from './model/graphParameters';
 import { useGraphStore } from './GraphStore';
 import { computeSize } from './simulation/simpleSizeComputer';
+import { ThoughtPositionCache } from './model/thoughtPositionCache';
 
 interface GraphRendererProps {
   Thoughts: thoughtDto[];
@@ -15,13 +16,18 @@ interface GraphRendererProps {
 const GraphContainer = (props: GraphRendererProps) => {
   let pixiApp = useApp();
   const setHighlightedThoughtId = useGraphStore(state => state.setHighlightedThoughtId);
-  const setRenderedThoughts = useGraphStore(state => state.setRenderedThoughts);
-  const renderedThoughts = useGraphStore(state => state.renderedThoughts);
+  const setAllRenderedThoughts = useGraphStore(state => state.setAllRenderedThoughts);
+  const allRenderedThoughts = useGraphStore(state => state.allRenderedThoughts);
 
   useEffect(() => {
     if (props.Thoughts.length === 0) {
       return;
     }
+
+    const storage = localStorage.getItem('thoughts-cache');
+    // console.log(storage);
+
+    const cachedPositions: ThoughtPositionCache[] = storage ? JSON.parse(storage) : [];
 
     const newThoughts = props.Thoughts.map<RenderedThought>(t =>
     ({
@@ -34,27 +40,37 @@ const GraphContainer = (props: GraphRendererProps) => {
 
     computeSize(newThoughts);
 
+    //set position either by cache or by initial positions circle
     let angle = 0;
     newThoughts.forEach(thought => {
       if (props.initialHighlightedThoughtId === thought.id) {
         thought.highlighted = true;
       }
 
-      thought.position.x = SIM_WIDTH / 2 + Math.cos(angle) * INITIAL_POSITIONS_RADIUS;
-      thought.position.y = SIM_HEIGHT / 2 + Math.sin(angle) * INITIAL_POSITIONS_RADIUS;
-      angle += Math.PI * 2 / props.Thoughts.length;
+      const cached = cachedPositions.find(c => c.id === thought.id);
+      if (cached) {
+        thought.position = cached.position;
+      }
+      else {
+        thought.position.x = SIM_WIDTH / 2 + Math.cos(angle) * INITIAL_POSITIONS_RADIUS;
+        thought.position.y = SIM_HEIGHT / 2 + Math.sin(angle) * INITIAL_POSITIONS_RADIUS;
+      }
+      angle += Math.PI * 2 / newThoughts.length;
     });
 
-    setRenderedThoughts(newThoughts);
+    setAllRenderedThoughts(newThoughts);
     if (props.initialHighlightedThoughtId !== 0) {
       setHighlightedThoughtId(props.initialHighlightedThoughtId);
     }
   }, [props.Thoughts]);
 
   useEffect(() => {
+    if (allRenderedThoughts.length === 0) {
+      return;
+    }
     pixiApp.stage.removeChildren();
     runGraph(pixiApp);
-  }, [renderedThoughts]);
+  }, [allRenderedThoughts]);
 
   return (
     <></>

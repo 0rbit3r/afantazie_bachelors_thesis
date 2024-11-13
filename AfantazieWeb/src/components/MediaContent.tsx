@@ -1,4 +1,4 @@
-import AudioPlayer from "../components/AudioPlayer";
+import AudioPlayer from "./AudioPlayer";
 
 interface MediaContentProps {
     id: number;
@@ -19,6 +19,7 @@ export const MediaContent = (props: MediaContentProps) => {
                     {props.id === 78 && <video src={`${CONTENT_FOLDER}/data_did_backflip.mp4`} autoPlay={true} controls={true} style={{ maxWidth: "500px" }}></video>}
                     {props.id === 80 && <AudioPlayer path={`${CONTENT_FOLDER}/2.wav`}></AudioPlayer>}
                     {props.id === 244 && <AudioPlayer path={`${CONTENT_FOLDER}/BendzaM.wav`}></AudioPlayer>}
+                    {props.id === 310 && <AudioPlayer path={`${CONTENT_FOLDER}/Downward_jam.wav`}></AudioPlayer>}
                 </>
             }
         </>

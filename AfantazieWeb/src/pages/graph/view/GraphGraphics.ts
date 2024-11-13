@@ -1,11 +1,12 @@
 import { Application, Color, Container, Graphics, Text, TextStyle } from "pixi.js";
 import { ARROW_Z, NODES_Z, TEXT_Z } from "./zIndexes";
-import { BASE_RADIUS, SIM_HEIGHT, SIM_WIDTH, ZOOM_TEXT_VISIBLE_THRESHOLD } from "../model/graphParameters";
+import { BASE_RADIUS, SIM_HEIGHT, SIM_WIDTH } from "../model/graphParameters";
 import { RenderedThought } from "../model/renderedThought";
 import { addDraggableViewport } from "./ViewportInitializer";
 import { XAndY } from "../model/xAndY";
 import tinycolor from "tinycolor2";
 import { useGraphStore } from "../GraphStore";
+import { getThoughtsInTimeWindow } from "../model/temporalThoughtsProvider";
 
 
 const DRAG_TIME_THRESHOLD = 200;
@@ -109,14 +110,21 @@ export const initGraphics = (
         textContainer.addChild(text);
     });
 
-    let lastZoom = 1;
+    // let lastZoom = 1;                                    BIG TODO BIG TODO BIG TODO BIG TODO BIG TODO - UNCOMMENT THIS
     const renderGraph = () => {
+
+        const thoughtsInCurrentTimeWindow = getThoughtsInTimeWindow();
+
         const graphStore = useGraphStore.getState();
         nodeContainer.clear();
-        // graphStore.viewport.onHighlightChange(); // TODO: this is attrocious. idellay this would only be called when the stage changes
+        nodeContainer.children.forEach(child => {
+            if (child instanceof Graphics) {
+                child.clear();
+            }
+        });
 
         // nodes
-        renderedThoughts.forEach(thought => {
+        thoughtsInCurrentTimeWindow.forEach(thought => {
 
             // draw node
             const circle = thought.graphics as Graphics;
@@ -137,32 +145,32 @@ export const initGraphics = (
             circle.drawCircle(circleCoors.x, circleCoors.y, graphStore.viewport.zoom * thought.radius + 10);
             circle.endFill();
 
-            const text = thought.text as Text;
-            if (graphStore.viewport.zoom > ZOOM_TEXT_VISIBLE_THRESHOLD) {
+            // const text = thought.text as Text; UNCOMMENT BIG TODO ABOVE AND BELLOW
+            // if (graphStore.viewport.zoom > ZOOM_TEXT_VISIBLE_THRESHOLD) {
 
-                const textCoors = graphStore.viewport.toViewportCoordinates({
-                    x: thought.position.x,
-                    y: thought.position.y + thought.radius + 5
-                });
-                textCoors.x -= text.width / 2;
-                text.x = textCoors.x;
-                text.y = textCoors.y;
+            //     const textCoors = graphStore.viewport.toViewportCoordinates({
+            //         x: thought.position.x,
+            //         y: thought.position.y + thought.radius + 5
+            //     });
+            //     textCoors.x -= text.width / 2;
+            //     text.x = textCoors.x;
+            //     text.y = textCoors.y;
 
-                if (lastZoom <= ZOOM_TEXT_VISIBLE_THRESHOLD) {
-                    textContainer.addChild(text);
-                }
-            }
-            else if (lastZoom > ZOOM_TEXT_VISIBLE_THRESHOLD) {
-                textContainer.removeChild(text);
-            }
+            //     if (lastZoom <= ZOOM_TEXT_VISIBLE_THRESHOLD) {
+            //         textContainer.addChild(text);
+            //     }
+            // }
+            // else if (lastZoom > ZOOM_TEXT_VISIBLE_THRESHOLD) {
+            //     textContainer.removeChild(text);
+            // }
         });
 
         // edges
-        renderedThoughts.forEach(thought => {
+        thoughtsInCurrentTimeWindow.forEach(thought => {
             const highlightedThought = useGraphStore.getState().highlightedThought;
             
             thought.links.forEach(referencedThoughtId => {
-                const referencedThought = renderedThoughts.filter(t => t.id == referencedThoughtId)[0];
+                const referencedThought = thoughtsInCurrentTimeWindow.filter(t => t.id == referencedThoughtId)[0];
                 // handle dynamic edge appearance based on highlighted thought
                 if (referencedThought) {
                     const arrowColor = highlightedThought === null
@@ -199,7 +207,7 @@ export const initGraphics = (
             SIM_HEIGHT * graphStore.viewport.zoom
 
         );
-        lastZoom = graphStore.viewport.zoom;
+        // lastZoom = graphStore.viewport.zoom;   BIG TODO BIG TODO BIG TODO BIG TODO BIG TODO - UNCOMMENT THIS 
     };
 
     renderGraph();

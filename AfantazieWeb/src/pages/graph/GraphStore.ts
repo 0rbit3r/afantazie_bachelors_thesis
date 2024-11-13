@@ -3,8 +3,8 @@ import { Viewport } from './model/Viewport';
 import { RenderedThought } from './model/renderedThought';
 
 interface GraphStore {
-    renderedThoughts: RenderedThought[];
-    setRenderedThoughts: (thoughts: RenderedThought[]) => void;
+    allRenderedThoughts: RenderedThought[];
+    setAllRenderedThoughts: (thoughts: RenderedThought[]) => void;
 
     viewport: Viewport;
     setViewport: (viewport: Viewport) => void;
@@ -21,20 +21,29 @@ interface GraphStore {
 
     frame: number;
     setFrame: (frame: number) => void;
+
+    timeShiftControl: number;
+    setTimeShiftControl: (timeShift: number) => void;
+
+    timeShift: number;
+    setTimeShift: (timeShift: number) => void;
+
+    maxThoughtsOnScreen: number;
+    setMaxThoughtsOnScreen: (value: number) => void;
 }
 
 export const useGraphStore = create<GraphStore>((set, get) => ({
-    renderedThoughts: [],
-    setRenderedThoughts: (thoughts: RenderedThought[]) => set({ renderedThoughts: thoughts }),
+    allRenderedThoughts: [],
+    setAllRenderedThoughts: (thoughts: RenderedThought[]) => set({ allRenderedThoughts: thoughts }),
 
     viewport: new Viewport(0, 0),
     setViewport: (viewport: Viewport) => set({ viewport }),
     lockedOnHighlighted: false,
     freeLockOnHighlighted: () => set({ lockedOnHighlighted: false }),
-    
+
     zoomingControl: 0,
     setZoomingControl: (value: number) => set({ zoomingControl: value }),
-    
+
     highlightedThought: null,
     setHighlightedThoughtId: (id) => {
         const currentlyhighlighted = get().highlightedThought;
@@ -44,18 +53,38 @@ export const useGraphStore = create<GraphStore>((set, get) => ({
             set({ highlightedThought: null });
             return;
         }
-        const thought = get().renderedThoughts.find((thought) => thought.id === id);
+        const thought = get().allRenderedThoughts.find((thought) => thought.id === id);
         set({ highlightedThought: thought || null });
-        if (thought !== null && thought !== undefined){
+        if (thought !== null && thought !== undefined) {
             thought.highlighted = true;
             set({ lockedOnHighlighted: true });
+
+            //handle time shift on highlight
+            const allRenderedThoughts = get().allRenderedThoughts;
+            const newUnboundedTimeShift = allRenderedThoughts.length - 1 - allRenderedThoughts.indexOf(thought) - Math.floor(get().maxThoughtsOnScreen / 2);
+            const newTimeshift = newUnboundedTimeShift < 0
+                ? 0
+                : newUnboundedTimeShift > get().allRenderedThoughts.length - get().maxThoughtsOnScreen
+                    ? get().allRenderedThoughts.length - get().maxThoughtsOnScreen
+                    : newUnboundedTimeShift;
+            set({ timeShift: newTimeshift });
         }
     },
     setHighlightedThought: (thought: RenderedThought) => {
         const currentlyhighlighted = get().highlightedThought;
         if (currentlyhighlighted !== null)
             currentlyhighlighted.highlighted = false;
-        
+
+        // //handle time shift on highlight
+        // const allRenderedThoughts = get().allRenderedThoughts;
+        // const newUnboundedTimeShift = allRenderedThoughts.length - 1 - allRenderedThoughts.indexOf(thought) - Math.floor(get().maxThoughtsOnScreen / 2);
+        // const newTimeshift = newUnboundedTimeShift < 0
+        //     ? 0
+        //     : newUnboundedTimeShift > get().allRenderedThoughts.length - get().maxThoughtsOnScreen
+        //         ? get().allRenderedThoughts.length - get().maxThoughtsOnScreen
+        //         : newUnboundedTimeShift;
+        // set({ timeShift: newTimeshift });
+
         set({ highlightedThought: thought });
         set({ lockedOnHighlighted: true });
         thought.highlighted = true;
@@ -70,4 +99,12 @@ export const useGraphStore = create<GraphStore>((set, get) => ({
 
     frame: 0,
     setFrame: (frame) => set({ frame }),
+
+    timeShiftControl: 0,
+    setTimeShiftControl: (timeShiftControl) => set({ timeShiftControl }),
+    timeShift: 0,
+    setTimeShift: (timeShift) => set({ timeShift }),
+
+    maxThoughtsOnScreen: 200,
+    setMaxThoughtsOnScreen: (value) => set({ maxThoughtsOnScreen: value }),
 }));

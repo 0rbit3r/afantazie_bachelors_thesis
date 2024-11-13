@@ -46,6 +46,6 @@
     "MaxThoughtsLabel": "Maximální počet vykreslených myšlenek:",
     "ClickHere": "<- klikni sem",
     "MaxThoughtsValidation": "Maximální počet myšlenek musí být alespoň 10",
-    "MaxThoughtsHint": "Pokud se ti graf seká, zmenšení tohoto čísla pomůže. Pokud máš výkonnější stroj, můžeš číslo zvětšit. Budou se ti zobrazovat vždy jen nejnovější myšlenky v rámci limitu. Výchozí hodnota je 300.",
+    "MaxThoughtsHint": "Pokud se ti graf seká, zmenšení tohoto čísla pomůže. Pokud máš výkonnější stroj, můžeš číslo zvětšit.",
     "CurrentNumberOfThoughtsLabel": "Současný počet myšlenek na Afantázii: "
 }
