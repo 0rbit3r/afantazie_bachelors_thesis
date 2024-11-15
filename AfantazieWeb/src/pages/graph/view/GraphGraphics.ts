@@ -135,6 +135,21 @@ export const initGraphics = (
             circle.drawCircle(circleCoors.x, circleCoors.y, graphStore.viewport.zoom * thought.radius);
             circle.endFill();
 
+            // muffins!
+            // if (thought.id == 318 || thought.id == 1) {
+            //     (async () => {
+            //         const muffinSvg = await Assets.load(import.meta.env.VITE_PUBLIC_FOLDER + '/icons/muffin.svg');
+            //         const muffinTexture = new Sprite(muffinSvg as Texture);;
+            //         muffinTexture.width = (thought.radius * 2) * viewport.zoom;
+            //         muffinTexture.height = (thought.radius * 2) * viewport.zoom;
+            //         muffinTexture.position.set((circleCoors.x - muffinTexture.width/2), (circleCoors.y - muffinTexture.height/2));  
+            //         muffinTexture.interactive = false;
+
+            //         circle.removeChildren();
+            //         circle.addChild(muffinTexture);
+            //     })();
+            // }
+
             if (thought.highlighted) {
                 circle.lineStyle(6, "#ffffff", 0.4);
                 circle.drawCircle(circleCoors.x, circleCoors.y, graphStore.viewport.zoom * thought.radius + 6);
@@ -168,7 +183,7 @@ export const initGraphics = (
         // edges
         thoughtsInCurrentTimeWindow.forEach(thought => {
             const highlightedThought = useGraphStore.getState().highlightedThought;
-            
+
             thought.links.forEach(referencedThoughtId => {
                 const referencedThought = thoughtsInCurrentTimeWindow.filter(t => t.id == referencedThoughtId)[0];
                 // handle dynamic edge appearance based on highlighted thought

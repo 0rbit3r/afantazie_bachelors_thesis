@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { Viewport } from './model/Viewport';
 import { RenderedThought } from './model/renderedThought';
+import { MAX_THOUGHTS_ON_SCREEN_FOR_LOGGED_OUT } from './model/graphParameters';
 
 interface GraphStore {
     allRenderedThoughts: RenderedThought[];
@@ -105,6 +106,6 @@ export const useGraphStore = create<GraphStore>((set, get) => ({
     timeShift: 0,
     setTimeShift: (timeShift) => set({ timeShift }),
 
-    maxThoughtsOnScreen: 200,
+    maxThoughtsOnScreen: MAX_THOUGHTS_ON_SCREEN_FOR_LOGGED_OUT,
     setMaxThoughtsOnScreen: (value) => set({ maxThoughtsOnScreen: value }),
 }));

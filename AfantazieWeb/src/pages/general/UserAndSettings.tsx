@@ -1,45 +1,29 @@
-// User.tsx
+
 import { ChangeEvent, useEffect, useState } from 'react';
 import { getUserSettings, postUserSettings } from '../../api/UserSettingsApiClient';
 import { Localization } from '../../locales/localization';
 import { getTotalThoughtsCount } from '../../api/graphClient';
 
 const colors = [
-    // First Set
-    "#5DADE2", // Light Blue
-    "#58D68D", // Soft Green
-    "#F7DC6F", // Golden Yellow
-    "#A569BD", // Muted Purple
-    "#F1948A", // Pale Red
-    "#85C1E9", // Sky Blue
-    "#73C6B6", // Light Turquoise
-    "#82E0AA", // Mint Green
-    "#F8C471", // Peach
-    "#D7BDE2", // Lavender
+"#85E085","#FFDD99","#BB8FCE","#FFB6C1","#ADD8E6","#D5DBDB","#7DCEA0","#F39C12","#DC7633","#8E44AD","#52BE80","#E59866","#D35400","#EB984E","#85C1C2",
+"#D7DBDD","#5DADE2","#58D68D","#F7DC6F","#A569BD","#F1948A","#85C1E9","#73C6B6","#82E0AA","#F8C471","#3498DB","#28B463","#F1C40F","#9B59B6",
+"#E74C3C","#7FB3D5","#48C9B0","#45B39D","#F5B041","#C39BD3","#1F618D","#1D8348","#B7950B","#633974","#922B21","#2874A6","#148F77","#117A65","#B9770E","#6C3483",
+"#76D7C4","#F8A488","#F9E79F","#F5CBA7","#E6B0AA","#D7BDE2","#A9CCE3","#A3E4D7","#AED6F1","#F7C6C7","#FFDAB9","#E3F2FD","#FFAA85","#B3E5FC",
+"#FFDDC1","#FFF176","#FFAB91","#CFD8DC","#FFE082","#F48FB1","#B2EBF2","#EC407A","#BA68C8","#FF7043","#7986CB","#FFD54F","#81C784","#A1887F",
+"#64B5F6","#E57373","#FFB74D","#4FC3F7","#AED581","#9575CD","#FF8A65","#4DD0E1","#81D4FA","#C5E1A5","#FFEB3B","#D1C4E9","#FFCCBC","#FFECB3","#C5CAE9",
+"#BBDEFB","#B2DFDB","#FFCDD2","#FFE0B2","#C8E6C9","#FFF9C4",
+// thanks chatGPT
 
-    // Second Set (Diverse Brightness/Saturation)
-    "#3498DB", // Rich Blue
-    "#28B463", // Bright Green
-    "#F1C40F", // Golden Yellow
-    "#9B59B6", // Deep Purple
-    "#E74C3C", // Bright Red
-    "#7FB3D5", // Lighter Sky Blue
-    "#48C9B0", // Turquoise
-    "#45B39D", // Emerald Green
-    "#F5B041", // Orange
-    "#C39BD3", // Soft Lavender
-
-    // Third Set (Darker & Muted Tones)
-    "#1F618D", // Dark Blue
-    "#1D8348", // Dark Green
-    "#B7950B", // Olive Yellow
-    "#633974", // Deep Purple
-    "#922B21", // Burgundy Red
-    "#2874A6", // Steel Blue
-    "#148F77", // Teal
-    "#117A65", // Forest Green
-    "#B9770E", // Brownish Orange
-    "#6C3483"  // Dark Purple
+'#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+'#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+'#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+'#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+'#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
+'#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+'#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
+'#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+'#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
+'#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF' //thanks https://gist.github.com/mucar/3898821
 ];
 
 
@@ -50,7 +34,7 @@ function UserAndSettings() {
     const [ColorValidationMessage, setColorValidationMessage] = useState<string | null>(null);
     const [maxThoughtsValidationMessage, setMaxThoughtsValidationMessage] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
-    const [maxThoughtsInput, setMaxThoughtsInput] = useState<number>(0);
+    const [maxThoughtsInput, setMaxThoughtsInput] = useState<string | undefined>(undefined);
     const [thoughtsCount, setThoughtsCount] = useState<number>(0);
 
     useEffect(() => {
@@ -58,7 +42,7 @@ function UserAndSettings() {
             const response = await getUserSettings();
             if (response.ok) {
                 setSelectedColor(response.data?.color!);
-                setMaxThoughtsInput(response.data?.maxThoughts!);
+                setMaxThoughtsInput(response.data?.maxThoughts!.toString());
                 setUsername(response.data?.username!)
             }
             else {
@@ -70,7 +54,7 @@ function UserAndSettings() {
         const getThoughtsCount = async () => {
             const response = await getTotalThoughtsCount();
             if (response.ok) {
-                // console.log(response.data);
+                
                 setThoughtsCount(response.data!);
             }
             else {
@@ -96,7 +80,11 @@ function UserAndSettings() {
     async function saveSettings() {
         setColorValidationMessage(null);
         setSuccessMessage(null);
-        var result = await postUserSettings({ color: selectedColor, username: username, maxThoughts: maxThoughtsInput });
+        if (maxThoughtsInput === undefined) {
+            setMaxThoughtsValidationMessage(Localization.MaxThoughtsValidation);
+            return;
+        }
+        var result = await postUserSettings({ color: selectedColor, username: username, maxThoughts: parseInt(maxThoughtsInput) });
         if (result.ok) {
             setSuccessMessage(Localization.SettingsSaved);
         }
@@ -130,7 +118,7 @@ function UserAndSettings() {
             ? parseInt(e.target.value)
             : 0;
 
-        setMaxThoughtsInput(number);
+        setMaxThoughtsInput(e.target.value);
 
         if (number < 10) {
             setColorValidationMessage(Localization.MaxThoughtsValidation);
@@ -153,7 +141,7 @@ function UserAndSettings() {
             >{username}</span><span> {Localization.ClickHere}</span>
             {isPickerOpen && (
                 <div className="color-picker-overlay" onClick={closeColorPicker}>
-                    <div className="color-picker-popup" onClick={(e) => e.stopPropagation()}>
+                    <div className="color-picker-popup" onClick={closeColorPicker}>
                         {colors.map((color, index) => (
                             <div
                                 key={index}

@@ -3,11 +3,12 @@
 
     .color-picker-overlay {
         position: fixed;
-        top: 20vh;
-        right: 15vw;
-        left: 15vw;
+        top: 0vh;
+        right: 0vw;
+        left: 0vw;
+        bottom: 0vh;
         background-color: #000000;
-        border: 2px solid var(--accent-color-2);
+        /* border: 2px solid var(--accent-color-2); */
         border-radius: 5px;
         display: flex;
         justify-content: center;
@@ -20,7 +21,7 @@
     }
 
     .color-picker-popup {
-        padding: 20px;
+        padding: 5px;
         border-radius: 8px;
         display: flex;
         flex-wrap: wrap;

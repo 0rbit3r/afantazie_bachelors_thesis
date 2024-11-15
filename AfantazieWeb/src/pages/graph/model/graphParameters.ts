@@ -1,3 +1,5 @@
+export const MAX_THOUGHTS_ON_SCREEN_FOR_LOGGED_OUT = 200;
+
 // simulation container
 export const SIM_WIDTH = 20000;
 export const SIM_HEIGHT = 20000;
@@ -10,14 +12,14 @@ export const FRAMES_WITH_OVERLAP = 0;
 export const THOUGHTS_CACHE_FRAME = 2000;
 
 // size and positions of nodes
-export const BASE_RADIUS = 19;
+export const BASE_RADIUS = 50;
 export const REFERENCE_RADIUS_MULTIPLIER = 1.5;
-export const MAX_RADIUS = 400;
+export const MAX_RADIUS = 800;
 
 export const INITIAL_POSITIONS_RADIUS = MAX_RADIUS * 1.1;
 
 // edges and forces simulation
-export const IDEAL_LINKED_DISTANCE = 100;
+export const IDEAL_LINKED_DISTANCE = 250;
 export const EDGE_COMPRESSIBILITY_FACTOR = 3;
 export const MAX_PULL_FORCE = 200;
 
