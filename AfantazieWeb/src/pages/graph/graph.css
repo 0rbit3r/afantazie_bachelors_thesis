@@ -101,11 +101,6 @@
   align-items: center;
 }
 
-
-.green-text {
-  color: var(--primary-color);
-}
-
 .graph-ui-button{
   padding: 0;
   background-color: transparent;

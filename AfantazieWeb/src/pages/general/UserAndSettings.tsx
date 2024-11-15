@@ -36,6 +36,7 @@ function UserAndSettings() {
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [maxThoughtsInput, setMaxThoughtsInput] = useState<string | undefined>(undefined);
     const [thoughtsCount, setThoughtsCount] = useState<number>(0);
+    const [savedPositionsNumber, setSavedPositionsNumber] = useState<number>(0);
 
     useEffect(() => {
         const getSettings = async () => {
@@ -62,6 +63,8 @@ function UserAndSettings() {
             }
         }
         getThoughtsCount();
+
+        setSavedPositionsNumber(localStorage.getItem('thoughts-cache') ? JSON.parse(localStorage.getItem('thoughts-cache')!).length : 0); //todo magic string
     }, []);
 
     function handlePaletteColorChoice(index: number) {
@@ -128,9 +131,15 @@ function UserAndSettings() {
         }
     }
 
+    function handleDeleteThoughtsPositionsButtonClick() {
+        localStorage.removeItem('thoughts-cache'); //todo magic string
+        setSuccessMessage(Localization.ThoughtsPositionsDeleted);
+    }
+
     return (
         <div className="content-container settings-container" style={{ padding: '20px', borderRadius: '8px', border: '1px solid #ccc' }}>
             <h1>{Localization.UserSettings}</h1>
+            <button className='button-primary' disabled={ColorValidationMessage !== null} onClick={saveSettings}>{Localization.SaveSettingsButton}</button> <br />
             {ColorValidationMessage && <pre className='red-text'>{ColorValidationMessage}</pre>}
             {maxThoughtsValidationMessage && <pre className='red-text'>{maxThoughtsValidationMessage}</pre>}
             {successMessage && <pre className='green-text'>{successMessage}</pre>}
@@ -138,7 +147,7 @@ function UserAndSettings() {
             <label className='settings-label'>{Localization.ColorLabel} </label>
             <span className='username' style={{ color: selectedColor }}
                 onClick={openColorPicker}
-            >{username}</span><span> {Localization.ClickHere}</span>
+            >{username}</span><span className='settings-hint'> {Localization.ClickHere}</span>
             {isPickerOpen && (
                 <div className="color-picker-overlay" onClick={closeColorPicker}>
                     <div className="color-picker-popup" onClick={closeColorPicker}>
@@ -160,12 +169,15 @@ function UserAndSettings() {
             <p>
                 <label className='settings-label'>{Localization.MaxThoughtsLabel}</label><br />
                 <input className='max-thoughts-input' type='number' value={maxThoughtsInput} onChange={e => handleMaxThoughtsChange(e)}></input><br />
-                <label>{Localization.MaxThoughtsHint}</label><br/>
-                <label>{Localization.CurrentNumberOfThoughtsLabel} {thoughtsCount}</label>
+                <label className='settings-hint'>{Localization.MaxThoughtsHint}</label><br/>
+                <label className='settings-hint'>{Localization.CurrentNumberOfThoughtsLabel} <b>{thoughtsCount}</b></label>
             </p>
 
             <hr/>
-            <button className='button-primary' disabled={ColorValidationMessage !== null} onClick={saveSettings}>{Localization.SaveButton}</button> <br />
+            <button className='button-secondary settings-button' onClick={handleDeleteThoughtsPositionsButtonClick}>{Localization.DeleteThoughtsPositions}</button><br />
+            <label className='settings-hint'>{Localization.DeleteThoughtsPositionsHint}</label> <br/>
+            <label className='settings-hint'>{Localization.CurrentlySavedThoughtsLabel} <b>{savedPositionsNumber}</b></label>
+            <hr/>
 
             <button className='button-secondary' onClick={logOut}>{Localization.LogoutButton}</button>
         </div>

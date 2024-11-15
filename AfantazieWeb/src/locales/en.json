@@ -33,7 +33,7 @@
     "UserSettings": "User Settings",
     "WhatsThisAbout": "What's this about?",
     "ColorLabel": "Color:",
-    "SaveButton": "Save",
+    "SaveSettingsButton": "Save Settings",
     "LogoutButton": "Log out",
     "Replies": "Replies",
     "ReplyButton": "Reply",
@@ -47,5 +47,9 @@
     "ClickHere": "<- click here",
     "MaxThoughtsValidation": "Maximum thoughts must be at least 10",
     "MaxThoughtsHint": "TODO",
-    "CurrentNumberOfThoughtsLabel": "Current number of thoughts on Thought Web: "
+    "CurrentNumberOfThoughtsLabel": "Current number of thoughts on Thought Web: ",
+    "DeleteThoughtsPositions": "Delete thoughts positions",
+    "DeleteThoughtsPositionsHint": "This will delete all thoughts positions and they will be recalculated on next load",
+    "ThoughtsPositionsDeleted": "Positions deleted",
+    "CurrentlySavedThoughtsLabel": "Current number of saved positions: "
 }

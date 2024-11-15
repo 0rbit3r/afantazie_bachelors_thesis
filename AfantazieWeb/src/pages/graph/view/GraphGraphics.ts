@@ -1,6 +1,6 @@
-import { Application, Color, Container, Graphics, Text, TextStyle } from "pixi.js";
+import { Application, Color, Container, Graphics } from "pixi.js";
 import { ARROW_Z, NODES_Z, TEXT_Z } from "./zIndexes";
-import { BASE_RADIUS, SIM_HEIGHT, SIM_WIDTH } from "../model/graphParameters";
+import { BASE_EDGE_ALPHA, BASE_EDGE_WIDTH, HIGHLIGHTED_EDGE_ALPHA, HIGHLIGHTED_EDGE_WIDTH, SIM_HEIGHT, SIM_WIDTH, UNHIGHLIGHTED_EDGE_ALPHA, UNHIGHLIGHTED_EDGE_WIDTH } from "../model/graphParameters";
 import { RenderedThought } from "../model/renderedThought";
 import { addDraggableViewport } from "./ViewportInitializer";
 import { XAndY } from "../model/xAndY";
@@ -87,27 +87,27 @@ export const initGraphics = (
 
         nodeContainer.addChild(circle);
 
-        const style = new TextStyle({
-            breakWords: false,
-            wordWrap: true,
-            fontFamily: 'Arial',
-            fontSize: 13,
-            fontWeight: 'bold',
-            fill: 'white',
-            wordWrapWidth: thought.radius * 4,
-            stroke: "#000000",
-            strokeThickness: 3,
-            // dropShadow: true,
-            // dropShadowDistance: 2,
-        });
+        // const style = new TextStyle({
+        //     breakWords: false,
+        //     wordWrap: true,
+        //     fontFamily: 'Arial',
+        //     fontSize: 13,
+        //     fontWeight: 'bold',
+        //     fill: 'white',
+        //     wordWrapWidth: thought.radius * 4,
+        //     stroke: "#000000",
+        //     strokeThickness: 3,
+        //     // dropShadow: true,
+        //     // dropShadowDistance: 2,
+        // });
 
-        const text = new Text(thought.title, style);
-        text.zIndex = TEXT_Z;
-        text.x = thought.position.x - text.width / 2;
-        text.y = thought.position.y - text.height / 2 + text.height / 2 + BASE_RADIUS + 5;
-        thought.text = text;
+        // const text = new Text(thought.title, style);
+        // text.zIndex = TEXT_Z;
+        // text.x = thought.position.x - text.width / 2;
+        // text.y = thought.position.y - text.height / 2 + text.height / 2 + BASE_RADIUS + 5;
+        // thought.text = text;
 
-        textContainer.addChild(text);
+        // textContainer.addChild(text);
     });
 
     // let lastZoom = 1;                                    BIG TODO BIG TODO BIG TODO BIG TODO BIG TODO - UNCOMMENT THIS
@@ -188,21 +188,22 @@ export const initGraphics = (
                 const referencedThought = thoughtsInCurrentTimeWindow.filter(t => t.id == referencedThoughtId)[0];
                 // handle dynamic edge appearance based on highlighted thought
                 if (referencedThought) {
-                    const arrowColor = highlightedThought === null
-                        ? referencedThought.color
-                        : highlightedThought === thought || highlightedThought === referencedThought
-                            ? tinycolor(referencedThought.color).lighten(5).toString()
-                            : tinycolor(referencedThought.color).darken(10).toString();
+                    // const arrowColor = highlightedThought === null
+                    //     ? referencedThought.color
+                    //     : highlightedThought === thought || highlightedThought === referencedThought
+                    //         ? tinycolor(referencedThought.color).lighten(5).toString()
+                    //         : tinycolor(referencedThought.color).darken(10).toString();
+                    const arrowColor = referencedThought.color;
                     const arrowThickness = highlightedThought === null
-                        ? 4
+                        ? BASE_EDGE_WIDTH
                         : highlightedThought === thought || highlightedThought === referencedThought
-                            ? 5
-                            : 3;
+                            ? HIGHLIGHTED_EDGE_WIDTH
+                            : UNHIGHLIGHTED_EDGE_WIDTH;
                     const arrowAlpha = highlightedThought === null
-                        ? 0.8
+                        ? BASE_EDGE_ALPHA
                         : highlightedThought === thought || highlightedThought === referencedThought
-                            ? 1
-                            : 0.6;
+                            ? HIGHLIGHTED_EDGE_ALPHA
+                            : UNHIGHLIGHTED_EDGE_ALPHA;
                     draw_edge(
                         nodeContainer,
                         graphStore.viewport.toViewportCoordinates({ x: referencedThought.position.x, y: referencedThought.position.y }),

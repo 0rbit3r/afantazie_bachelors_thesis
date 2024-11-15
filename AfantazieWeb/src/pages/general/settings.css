@@ -70,4 +70,26 @@
         outline-color: var(--primary-color);
         outline-style: solid;
     }
+
+    .settings-hint {
+        font-size: small;
+        color: #d0d0d0;
+        margin-left: 25px;
+    }
+
+    .settings-button {
+    font-size: medium;
+    background-color: var(--secondary-color);
+    }
+
+    .green-text {
+        color: var(--primary-color-lighter);
+        font-size: larger;
+        font-weight: bold;
+        border: 2px solid var(--primary-color);
+        padding: 3px;
+        text-align: center;
+        border-radius: 12px;
+      }
+      
 }

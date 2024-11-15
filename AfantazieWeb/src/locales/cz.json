@@ -33,7 +33,7 @@
     "UserSettings": "Účet a nastavení",
     "WhatsThisAbout": "O co tu jde?",
     "ColorLabel": "Barva:",
-    "SaveButton": "Uložit",
+    "SaveSettingsButton": "Uložit nastavení",
     "LogoutButton": "Odhlásit se",
     "Replies": "Odpovědi",
     "ReplyButton": "Odpovědět",
@@ -47,5 +47,9 @@
     "ClickHere": "<- klikni sem",
     "MaxThoughtsValidation": "Maximální počet myšlenek musí být alespoň 10",
     "MaxThoughtsHint": "Pokud se ti graf seká, zmenšení tohoto čísla pomůže. Pokud máš výkonnější stroj, můžeš číslo zvětšit.",
-    "CurrentNumberOfThoughtsLabel": "Současný počet myšlenek na Afantázii: "
+    "CurrentNumberOfThoughtsLabel": "Současný počet myšlenek na Afantázii: ",
+    "DeleteThoughtsPositions": "Smazat uložené pozice myšlenek",
+    "DeleteThoughtsPositionsHint": "Pozice myšlenek se průběžně ukládají v prohlížeči. Pokud je smažeš, graf se při příštím načtení bude muset znovu stabilizovat.",
+    "ThoughtsPositionsDeleted": "Pozice myšlenek byly vymazány",
+    "CurrentlySavedThoughtsLabel": "Současný počet uložených pozic: "
 }
