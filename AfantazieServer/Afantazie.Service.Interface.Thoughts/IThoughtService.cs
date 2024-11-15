@@ -10,7 +10,7 @@ namespace Afantazie.Service.Interface.Thoughts
         /// <summary>
         /// Gets last thoughts and limits them based on user - selected maximum thoughts.
         /// </summary>
-       Task<Result<List<Thought>>> GetLastThoughtsForUserAsync(int? userId);
+       Task<Result<List<Thought>>> GetAllThoughts();
        Task<Result<Thought>> GetThoughtByIdAsync(int id);
 
        Task<Result<int>> GetTotalThoughtCount();

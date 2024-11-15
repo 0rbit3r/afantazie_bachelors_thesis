@@ -17,7 +17,7 @@ namespace Afantazie.Data.Repository
 {
     public partial class UserAuthRepository(
         DataContextProvider _contextProvider,
-        IAuthValidationMessages _errorMessages
+        IAuthValidationMessages _errorMessages = null!
         ) : IUserAuthRepository
     {
         public async Task<Result<int>> VerifyLoginByEmail(string email, string password)

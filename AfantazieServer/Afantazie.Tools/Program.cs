@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Afantazie.Data.Repository;
 using Afantazie.Tools;
 using Microsoft.Extensions.Configuration;
+using Afantazie.Data.Interface.Repository;
 
 var services = new ServiceCollection();
 

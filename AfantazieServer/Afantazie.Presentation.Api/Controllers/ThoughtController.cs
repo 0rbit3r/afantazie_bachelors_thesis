@@ -32,7 +32,7 @@ namespace Afantazie.Presentation.Api.Controllers
         public async Task<ActionResult<List<ThoughtDto>>> GetEntireGraph()
         {
 
-            var response = await _thoughtService.GetLastThoughtsForUserAsync(UserId);
+            var response = await _thoughtService.GetAllThoughts();
 
             if (!response.IsSuccess)
             {
@@ -58,7 +58,7 @@ namespace Afantazie.Presentation.Api.Controllers
         [HttpGet("titles")]
         public async Task<ActionResult<List<ThoughtTitleDto>>> GetThoughtTitles()
         {
-            var response = await _thoughtService.GetLastThoughtsForUserAsync(UserId);
+            var response = await _thoughtService.GetAllThoughts();
 
             if (!response.IsSuccess)
             {

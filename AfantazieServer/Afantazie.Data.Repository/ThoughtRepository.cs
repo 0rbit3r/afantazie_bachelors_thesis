@@ -46,7 +46,7 @@ namespace Afantazie.Data.Repository
             }
         }
 
-        public async Task<Result<List<Thought>>> GetLastThoughtsAsync(int count)
+        public async Task<Result<List<Thought>>> GetAllThoughts()
         {
             using (var db = _contextProvider.GetDataContext())
             {
@@ -67,7 +67,6 @@ namespace Afantazie.Data.Repository
                     .ToListAsync();
 
                 return thoughtsWithBoth
-                    .TakeLast(count)
                     .Adapt<List<Thought>>();
             }
         }

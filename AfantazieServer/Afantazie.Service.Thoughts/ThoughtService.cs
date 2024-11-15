@@ -29,15 +29,11 @@ namespace Afantazie.Service.Thoughts
                 : result.Error!;
         }
 
-        public async Task<Result<List<Thought>>> GetLastThoughtsForUserAsync(int? userId)
+        public async Task<Result<List<Thought>>> GetAllThoughts()
         {
             _logger.LogInformation("Requested thought graph.");
 
-            var takeLast = userId.HasValue
-                ? (await _userRepo.GetMaxThoughts(userId.Value)).Payload!
-                : Constants.DefaultMaximumThoughts;
-
-            return await _repo.GetLastThoughtsAsync(takeLast);
+            return await _repo.GetAllThoughts();
         }
 
         public Task<Result<Thought>> GetThoughtByIdAsync(int id)

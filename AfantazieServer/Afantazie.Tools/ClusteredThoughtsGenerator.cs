@@ -56,7 +56,7 @@ namespace Afantazie.Tools
             for (int i = 1; i < thoughtsNum + 1; i++)
             {
                 var userId = new Random().Next(1, usersNum + 1);
-                var refNum = i < 5 ? 0 : new Random().Next(1, 4);
+                var refNum = i < 5 ? 0 : 5;
 
                 var chosenClusterIndex = new Random().Next(0, clustersNum);
                 var references = new List<int>();
@@ -69,7 +69,10 @@ namespace Afantazie.Tools
                         if (chooseDifferentCluster)
                         {
                             var newChosenCluster = new Random().Next(0, clustersNum);
-                            var chosenThoughtIndex = new Random().Next(0, clusters[newChosenCluster].Count);
+                            var chosenThoughtIndex = new Random().Next(
+                                Math.Max(0, clusters[newChosenCluster].Count - 20), //dont go too far in history
+                                clusters[newChosenCluster].Count
+                                );
                             var chosenThoughtId = clusters[newChosenCluster][chosenThoughtIndex];
                             if (!references.Contains(chosenThoughtId))
                             {
@@ -78,11 +81,17 @@ namespace Afantazie.Tools
                         }
                         else
                         {
-                            var chosenThoughtIndex = new Random().Next(0, clusters[chosenClusterIndex].Count);
-                            var chosenThoughtId = clusters[chosenClusterIndex][chosenThoughtIndex];
-                            if (!references.Contains(chosenThoughtId))
+                            var chosenThoughtIndex = new Random().Next(
+                                Math.Max(0, clusters[chosenClusterIndex].Count - 20), //dont go too far in history
+                                clusters[chosenClusterIndex].Count
+                                );
+                            if (clusters[chosenClusterIndex].Count > 0)
                             {
-                                references.Add(chosenThoughtId);
+                                var chosenThoughtId = clusters[chosenClusterIndex][chosenThoughtIndex];
+                                if (!references.Contains(chosenThoughtId))
+                                {
+                                    references.Add(chosenThoughtId);
+                                } 
                             }
                         }
                     }
