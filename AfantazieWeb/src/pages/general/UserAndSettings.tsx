@@ -134,6 +134,7 @@ function UserAndSettings() {
     function handleDeleteThoughtsPositionsButtonClick() {
         localStorage.removeItem('thoughts-cache'); //todo magic string
         setSuccessMessage(Localization.ThoughtsPositionsDeleted);
+        setSavedPositionsNumber(0);
     }
 
     return (

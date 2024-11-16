@@ -1,7 +1,4 @@
 .overlay {
-  visibility: collapse;
-  height: 0;
-  /* todo.: figure out safari... and top+bottom urlbars. */
   background-color: rgba(0, 0, 0, 0.95);
   display: flex;
   justify-content: center;
@@ -12,8 +9,6 @@
   transition: all 0.3s ease-in-out;
 
   .text-scroll-container {
-    width: 90%;
-    height: 100%;
     overflow-y: auto;
 
     .text-flex-container {
@@ -35,7 +30,6 @@
   .thought-overlay-button-row {
     display: flex;
     justify-content: center;
-    width: 90%;
     margin: 0;
     button{
       margin-top: 5px;
@@ -51,7 +45,20 @@
   h3 {
     margin: 10px;
   }
+}
 
+.overlay-portrait {
+  visibility: collapse;
+
+  .text-scroll-container {
+    width: 90%;
+    height: 100%;
+  }
+
+  .thought-overlay-button-row {
+    width: 90%;
+  }
+  /* todo.: figure out safari... and top+bottom urlbars. */
 }
 
 .overlay-expanded-portrait {
@@ -66,16 +73,34 @@
   height: 86vh;
 }
 
-/* todo... */
-.overlay-expanded-landscape {
-  visibility: visible;
-  width: 100%;
-  height: 40vh;
+.overlay-landscape {
+  display: inline-block;
+  visibility: collapse;
+  width: 50%;
+  height: 80%;
+
+  .text-scroll-container {
+    /* width: 100%; */
+    margin: 25px;
+    margin-right: 80px;
+    height: 100%;
+  }
+
+  .thought-overlay-button-row {
+    width: 90%;
+  }
 }
 
-.overlay-fullscreen-landscape {
+/* todo... */
+.overlay-expanded-landscape {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 100%;
+  bottom: 100%;
   visibility: visible;
-  height: 86vh;
+  /* width: 100%; */
+  /* height: 40vh; */
 }
 
 .in-text-thought-ref {
@@ -141,8 +166,8 @@
 .time-shift-label {
   font-size: larger;
   position: absolute;
-  bottom: 60px;
-  left: 140px;
+  bottom: 120px;
+  left: 10px;
   color: var(--secondary-color-lighter);
 }
 

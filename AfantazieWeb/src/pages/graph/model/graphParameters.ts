@@ -18,9 +18,9 @@ export const MAX_RADIUS = 500;
 
 export const INITIAL_POSITIONS_RADIUS = MAX_RADIUS * 1.1;
 
-// edges and forces simulation
+// forces simulation
 export const IDEAL_LINKED_DISTANCE = 300;
-export const EDGE_COMPRESSIBILITY_FACTOR = 3;
+export const EDGE_COMPRESSIBILITY_FACTOR = 1;
 export const MAX_PULL_FORCE = 200;
 
 export const PUSH_THRESH = 3000;
@@ -33,13 +33,13 @@ export const MAX_MASS_DIFFERENCE_FORCE_MULTIPLIER = 1;
 export const MIN_MASS_DIFFERENCE_FORCE_MULTIPLIER = 0.1;
 
 //edges appearance
-export const BASE_EDGE_WIDTH = 4;
+export const BASE_EDGE_WIDTH = 9;
 export const BASE_EDGE_ALPHA = 0.8;
 
-export const HIGHLIGHTED_EDGE_WIDTH = 5;
+export const HIGHLIGHTED_EDGE_WIDTH = 14;
 export const HIGHLIGHTED_EDGE_ALPHA = 1;
 
-export const UNHIGHLIGHTED_EDGE_WIDTH = 3;
+export const UNHIGHLIGHTED_EDGE_WIDTH = 4;
 export const UNHIGHLIGHTED_EDGE_ALPHA = 0.6;
 
 

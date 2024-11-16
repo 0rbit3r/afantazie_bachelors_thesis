@@ -125,11 +125,17 @@ export const initGraphics = (
 
         // nodes
         thoughtsInCurrentTimeWindow.forEach(thought => {
+            
+            const circle = thought.graphics as Graphics;
+            circle.clear();
+
+            const circleCoors = graphStore.viewport.toViewportCoordinates({ x: thought.position.x, y: thought.position.y });
+            if (circleCoors.x < -thought.radius || circleCoors.x > graphStore.viewport.width + thought.radius
+                || circleCoors.y < -thought.radius || circleCoors.y > graphStore.viewport.height + thought.radius) {
+                return;
+            }
 
             // draw node
-            const circle = thought.graphics as Graphics;
-            const circleCoors = graphStore.viewport.toViewportCoordinates({ x: thought.position.x, y: thought.position.y });
-            circle.clear();
             circle.beginFill(thought.color, 1);
             circle.lineStyle(8 * graphStore.viewport.zoom, tinycolor(thought.color).lighten(15).toString(), 0.5);
             circle.drawCircle(circleCoors.x, circleCoors.y, graphStore.viewport.zoom * thought.radius);
@@ -247,7 +253,7 @@ const draw_edge = (
     const y2 = to.y;
 
     // Arrowhead properties
-    const arrowLength = 25 * zoom;
+    const arrowLength = 50 * zoom;
     const arrowAngle = Math.PI / 5;
 
     // Calculate the angle of the arrow line

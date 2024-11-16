@@ -51,5 +51,7 @@
     "DeleteThoughtsPositions": "Smazat uložené pozice myšlenek",
     "DeleteThoughtsPositionsHint": "Pozice myšlenek se průběžně ukládají v prohlížeči. Pokud je smažeš, graf se při příštím načtení bude muset znovu stabilizovat.",
     "ThoughtsPositionsDeleted": "Pozice myšlenek byly vymazány",
-    "CurrentlySavedThoughtsLabel": "Současný počet uložených pozic: "
+    "CurrentlySavedThoughtsLabel": "Současný počet uložených pozic: ",
+    "NoNotifications": "Žádné odpovědi. Napiš myšlenku a nějaké se tu objeví;-)",
+    "Notifications": "(ne)Notifikace"
 }

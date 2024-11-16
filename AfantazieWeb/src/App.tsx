@@ -11,6 +11,7 @@ import GraphPage from './pages/graph/GraphPage'
 import CreateThought from './pages/createThought/CreateThought'
 import { RealtimeStatsProvider } from './Contexts/RealtimeStatsContext'
 import ThoughtsList from './pages/thoughtsList/thoughtsList'
+import { NotificationsPage } from './pages/notifications/NotificationsPage'
 
 // const clearCache =  (): Promise<void> => {
 //   return new Promise((resolve) => {
@@ -44,6 +45,7 @@ function App() {
                   <Route path="/graph/:urlThoughtId" element={<GraphPage />} />
                   <Route path="/create-thought" element={<ProtectedRoute redirectPath='/login'><CreateThought /></ProtectedRoute>} />
                   <Route path='/list' element={<ThoughtsList />} />
+                  <Route path='/zvoneček' element={<ProtectedRoute redirectPath='/login'>< NotificationsPage/></ProtectedRoute> } />
                   <Route path="*" element={<div>404 :-(</div>} />
                 </Routes>
               </ScrollToTop>

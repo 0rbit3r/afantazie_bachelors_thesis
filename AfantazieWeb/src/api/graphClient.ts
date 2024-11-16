@@ -1,5 +1,6 @@
 import { API_URL, sendAndExpectBody } from "./ApiClient";
 import { apiResponseWithBody as ApiResponseWithBody } from "./dto/ApiResponse";
+import { NotificationDto } from "./dto/NotificationDto";
 import { createThoughtDto, thoughtDto, thoughtTitleDto } from "./dto/ThoughtDto";
 
 export async function fetchThoughts(): Promise<ApiResponseWithBody<thoughtDto[]>> {
@@ -59,6 +60,18 @@ export async function  getTotalThoughtsCount(): Promise<ApiResponseWithBody<numb
             'Content-Type': 'application/json',
         },
         // credentials: 'include'
+    });
+
+    return response;
+}
+
+export async function getNotifications(): Promise<ApiResponseWithBody<NotificationDto[]>> {
+    const response = await sendAndExpectBody<NotificationDto[]>(`${API_URL}/notifications`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
     });
 
     return response;

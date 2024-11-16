@@ -8,13 +8,13 @@ export default function ThoughtsList() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const getLogs = async () => {
+        const getThoughtList = async () => {
             const response = await fetchThoughtTitles();
             if (response.ok) {
                 setThoughtTitles(response.data!.reverse());
             }
         };
-        getLogs();
+        getThoughtList();
     }, []);
 
     return (

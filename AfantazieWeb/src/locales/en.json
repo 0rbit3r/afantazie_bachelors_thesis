@@ -51,5 +51,7 @@
     "DeleteThoughtsPositions": "Delete thoughts positions",
     "DeleteThoughtsPositionsHint": "This will delete all thoughts positions and they will be recalculated on next load",
     "ThoughtsPositionsDeleted": "Positions deleted",
-    "CurrentlySavedThoughtsLabel": "Current number of saved positions: "
+    "CurrentlySavedThoughtsLabel": "Current number of saved positions: ",
+    "NoNotifications": "No replies. Write a thought and some will appear here;-)",
+    "Notifications": "(no)Notifications"
 }

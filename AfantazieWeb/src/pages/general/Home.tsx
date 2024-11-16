@@ -31,6 +31,11 @@ function Home() {
                 </NavLink>
             </div>
             <div className="center">
+                <NavLink to="/zvoneček">
+                    <button className="button-secondary home-action-button">{Localization.Notifications}</button>
+                </NavLink>
+            </div>
+            <div className="center">
                 <NavLink to="/user">
                     <button className="button-secondary home-action-button">{Localization.UserSettings}</button>
                 </NavLink>

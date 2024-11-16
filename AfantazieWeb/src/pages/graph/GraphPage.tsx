@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Stage } from '@pixi/react';
 import { thoughtDto } from '../../api/dto/ThoughtDto';
 import { fetchThoughts } from '../../api/graphClient';
@@ -6,9 +6,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { LocationState } from '../../interfaces/LocationState';
 import { useGraphStore } from './GraphStore';
 import GraphContainer from './GraphContainer';
-import { MediaContent } from '../../components/MediaContent';
 import { Localization } from '../../locales/localization';
 import { getUserSettings } from '../../api/UserSettingsApiClient';
+import { MediaContent } from '../../components/MediaContent';
 
 const COLOR_BACKGROUND = 0x020304;
 
@@ -36,7 +36,7 @@ const GraphPage: React.FC = () => {
     // controls
     const [zoomingHeld, setZoomingHeld] = useState(0);
     const setZoomingControl = useGraphStore((state) => state.setZoomingControl);
-    
+
     const highlightedThought = useGraphStore((state) => state.highlightedThought);
     const setHighlightedThoughtId = useGraphStore((state) => state.setHighlightedThoughtId);
     const unsetHighlightedThought = useGraphStore((state) => state.unsetHighlightedThought);
@@ -46,6 +46,8 @@ const GraphPage: React.FC = () => {
     const setTimeShiftControl = useGraphStore((state) => state.setTimeShiftControl);
 
     const setMaxThoughtsOnScreen = useGraphStore((state) => state.setMaxThoughtsOnScreen);
+
+    const scrollContainer = useRef<HTMLDivElement>(null);
 
     // Fetch thoughts from the server
     useEffect(() => {
@@ -81,8 +83,14 @@ const GraphPage: React.FC = () => {
         }
         window.history.pushState(null, '', `/graph/${highlightedThought.id}`);
         //set stage size half open
-        setStageSize({ width: initialStageSize.width, height: Math.floor(initialStageSize.height / 2) });
+        if (landscapeMode)
+            setStageSize({ width: Math.floor(initialStageSize.width / 2), height: initialStageSize.height });
+        else
+            setStageSize({ width: initialStageSize.width, height: Math.floor(initialStageSize.height / 2) });
         setOverlayVisible(true);
+        if (scrollContainer.current) {
+            scrollContainer.current.scrollTop = 0;
+        }
     }, [highlightedThought]);
 
     // zooming effect
@@ -100,7 +108,10 @@ const GraphPage: React.FC = () => {
         if (fullscreenPreview) {
             setFullscreenPreview(false);
             //set stage size half open
-            setStageSize({ width: initialStageSize.width, height: Math.floor(initialStageSize.height / 2) });
+            if (landscapeMode)
+                setStageSize({ width: Math.floor(initialStageSize.width / 2), height: initialStageSize.height });
+            else
+                setStageSize({ width: initialStageSize.width, height: Math.floor(initialStageSize.height / 2) });
         }
         else {
             unsetHighlightedThought();
@@ -134,19 +145,19 @@ const GraphPage: React.FC = () => {
     return (
         <>
             <div className={
-                `overlay ${overlayVisible &&
+                `overlay ${landscapeMode ? 'overlay-landscape' : 'overlay-portrait'} ${overlayVisible &&
                     highlightedThought !== null
-                        ? fullscreenPreview
-                            ? landscapeMode 
-                                ? 'overlay-fullscreen-landscape'
-                                : 'overlay-fullscreen-portrait '
-                            : landscapeMode
+                    ? fullscreenPreview
+                        ? landscapeMode
+                            ? 'overlay-fullscreen-landscape'
+                            : 'overlay-fullscreen-portrait '
+                        : landscapeMode
                             ? 'overlay-expanded-landscape'
                             : 'overlay-expanded-portrait'
-                        : ''}` //todo: this does nothing atm
-                        }>
+                    : ''}` //todo: this does nothing atm
+            }>
                 {overlayVisible && highlightedThought !== null &&
-                    <div className='text-scroll-container'>
+                    <div className='text-scroll-container' ref={scrollContainer}>
                         <div className='text-flex-container'>
                             <h2>{highlightedThought?.title}</h2>
                             <h3>{highlightedThought.author} - {highlightedThought.dateCreated}</h3>
@@ -177,7 +188,7 @@ const GraphPage: React.FC = () => {
                         </div>
                     </>}
                 <p className='thought-overlay-button-row'>
-                    <button className='button-secondary' onClick={handleUpButtonOverlay}>▲</button>
+                    <button className='button-secondary' onClick={handleUpButtonOverlay}>{landscapeMode && 'X' || '▲'}</button>
                     <button
                         className='button-primary'
                         onClick={() => {
@@ -188,7 +199,8 @@ const GraphPage: React.FC = () => {
                         }}>
                         {Localization.ReplyButton}
                     </button>
-                    {!fullscreenPreview && <button className='button-secondary' onClick={handleDownButtonOverlay}>▼</button>}
+
+                    {!fullscreenPreview && !landscapeMode && <button className='button-secondary' onClick={handleDownButtonOverlay}>▼</button>}
                 </p>
             </div>
 
@@ -201,13 +213,13 @@ I suspect it might be because of different references to viewport? (second initi
                     </Stage>
 
                     {timeShift && <div className='time-shift-label'>{-timeShift}</div> || <div className='time-shift-label'>0</div> //todo - why is timeshift undefined when zero?
-                    } 
+                    }
                     <button className='graph-ui-button rewind-button'
                         onPointerDown={_ => setTimeShiftControl(1)} onPointerUp={_ => setTimeShiftControl(0)} onPointerLeave={_ => setTimeShiftControl(0)} onPointerOut={_ => setTimeShiftControl(0)}>
                         {timeShiftControl != 1 && <img draggable='false' src={PUBLIC_FOLDER + '/icons/rewind.svg'}></img>}
                     </button>
-                    
-                    <button className='graph-ui-button play-forward-button' 
+
+                    <button className='graph-ui-button play-forward-button'
                         onPointerDown={_ => setTimeShiftControl(-1)} onPointerUp={_ => setTimeShiftControl(0)} onPointerLeave={_ => setTimeShiftControl(0)} onPointerOut={_ => setTimeShiftControl(0)}>
                         {timeShiftControl != -1 && <img draggable='false' src={PUBLIC_FOLDER + '/icons/play-forward.svg'}></img>}
                     </button>
