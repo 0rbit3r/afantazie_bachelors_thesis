@@ -31,8 +31,14 @@
     overflow: hidden;
 }
 
-.navbar-expanded {
+.navbar-long-expanded {
     height: 500px;
+    width: 66px;
+    align-items: center;
+}
+
+.navbar-short-expanded {
+    height: 250px;
     width: 66px;
     align-items: center;
 }

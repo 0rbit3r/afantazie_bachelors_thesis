@@ -7,17 +7,15 @@ function Welcome() {
     return (
         <div className="content-container home-container">
             <h1>{Localization.Title}</h1>
+            <h2 className="quip">{Localization.Quips[Math.floor(Math.random() * Localization.Quips.length)]}</h2>
             <div className="hero">
                 {/* <div>
                     <img className="map" src="map.png" alt="mapa" />
                 </div>
                     <div>Online: {onlineUsers}</div> */}
                 <ThoughtLogViewer></ThoughtLogViewer>
-                <div className="hero-text">
-                    <p>
-                        {Localization.HeroText}
-                    </p>
-                </div>
+                {/* <div className="hero-text">
+                </div> */}
             </div>
             {/* <Rules></Rules> */}
             <div className="center">

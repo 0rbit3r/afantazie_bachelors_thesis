@@ -4,6 +4,7 @@ interface AuthContextType {
   token: string | null;
   setAccessToken: (token: string) => void;
   logout: () => void;
+  isAuthenticated: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,8 +28,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     localStorage.removeItem('token');
   };
 
+  const isAuthenticated = token !== null;
+
   return (
-    <AuthContext.Provider value={{ token, setAccessToken, logout }}>
+    <AuthContext.Provider value={{ token, setAccessToken, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );

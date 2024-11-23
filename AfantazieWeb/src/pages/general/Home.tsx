@@ -11,14 +11,15 @@ function Home() {
     return (
         <div className="content-container home-container">
             <h1>{Localization.Title}</h1>
-            <h2>{message}</h2>
+
+            <h2 className="quip">{Localization.Quips[Math.floor(Math.random() * Localization.Quips.length)]}</h2>
+            <p className="center">
+                {message}
+            </p>
             <div className="hero">
                 <ThoughtLogViewer></ThoughtLogViewer>
-                <div className="hero-text">
-                    <p>
-                        {Localization.HeroText}
-                    </p>
-                </div>
+                {/* <div className="hero-text">
+                </div> */}
             </div>
             <div className="center">
                 <NavLink to="/graph">

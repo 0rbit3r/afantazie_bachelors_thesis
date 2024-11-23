@@ -1,7 +1,7 @@
 {
     "Title": "Thought Web",
     "WelcomeBack": "Welcome back!",
-    "HeroText": "Let's graph together!",
+    "Quips": ["Let's graph together!"],
     "LoginTitle": "Log in",
     "NameOrEmail": "Username or email",
     "Name": "Username",

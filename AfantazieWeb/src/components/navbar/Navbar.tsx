@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
+import { useAuth } from '../../Contexts/AuthContext';
 
 function Navbar() {
 
     const [expanded, setExpanded] = useState(false);
 
+    const {isAuthenticated} = useAuth();
 
     useEffect(() => {
         if (window.innerWidth > 500) {
@@ -25,7 +27,11 @@ function Navbar() {
     };
 
     return (
-        <div className={`navbar ${expanded ? 'navbar-expanded' : ''}`}>
+        <div className={`navbar ${expanded 
+        ? isAuthenticated
+            ? 'navbar-long-expanded'
+            : 'navbar-short-expanded'
+        : ''}`}>
             <div className='menu-button navbar-icon' onClick={handleExpansion}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -53,6 +59,8 @@ function Navbar() {
                             <path d="M15.408 6.51199L8.59436 10.4866M15.408 17.488L8.59436 13.5134" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                         </g></svg>
                 </NavLink>
+                {isAuthenticated && (
+                    <>
                 <NavLink to="/chat" onClick={handleClick} className={({ isActive }) =>
                     isActive ? 'navbar-icon-active' : 'navbar-icon'}>
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="0.00024000000000000003" width="52" height="52">
@@ -89,6 +97,7 @@ function Navbar() {
 
 
                 </NavLink>
+                </>)}
                 <NavLink to="/about" onClick={handleClick} className={({ isActive }) =>
                     isActive ? 'navbar-icon-active' : 'navbar-icon'}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
