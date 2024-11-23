@@ -51,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Afantazie.Service.Interface
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Afantazie.Tools", "Afantazie.Tools\Afantazie.Tools.csproj", "{0057D5B5-E18E-431D-9B1D-D43AD4962D4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Afantazie.Core.Constants", "Afantazie.Core.Constants\Afantazie.Core.Constants.csproj", "{53161634-35B7-407C-9091-21742F53520F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Afantazie.Core.Constants", "Afantazie.Core.Constants\Afantazie.Core.Constants.csproj", "{53161634-35B7-407C-9091-21742F53520F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

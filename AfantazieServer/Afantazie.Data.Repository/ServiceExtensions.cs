@@ -18,6 +18,7 @@ namespace Afantazie.Data.Repository
             services.AddScoped<DataContextProvider>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IThoughtRepository, ThoughtRepository>();
+            services.AddScoped<INotificationsRepository, NotificationsRepository>();
         }
     }
 }

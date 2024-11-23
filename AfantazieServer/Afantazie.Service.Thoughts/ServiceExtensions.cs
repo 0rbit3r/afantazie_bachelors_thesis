@@ -13,6 +13,7 @@ namespace Afantazie.Service.Thoughts
         public static void AddThoughtsModule(this IServiceCollection services)
         {
             services.AddScoped<IThoughtService, ThoughtService>();
+            services.AddScoped<INotificationService, NotificationService>();
         }
     }
 }
