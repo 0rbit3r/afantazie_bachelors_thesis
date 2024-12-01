@@ -20,6 +20,7 @@ export const MediaContent = (props: MediaContentProps) => {
                     {props.id === 80 && <AudioPlayer path={`${CONTENT_FOLDER}/2.wav`}></AudioPlayer>}
                     {props.id === 244 && <AudioPlayer path={`${CONTENT_FOLDER}/BendzaM.wav`}></AudioPlayer>}
                     {props.id === 310 && <AudioPlayer path={`${CONTENT_FOLDER}/Downward_jam.wav`}></AudioPlayer>}
+                    {props.id === 537 && <AudioPlayer path={`${CONTENT_FOLDER}/Growls.wav`}></AudioPlayer>}
                 </>
             }
         </>
