@@ -14,9 +14,9 @@ using System.Threading.Tasks;
 
 namespace Afantazie.Data.Repository
 {
-    internal class ThoughtRepository(
+    internal partial class ThoughtRepository(
         DataContextProvider _contextProvider
-        ): IThoughtRepository
+        ) : IThoughtRepository
     {
         public async Task<Result<Thought>> GetThoughtById(int id)
         {
@@ -38,7 +38,7 @@ namespace Afantazie.Data.Repository
             }
         }
 
-        public async Task<Result<int>> GetTotalThoughtsCount()
+        public async Task<Result<int>> GetTotalThoughtsCountAsync()
         {
             using (var db = _contextProvider.GetDataContext())
             {
@@ -50,16 +50,6 @@ namespace Afantazie.Data.Repository
         {
             using (var db = _contextProvider.GetDataContext())
             {
-                //var thoughtsAsIs = await db.Thoughts.ToListAsync();
-
-                //var thoughtsWithLinks = await db.Thoughts
-                //    .Include(t => t.Links).ToListAsync();
-
-                //var thoughtsWithBackLinks = await db.Thoughts
-                //    .Include(t => t.Backlinks).ToListAsync();
-
-                //TODO - granular controle over what to include
-
                 var thoughtsWithBoth = await db.Thoughts
                     .Include(t => t.Links)
                     .Include(t => t.Backlinks)
@@ -76,7 +66,7 @@ namespace Afantazie.Data.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<Result<int>> InserertThoughtAsync(
+        public async Task<Result<int>> InsertThoughtAsync(
             string title, string content, int authorId, IEnumerable<int> references)
         {
             using (var db = _contextProvider.GetDataContext())
@@ -121,6 +111,119 @@ namespace Afantazie.Data.Repository
 
                 return thoughtsWithBoth
                     .Adapt<List<Thought>>();
+            }
+        }
+
+        public async Task<Result<List<Thought>>> TakeBeforeId(int amount, int id)
+        {
+            // validations
+            if (amount < 0)
+            {
+                return Error.Validation("Amount must be a positive integer.");
+            }
+            if (id < 0)
+            {
+                return Error.Validation("Id must be a positive integer.");
+            }
+
+            // get the thoughts
+            using (var db = _contextProvider.GetDataContext())
+            {
+                var list = await db.Thoughts
+                    .OrderBy(t => t.Id)
+                    .Include(t => t.Author)
+                    .Include(t => t.Links)
+                    .Include(t => t.Backlinks)
+                    .Where(t => t.Id < id)
+                    .Where(t => t.Id >= id - amount)
+                    .ToListAsync();
+                    
+
+                return (list.Take(amount)).Adapt<List<Thought>>();
+            }
+        }
+
+        public async Task<Result<List<Thought>>> TakeAfterId(int amount, int id)
+        {
+            // validations
+            if (amount < 0)
+            {
+                return Error.Validation("Amount must be a positive integer.");
+            }
+            if (id < 0)
+            {
+                return Error.Validation("Id must be a positive integer.");
+            }
+
+            // get the thoughts
+            using (var db = _contextProvider.GetDataContext())
+            {
+                var list = await db.Thoughts
+                    .OrderBy(t => t.Id)
+                    .Include(t => t.Author)
+                    .Include(t => t.Links)
+                    .Include(t => t.Backlinks)
+                    .Where(t => t.Id > id)
+                    .Where(t => t.Id <= id + amount)
+                    .ToListAsync();
+
+                return (list.Take(amount)).Adapt<List<Thought>>();
+            }
+        }
+
+        public async Task<Result<List<Thought>>> TakeAroundId(int amount, int thoughtId)
+        {
+            using (var db = _contextProvider.GetDataContext())
+            {
+                var list = await db.Thoughts
+                    .OrderBy(t => t.Id)
+                    .Include(t => t.Author)
+                    .Include(t => t.Links)
+                    .Include(t => t.Backlinks)
+                    .Where(t => t.Id >= thoughtId - amount / 2)
+                    .Where(t => t.Id < thoughtId + amount / 2)
+                    .ToListAsync();
+
+                return list.Adapt<List<Thought>>();
+            }
+        }
+
+        public async Task<Result<List<Thought>>> TakeLatest(int amount)
+        {
+            using (var db = _contextProvider.GetDataContext())
+            {
+                var thoughtsList = await db.Thoughts
+                    .Include(t => t.Author)
+                    .Include(t => t.Links)
+                    .Include(t => t.Backlinks)
+                    .OrderByDescending(t => t.DateCreated)
+                    .Take(amount)
+                    .ToListAsync();
+
+                thoughtsList.Reverse();
+
+                return thoughtsList.Adapt<List<Thought>>();
+            }
+        }
+
+        public async Task<Result<int>> BumpThoughtAsync(int targetId)
+        {
+            using (var db = _contextProvider.GetDataContext())
+            {
+                var thought = db.Thoughts
+                    .Where(t => t.Id == targetId)
+                    .SingleOrDefault();
+
+                if (thought is null)
+                {
+                    return Error.NotFound();
+                }
+
+                thought.SizeMultiplier++;
+
+                await db.SaveChangesAsync();
+
+                return thought.SizeMultiplier;
             }
         }
     }

@@ -9,5 +9,10 @@ namespace Afantazie.Core.Model.Results.Errors
     public abstract class ErrorWithMessage : Error
     {
         public abstract string Message { get; }
+
+        public override string ToString()
+        {
+            return Message;
+        }
     }
 }

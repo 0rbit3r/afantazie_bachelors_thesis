@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Afantazie.Presentation.Model.Dto.Thought
 {
-    public class ThoughtDto
+    public class FullThoughtDto
     {
         public int Id { get; set; }
 
@@ -23,5 +23,6 @@ namespace Afantazie.Presentation.Model.Dto.Thought
         public List<int> Links { get; set; } = new List<int>();
 
         public List<int> Backlinks { get; set; } = new List<int>();
+        public object Size { get; internal set; }
     }
 }

@@ -20,7 +20,8 @@ namespace Afantazie.Data.Model.Mapping
                 .Map(dest => dest.Content, src => src.Content)
                 .Map(dest => dest.DateCreated, src => src.DateCreated)
                 .Map(dest => dest.Color, src => src.Author.Color)
-                .Map(dest => dest.Title, src => src.Title);
+                .Map(dest => dest.Title, src => src.Title)
+                .Map(dest => dest.Size, src => src.SizeMultiplier); 
 
             // Map from Thought to ThoughtEntity
             TypeAdapterConfig<Thought, ThoughtEntity>.NewConfig()

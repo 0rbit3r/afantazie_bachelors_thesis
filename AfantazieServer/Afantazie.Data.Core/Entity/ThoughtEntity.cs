@@ -21,6 +21,8 @@ namespace Afantazie.Data.Model.Entity
 
         public UserEntity Author { get; set; } = null!; // todo rename to author...
 
+        public int SizeMultiplier { get; set; } = 0;
+
         public required string Content { get; set; }
 
         // Outgoing links (links from this Thought to others)

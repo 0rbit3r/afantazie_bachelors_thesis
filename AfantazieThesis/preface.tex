@@ -4,16 +4,17 @@
 \section*{Motivation}
 
 Every social network with userbase past a certain threshold will at some point face a problem.
-The problem is in essence a question of filtering.
-Questions like what should we show to our users, in what order or how often have to be answered at the very least by every big-tech company.
+This problem is in essence a question of filtering.
+Questions like what should we show to our users, in what order or how often have to be answered at the very least by every social network operating big-tech company.
+It can also arise with moderately big forums and communities online. 
 
-And the amount of data to consider can be vast.
+It does not help that the amount of data to consider can be vast.
 Meta-owned social apps for example, have over 3.29 billion daily active users as of september 2024 \cite{metaDau2024}.
 \xxx{TODO - naučit se citovat}
 When different tastes and preferences of the userbase are to be taken into account
 this problem becomes a very interesting software engineering challenge indeed.
 
-It's safe to say that all the big contemporary social networks (Facebook, Twitter (newly rebranded to X), Instagram, Reddit or TikTok)
+It is safe to say that all the big contemporary social networks (Facebook, Twitter (newly rebranded to X), Instagram, Reddit or TikTok)
 tackle this challenge in the same way.
 Commonly reffered to as "The algorithm",
 their solutions rely on machine learning to learn user preferences and maximize retention time.
@@ -23,27 +24,27 @@ with another tweet, picture or video just a scroll away.
 
 This approach while for sure effective at maximizing ad revenue and user retention has its downsides:
 \begin{itemize}
-  \item Users have little conscious control over the content they see. The algorithm decides for them based on nebulous criteria.
-  \item Echo chambers - the algorithm will show the user more of what they like and agree with making it easy to believe that
+  \item \textbf{Lack of autonomy} - Users have little conscious control over the content they see. The algorithm decides for them based on nebulous criteria.
+  \item \textbf{Echo chambers} - the algorithm will show the user more of what they like and agree with making it easy to believe that
   everyone thinks the same way.
-  \item The process of using the app can easily become addictive as each swipe is akin to pulling a lever on a slot machine.
+  \item \textbf{Addictive design} - The process of scrolling through an infinite-feed can easily become addictive as each swipe is akin to pulling a lever on a slot machine.
 \end{itemize}
-While subjective, I believe that these are common experiences of users of social networks.
+While subjective, we believe that these are common experiences of users of social networks.
 
 \section*{Afantázie}
 Afantázie is the implementation part and the final product of this thesis.
-It's a website (currently hosted on domain afantazie.cz)
-on which I'm going to attempt to give an alternative to how we interact with social networks.
+It is a website (with one instance currently accessible through domain afantazie.cz)
+on which we are going to attempt to give an alternative to how we interact with social networks.
 
-This alternative is a graph-based approach where
-users are presented with a graph of nodes representing posts and edges representing connections between them.
+This alternative is a graph-based approach.
+Users will be presented with a graph of nodes representing posts and edges representing connections between them.
 
 Now ideally user could log in and see the entirety of the content on the website.
-This is of course unfeasable not only from technical perspective but also because of limits of human perception.
+This is of course unfeasable not just from technical perspective but also because of limits of human perception.
 Our eyes and brains can only process so much information at once
 and rendering potentially billions of nodes is even bigger challenge than the aforementioned infinite feed approach.
 
-But I believe there is a way to make this idea work.
+But we believe there is a way to make this idea work.
 While seeing the entirety of the content is practically impossible,
 giving users the ability to see currently relevant content as a graph might be feasable.
 If we also add the ability to zoom and dynamically load more content related to the area of interest (ie. zoomed-in coordinates of the graph),
@@ -53,15 +54,15 @@ If implemented properly, this solution could solve the problems mentioned:
 \begin{itemize}
   \item Users would have more control over the content they see. They could zoom in on the parts of the graph they find interesting.
   \item Echo chambers could be mitigated by showing the user the graph-based context of the entire site.
-  \item While from the perspective of software makers, an addictive product is not a bad thing, it's not necessarily good for the users.
+  \item While from the perspective of software makers, an addictive product is not a bad thing, it is not necessarily good for the users.
     Graph-based interaction doesn't rely on addictive patterns and if in anyway adictive,
     the addictiveness would stem from exploring the content on users own terms.
 \end{itemize}
 
-\xxx{To wrap up this introduction, I'm going to present a picture TODO. It's the header of a news article called 72 Hours of Gamergate}
+\xxx{To wrap up this introduction, I'm going to present a picture TODO. It is the header of a news article called 72 Hours of Gamergate}
 
 The task ahead is going to require solving technical challenges regarding development and hosting of a public website
 as well as implementation and research about graph vizualization.
 
-I will start by presenting and comparing a few existing software products that provide graph visualization,
-then I will move to graph layout algorithms that make these visualizations possible and finally I will implement the website itself.
+We will start by presenting and comparing a few existing software products that provide graph visualization,
+then we will move to graph layout algorithms that make these visualizations possible and finally we will implement the website itself.

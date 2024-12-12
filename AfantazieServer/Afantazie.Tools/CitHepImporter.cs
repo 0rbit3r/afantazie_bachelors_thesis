@@ -90,7 +90,7 @@ namespace Afantazie.Tools
                     {
                         Console.WriteLine($"{i} / {nodes}");
                     }
-                    await thoughtRepo.InserertThoughtAsync(
+                    await thoughtRepo.InsertThoughtAsync(
                         $"{i}th thought", $"{i}th thought", i, references[i] ?? new List<int>());
                 }
 

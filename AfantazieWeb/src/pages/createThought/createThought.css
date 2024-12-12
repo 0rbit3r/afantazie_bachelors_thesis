@@ -4,7 +4,7 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    max-width: 600px;
+    min-height: 90vh;
     margin: auto;
 
     h1 {
@@ -45,7 +45,8 @@
             border: 0;
             border-radius: 5px;
             font-size: 1em;
-            height: 400px;
+            /* height: 400px; */
+            min-height: 200px;
             resize: none;
             text-align: left;
         }

@@ -4,38 +4,37 @@ import { initGraphics } from '../view/GraphGraphics';
 import { SIMULATION_FRAMES, THOUGHTS_CACHE_FRAME } from '../model/graphParameters';
 import { useGraphStore } from '../GraphStore';
 import { ThoughtPositionCache } from '../model/thoughtPositionCache';
+import { updateTemporalThoughts } from '../model/temporalThoughtsProvider';
 
-export default function runGraph(
-    app: Application) {
+export default function runGraph(app: Application) {
 
     const thoughtGrabbed = () => {
         useGraphStore.getState().setFrame(1);
     };
 
-    const allRenderedThoughts = useGraphStore.getState().allRenderedThoughts; //after dynamic loading this might need to move to ticker.
-
-    // console.log(allRenderedThoughts);
+    const allRenderedThoughts = useGraphStore.getState().temporalRenderedThoughts; //after dynamic loading this might need to move to ticker.
 
     const renderGraph = initGraphics(app, allRenderedThoughts, thoughtGrabbed);
 
     useGraphStore.getState().setFrame(0);
 
+    // main apploication loop
     app.ticker.add((_) => {
-        
         // cache thoughts
-        if (useGraphStore.getState().frame === THOUGHTS_CACHE_FRAME){
+        if (useGraphStore.getState().frame === THOUGHTS_CACHE_FRAME) {
             // console.log('caching thoughts positions');
             localStorage.removeItem('thoughts-cache');
             // console.log(useGraphStore.getState().allRenderedThoughts);
 
             localStorage.setItem('thoughts-cache',
                 JSON.stringify(useGraphStore.getState()
-                    .allRenderedThoughts.map<ThoughtPositionCache>(t => ({
+                    .temporalRenderedThoughts.map<ThoughtPositionCache>(t => ({
                         id: t.id,
                         position: t.position,
                     }))));
         }
 
+        
         // handle zoom input from user
         const zoomingControl = useGraphStore.getState().zoomingControl;
         if (zoomingControl !== 0) {
@@ -43,13 +42,19 @@ export default function runGraph(
         }
         // handle TimeShift  control input from user
         const timeShiftControl = useGraphStore.getState().timeShiftControl;
-        const timeShift = useGraphStore.getState().timeShift; 
+        const timeShift = useGraphStore.getState().timeShift;
         const maxThoughtsOnScreen = useGraphStore.getState().maxThoughtsOnScreen;
-
-        if ((timeShiftControl > 0 && timeShift < allRenderedThoughts.length)
-              || (timeShiftControl < 0 && timeShift > -maxThoughtsOnScreen)) { //todo check the one
+        
+        // if live preview - update temporal thoughts
+        if (useGraphStore.getState().timeShift <= 0 && useGraphStore.getState().frame > 1 && useGraphStore.getState().frame % 300 === 0) {
+            updateTemporalThoughts();
+        }
+        else if ((timeShiftControl > 0 && timeShift < useGraphStore.getState().temporalRenderedThoughts.length)
+            || (timeShiftControl < 0 && timeShift > -maxThoughtsOnScreen)) { //todo check the one
             useGraphStore.getState().setTimeShift(timeShift + timeShiftControl); //todo move this in store
             useGraphStore.getState().setFrame(1);
+
+            updateTemporalThoughts();
         }
 
         //move the viewport to the highlighted thought
@@ -62,7 +67,7 @@ export default function runGraph(
                 const dy = viewport.position.y + viewport.height / 2 / viewport.zoom - highlightedThought.position.y;
                 // console.log(dx, dy, lockedOnHighlighted);
                 if (Math.abs(dx) > 0.01 && Math.abs(dy) > 0.01) {
-                    useGraphStore.getState().viewport.moveBy({x: dx / 10, y: dy / 10});
+                    useGraphStore.getState().viewport.moveBy({ x: dx / 10, y: dy / 10 });
                 }
             }
         }
@@ -71,8 +76,8 @@ export default function runGraph(
         const frame = useGraphStore.getState().frame;
         if (frame < SIMULATION_FRAMES) {
             pull_and_push();
-            useGraphStore.getState().setFrame(frame + 1);
         }
+        useGraphStore.getState().setFrame(frame + 1);
 
         // render the graph
         renderGraph();

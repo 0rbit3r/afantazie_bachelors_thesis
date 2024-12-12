@@ -1,7 +1,7 @@
 {
   "name": "afantazie",
   "private": true,
-  "version": "0.0.172",
+  "version": "0.0.176",
   "type": "module",
   "scripts": {
     "dev": "vite",

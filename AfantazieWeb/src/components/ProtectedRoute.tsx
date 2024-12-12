@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { testAuth } from '../api/AuthApiClient';
 import Loader from './Loader';
+import { useAuth } from '../Contexts/AuthContext';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -10,6 +11,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children, redirectPath = '/welcome' }: ProtectedRouteProps) => {
   const [isAllowed, setIsAllowed] = React.useState<null | boolean>(null);
+  const authContext = useAuth();
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -19,6 +21,12 @@ const ProtectedRoute = ({ children, redirectPath = '/welcome' }: ProtectedRouteP
 
     checkAuth();
   }, []);
+
+  useEffect(() => {
+    if (isAllowed === false) {
+      authContext.logout();
+    }
+  }, [isAllowed]);
 
   if (isAllowed === null) {
     return <Loader/>; // Or any other loading state component

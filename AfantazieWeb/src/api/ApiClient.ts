@@ -19,7 +19,7 @@ async function sendAndExpectBody<T_Body>(url: string, options: RequestInit): Pro
         if (!response.ok) {
             return {
                 status: response.status,
-                error: data.error || 'Typescript mě nutí něco napsat, ale tady error určitě nebude...',
+                error: data.error,
                 ok: false
             };
         }

@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchThought, fetchThoughtTitles, postNewThought } from '../../api/graphClient';
-import { thoughtDto, thoughtTitleDto } from '../../api/dto/ThoughtDto';
+import { fullThoughtDto, thoughtColoredTitleDto } from '../../api/dto/ThoughtDto';
 import { LocationState } from '../../interfaces/LocationState';
 import { LocalizedCreateThoughtHint } from '../../locales/LocalizedCreateThoughtHint';
 import { Localization } from '../../locales/localization';
@@ -26,12 +26,12 @@ function CreateThought() {
     const [searchOverlayVisible, setSearchOverlayVisible] = useState(false);
     const [shakingThoughtIds, setShakingThoughtIds] = useState<number[]>([]);
 
-    const [thoughtTitles, setThoughtTitles] = useState<thoughtTitleDto[]>([]);
-    const [filteredThoughtTitles, setFilteredThoughtTitles] = useState<thoughtTitleDto[]>([]);
+    const [thoughtTitles, setThoughtTitles] = useState<thoughtColoredTitleDto[]>([]);
+    const [filteredThoughtTitles, setFilteredThoughtTitles] = useState<thoughtColoredTitleDto[]>([]);
     const [validThoughtReferences, setValidThoughtReferences] = useState<ThoughtReference[]>([]);
     const [notFoundThoughtIds, setNotFoundThoughtIds] = useState<number[]>([]);
     const [previewOverlayVisible, setPreviewOverlayVisible] = useState(false);
-    const [previewedThought, setPreviewedThought] = useState<thoughtDto | null>(null);
+    const [previewedThought, setPreviewedThought] = useState<fullThoughtDto | null>(null);
     const [createButtonEnabled, setCreateButtonEnabled] = useState(false);
 
     const [tutorialOverlayVisible, setTutorialOverlayVisible] = useState(false);

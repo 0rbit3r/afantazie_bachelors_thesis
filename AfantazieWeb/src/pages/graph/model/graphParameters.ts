@@ -13,8 +13,8 @@ export const THOUGHTS_CACHE_FRAME = 1000;
 
 // size and positions of nodes
 export const BASE_RADIUS = 50;
-export const REFERENCE_RADIUS_MULTIPLIER = 1.4;
-export const MAX_RADIUS = 500;
+export const REFERENCE_RADIUS_MULTIPLIER = 1.3;
+export const MAX_RADIUS = 700;
 
 export const INITIAL_POSITIONS_RADIUS = MAX_RADIUS * 1.1;
 

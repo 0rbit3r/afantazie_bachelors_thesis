@@ -13,8 +13,14 @@ namespace Afantazie.Data.Interface.Repository
 
         Task<Result<IEnumerable<Thought>>> GetThoughtsByOwner(int ownerId);
 
-        Task<Result<int>> InserertThoughtAsync(string title, string content, int authorId, IEnumerable<int> references);
+        Task<Result<int>> InsertThoughtAsync(string title, string content, int authorId, IEnumerable<int> references);
 
-        Task<Result<int>> GetTotalThoughtsCount();
+        Task<Result<int>> GetTotalThoughtsCountAsync();
+
+        Task<Result<List<Thought>>> TakeBeforeId(int amount, int id);
+        Task<Result<List<Thought>>> TakeAfterId(int amount, int thoughtId);
+        Task<Result<List<Thought>>> TakeAroundId(int amount, int thoughtId);
+        Task<Result<List<Thought>>> TakeLatest(int amount);
+        Task<Result<int>> BumpThoughtAsync(int targetId);
     }
 }

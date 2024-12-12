@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchThoughtTitles } from "../../api/graphClient";
-import { thoughtTitleDto } from "../../api/dto/ThoughtDto";
+import { thoughtColoredTitleDto } from "../../api/dto/ThoughtDto";
 
 export default function ThoughtsList() {
-    const [thoughtTitles, setThoughtTitles] = useState<thoughtTitleDto[]>([]);
+    const [thoughtTitles, setThoughtTitles] = useState<thoughtColoredTitleDto[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {

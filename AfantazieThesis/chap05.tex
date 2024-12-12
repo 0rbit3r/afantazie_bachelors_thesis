@@ -1,19 +1,69 @@
-\chapter{Documentation}
+\chapter{The completed application}
+In the grand scheme of a "real" social network Afantázie is quite lacking as it still missing a lot of obvious features.
+Namely at least:
+\begin{itemize}
+    \item Email verification 
+    \item Password reset
+    \item Streamlined UI and UX
+\end{itemize}
 
-\section{User documentation}
+Despite that we believe our efforts did pay off.
+The application does what we expected and more.
 
-\subsection{Navigating the small graph}
+\section{Features}
+Let us take a deeper look at the features the final application provides.
 
-\subsection{Navigating the big graph}
+\subsection{Graph walk}
+The neighborhood API endpoint mentioned above is used for a feature we call graph walk.
+It's a simple idea - user can click on a node and the graph will load the neighborhood of the node.
 
-\subsection{Creating a new post}
+This allows users to traverse the graph across associations and explore the data in a interactive way.
+This feature is of course limited by the size of the connected component user is currently in but the ability to "hop" between components is 
 
-\section{Developer documentation}
+\subsection{Realtime chat}
+The chat room implemented in the very first stage of development remained as an extra feature.
+While at this point chat is a completely separate feature from the graph, in the future it might be integrated into the graph more.
+For example by providing the ability to link thoughts in-chat.
 
-\subsection{Frontend}
 
-\subsection{Backend}
+\section{Usage}
+While not yet logged in users can acces the Landing page, the About page and the Graph page (in a slightly limited form) and of course the Login and registration pages.
 
-\subsection{Database}
+After logging in users gain further access to
+\begin{itemize}
+    \item User settings
+    \item Notifications
+    \item Chat
+\end{itemize}
 
-\subsection{Deployment}
+\subsection{Graph view}
+Graphs view provides several ways of exploration:
+\begin{itemize}
+    \item neighborhood of a highlighted thought
+    \item thoughts in similar timeframe
+    \item thoughts filtered by user-defined parameters such as author \xxx{or..?}
+\end{itemize}
+
+While we did discuss some of our graph view limits and quantitative parameters it is an interactive experience and as such is hard to describe without acknowleging it.
+Allow us then to have a few subjective claims.
+First, the pros:
+\begin{itemize}
+    \item The result is visualy pleasing, tactile and interactive in a very similar way to obsidians graph view, if not more
+    \item Performance-wise the graph runs fairly smoothly on all tested desktop and mobile devices (with the default 300 thoughts on screen limit)
+\end{itemize}
+And the cons:
+\begin{itemize}
+    \item 
+    \item 
+\end{itemize}
+
+
+
+\subsubsection*{Deviation from the original plan}
+We did deviate from our initial plan of rendering big graphs.
+In the beginnig we expected to implement a zoom-based dynamic loading and rendering.
+But we ended up with time-based and proximity-based approach (ie. Time slider and neighborhood).
+
+The reason behind this decision was mainly the ease of implementation.
+While the zoom-based technique still remains a valid possibility it is more complex and could prove to be a roadblock.
+The time slider also unexpectedly but naturaly emerged as a consequence of thoughts-on-screen-limit feature making a second way of handling big thoughts redundant time sink.

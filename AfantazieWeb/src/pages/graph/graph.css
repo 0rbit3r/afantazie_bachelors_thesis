@@ -104,8 +104,9 @@
 }
 
 .in-text-thought-ref {
-  color: var(--primary-color);
   cursor: pointer;
+  /* underline */
+  text-decoration: underline;
 }
 
 

@@ -1,7 +1,7 @@
 import { useGraphStore } from "../GraphStore";
 import { pullForce, linksNumberDivisor, pushForce, SIM_HEIGHT, SIM_WIDTH, PUSH_THRESH, MOMENTUM_DAMPENING_RATE, FRAMES_WITH_OVERLAP, SLOW_SIM_EVERY_N_FRAMES, NODE_MASS_ON, MAX_MASS_DIFFERENCE_FORCE_MULTIPLIER, MIN_MASS_DIFFERENCE_FORCE_MULTIPLIER } from "../model/graphParameters";
 import { RenderedThought } from "../model/renderedThought";
-import { getThoughtsInTimeWindow } from "../model/temporalThoughtsProvider";
+import { getThoughtsOnScreen } from "../model/temporalThoughtsProvider";
 
 export const get_border_distance = (thought1: RenderedThought, thought2: RenderedThought) => {
     const x1 = thought1.position.x;
@@ -26,14 +26,14 @@ const get_center_distance = (thought1: RenderedThought, thought2: RenderedThough
 }
 
 export const pull_and_push = () => {
-    const thoughts = getThoughtsInTimeWindow();
+    const onScreenThoughts = getThoughtsOnScreen();
 
-    for (let i = 0; i < thoughts.length; i++) {
-        const thought = thoughts[i];
+    for (let i = 0; i < onScreenThoughts.length; i++) {
+        const thought = onScreenThoughts[i];
         handleOutOfBounds(thought);
 
         for (let j = 0; j < i; j++) {
-            const otherThought = thoughts[j];
+            const otherThought = onScreenThoughts[j];
             if (thought.id > otherThought.id) { //This relies on the fact that thoughts can only reference older ones...
                 const borderDistance = get_border_distance(thought, otherThought);
 
@@ -47,7 +47,7 @@ export const pull_and_push = () => {
     }
 
     const frame = useGraphStore.getState().frame;
-    thoughts.forEach(thought => {
+    onScreenThoughts.forEach(thought => {
 
         if (Math.abs(thought.momentum.x) < Math.abs(thought.forces.x)) {
             thought.momentum.x = Math.abs(thought.momentum.x) * Math.sign(thought.forces.x);
@@ -114,6 +114,7 @@ export const push_unconnected = (sourceThought: RenderedThought, targetThought: 
     //     ? -borderDistance
     //     : pushForce(centerDistance);
     // const force = pushForce(centerDistance);
+    
     const force = useGraphStore.getState().frame > FRAMES_WITH_OVERLAP
         ? pushForce(borderDistance)
         : 0;

@@ -17,66 +17,61 @@ We are expecting to implement at least these following features:
   \item Graph filtering and search functionality
 \end{itemize}
 
-If we have the time we might look into also implementing:
-\begin{itemize}
-    \item Localization
-\end{itemize}
-
 \section{Technologies and architecture}
 
-Afantázie will be a web application and as such we will need to set up the standard trio of frontend (FE), backend (BE) and a database (DB).
-Next we will need to decide on the hosting and deployment strategy.
-And finally we have to decide on the graph rendering approach.
+Afantázie will be a publicly accessible web application and as such we will need to set up the following:
+\begin{itemize}
+  \item Frontend - a webpage serving an interactive graph and UI
+  \item Backend - for bussiness logic and data processing
+  \item Database - for persistence of data
+  \item Hosting - to make the website accessible
+\end{itemize}
 
-Let's start from the bottom end and choose a database.
-This is arguably the least critical decision as the data is not expected to be complex and the database can be easily swapped out later on.
-We will use PostgreSQL as it is one of the most popular database engines and is known for its reliability and performance.
+Let's start from the bottom with hosting.
+We will use a Virtual Private Server (VPS) from a hosting company Váš hosting.
+This will provide us with a linux server fully prepared for hosting including
+SSL certificates, domains, databases and a lot of tools to manage the server.
+
+For database will use PostgreSQL as it is one of the most popular database engines and is known for its reliability and performance.
 
 For the backend we will use ASP.NET Core with C\#.
-While the main reason for this decision is familiarity with the technology the .NET platform is regardles a good choice for building robust and scalable web APIs.
+While the main reason for this decision is familiarity with the technology the .NET platform is regardles a good choice as:
+\begin{itemize}
+    \item It is linux compatible
+    \item The provided Entity Framework library providesORM, complete Code-first solutions and makes it easy to replace database technology later on if needed.
+    \item It is just so good and sexy (cit. needed... statistics of usage by firms?) 
+\end{itemize}
 
-Frontend is where the most interesting decisions will be made. It makes a lot of sense to use a modern frontend jasascipt library.
+Frontend is where the most interesting decisions will be made. It makes a lot of sense to use a modern frontend javascipt library.
 We have experience with two - Angular and React.
 
 We will use React.js with Typescript. React is a popular frontend library and Typescript is a superset of Javascript that provides static typing.
 The reason for this choice is the fact that we will have to implement a rendering engine.
 React has unopinionated approach to architecture which should make it easier to integrate with our rendering solution.
 
-For hosting we will use a Virtual Private Server (VPS) from a hosting company Váš hosting.
-Thisis the easiest decision to make as the VPS servers provided by Váš hosting come fully prepared for hjosting including
-SSL certificates, domains, databases and a lot of tools to manage the servers.
-
 For rendering the graph we have two options - use an existing library or implement our own.
 We looked into one such library that might be usable in our case - Cytoscape.js.
-\xxx{But while it is a powerful library it is also quite complex and might be an overkill for our purposes.}
+\xxx{But...}
 
 We will implement our own rendering engine using a rendering library for javascript. The reasoning behind this is two-fold:
 \begin{itemize}
     \item We will have more control over the rendering process and appearance of the graph
-    \item Rendering graphs is not a too difficult of a task and we should be able to implement a simple version of it in a reasonable time frame.
+    \item Rendering graphs is not a too difficult of a task and we should be able to implement a simple and extendable version in a reasonable time frame.
 \end{itemize}
 
 The last decision to be made is how to render the graph.
 Even if we implement our own graph layout algoritm we will need a way to render the result.
 We considered three possibilities:
 \begin{itemize}
-    \item Html and css
-
-    the most barebones solution would be to use a set of divs to represent nodes and svg lines to represent edges.
-    \item HTML5 canvas
-
-    a more sophisticated solution to draw both nodes and edges in HTML5 Canvas api.
-    \item PIXI.js
-
-    a library for 2D rendering in the browser.
-    \item Three.js
-
-    a library for 3D rendering in the browser.
+    \item \textbf{Html and css} - the most barebones solution would be to use a set of divs to represent nodes and svg lines to represent edges.
+    \item \textbf{HTML5 canvas} - a more sophisticated solution to draw both nodes and edges in HTML5 Canvas api.
+    \item \textbf{PIXI.js} - a library for 2D rendering in the browser.
+    \item \textbf{Three.js} - a library for 3D rendering in the browser.
 \end{itemize}
 
-We chose to use PIXI.js mainly because according to \xxx{this video} it is the most performant library for 2D rendering in the browser
-(out of presented onec including trhee.js).
-The reason might be that Pixi whilce capable of 2D only simulates it by rendering 3D objects in orthographic projection.\xxx{TODO - verify this}
+We chose to use \textbf{PIXI.js} as it seemes to be simple to use and performant library for 2D rendering in the browser
+(out of presented ones including three.js).
+\xxx{NOTE: The reason might be that Pixi whilce capable of 2D only simulates it by rendering 3D objects in orthographic projection.}\xxx{TODO - verify this}
 
 
 \section{Utilized algorithms}
@@ -88,3 +83,10 @@ There as
 \section{Data}
 
 \section{Plan of execution}
+\begin{enumerate}
+    \item set up the hosting and database
+    \item build and host a simple web application in react
+    \item set up user and author management
+    \item implement a proof of concept of the graph engine for small graphs
+    \item extend the application to handle large graphs
+\end{enumerate}

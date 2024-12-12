@@ -4,8 +4,20 @@ import { RenderedThought } from './model/renderedThought';
 import { MAX_THOUGHTS_ON_SCREEN_FOR_LOGGED_OUT } from './model/graphParameters';
 
 interface GraphStore {
-    allRenderedThoughts: RenderedThought[];
-    setAllRenderedThoughts: (thoughts: RenderedThought[]) => void;
+    // Temporal thoughts are thoughts viewed using time slider
+    temporalRenderedThoughts: RenderedThought[];
+    setTemporalRenderedThoughts: (thoughts: RenderedThought[]) => void;
+
+    //Flag to indicate whether the app is fetching temporal thoughts from API (to prevent from multiple calls)
+    fetchingTemporalThoughts: boolean;
+    setFetchingTemporalThoughts: (value: boolean) => void;
+    // contains lowest and highest thought id present in the temporalRenderedThoughts
+    temporalBoundIds: { low: number, high: number };
+    setTemporalBoundIds: (low: number, high: number) => void; 
+
+    // Neighborhood thoughts are thoughts that are in the neighborhood of the highlighted thought
+    neighborhoodThoughts: RenderedThought[];
+    setNeighborhoodThoughts: (thoughts: RenderedThought[]) => void;
 
     viewport: Viewport;
     setViewport: (viewport: Viewport) => void;
@@ -34,8 +46,20 @@ interface GraphStore {
 }
 
 export const useGraphStore = create<GraphStore>((set, get) => ({
-    allRenderedThoughts: [],
-    setAllRenderedThoughts: (thoughts: RenderedThought[]) => set({ allRenderedThoughts: thoughts }),
+    temporalRenderedThoughts: [],
+    setTemporalRenderedThoughts: (thoughts: RenderedThought[]) => {
+        set({ temporalRenderedThoughts: thoughts });
+        set({ temporalBoundIds: { low: thoughts[0].id, high: thoughts[thoughts.length - 1].id } });
+    },
+
+    fetchingTemporalThoughts: false,
+    setFetchingTemporalThoughts: (value: boolean) => set({ fetchingTemporalThoughts: value }),
+
+    temporalBoundIds: { low: 0, high: 0 },
+    setTemporalBoundIds: (low: number, high: number) => set({ temporalBoundIds: { low, high } }),
+
+    neighborhoodThoughts: [],
+    setNeighborhoodThoughts: (thoughts: RenderedThought[]) => set({ neighborhoodThoughts: thoughts }),
 
     viewport: new Viewport(0, 0),
     setViewport: (viewport: Viewport) => set({ viewport }),
@@ -46,6 +70,7 @@ export const useGraphStore = create<GraphStore>((set, get) => ({
     setZoomingControl: (value: number) => set({ zoomingControl: value }),
 
     highlightedThought: null,
+    // this is used for graph walk - the function expects the thought with the id be present in neighborhood thoughts
     setHighlightedThoughtId: (id) => {
         const currentlyhighlighted = get().highlightedThought;
         if (currentlyhighlighted !== null)
@@ -54,19 +79,20 @@ export const useGraphStore = create<GraphStore>((set, get) => ({
             set({ highlightedThought: null });
             return;
         }
-        const thought = get().allRenderedThoughts.find((thought) => thought.id === id);
-        set({ highlightedThought: thought || null });
-        if (thought !== null && thought !== undefined) {
-            thought.highlighted = true;
+        const newlyHighlightedThought = get().neighborhoodThoughts.find((thought) => thought.id === id);
+
+        set({ highlightedThought: newlyHighlightedThought || null });
+        if (newlyHighlightedThought !== null && newlyHighlightedThought !== undefined) {
+            newlyHighlightedThought.highlighted = true;
             set({ lockedOnHighlighted: true });
 
             //handle time shift on highlight
-            const allRenderedThoughts = get().allRenderedThoughts;
-            const newUnboundedTimeShift = allRenderedThoughts.length - 1 - allRenderedThoughts.indexOf(thought) - Math.floor(get().maxThoughtsOnScreen / 2);
+            const allRenderedThoughts = get().temporalRenderedThoughts;
+            const newUnboundedTimeShift = allRenderedThoughts.length - 1 - allRenderedThoughts.indexOf(newlyHighlightedThought) - Math.floor(get().maxThoughtsOnScreen / 2);
             const newTimeshift = newUnboundedTimeShift < 0
                 ? 0
-                : newUnboundedTimeShift > get().allRenderedThoughts.length - get().maxThoughtsOnScreen
-                    ? get().allRenderedThoughts.length - get().maxThoughtsOnScreen
+                : newUnboundedTimeShift > get().temporalRenderedThoughts.length - get().maxThoughtsOnScreen
+                    ? get().temporalRenderedThoughts.length - get().maxThoughtsOnScreen
                     : newUnboundedTimeShift;
             set({ timeShift: newTimeshift });
         }

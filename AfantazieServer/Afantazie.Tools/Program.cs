@@ -28,7 +28,8 @@ Console.WriteLine(
 [4] - Generate Rainbow Tree
 [5] - Import citHep
 [6] - Import citHep to Markdown
-[7] - Retroactively add links to content");
+[7] - Retroactively add links to content
+[8] - Retroactively compute sizes");
 
 var choice = Console.ReadLine();
 if (!int.TryParse(choice, out var choiceInt))
@@ -69,6 +70,10 @@ if (choiceInt == 6)
 if (choiceInt == 7)
 {
     await RetroactiveResponseAdder.AddResponses();
+}
+if (choiceInt == 8)
+{
+    await RetroactiveSizeCalculator.CalculateSizeMultipliers();
 }
 else
 {

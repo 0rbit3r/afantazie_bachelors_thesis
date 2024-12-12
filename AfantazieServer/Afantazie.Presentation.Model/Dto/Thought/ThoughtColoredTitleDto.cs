@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Afantazie.Presentation.Model.Dto.Thought
 {
-    public class ThoughtTitleDto
+    public class ThoughtColoredTitleDto
     {
         public int Id { get; set; }
 

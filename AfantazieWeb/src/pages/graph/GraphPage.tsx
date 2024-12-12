@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Stage } from '@pixi/react';
-import { thoughtDto } from '../../api/dto/ThoughtDto';
-import { fetchThoughts } from '../../api/graphClient';
+import { fullThoughtDto, thoughtNodeDto } from '../../api/dto/ThoughtDto';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { LocationState } from '../../interfaces/LocationState';
 import { useGraphStore } from './GraphStore';
 import GraphContainer from './GraphContainer';
 import { Localization } from '../../locales/localization';
-import { getUserSettings } from '../../api/UserSettingsApiClient';
 import { MediaContent } from '../../components/MediaContent';
+import { fetchReplies, fetchThought } from '../../api/graphClient';
+import { clearNeighborhoodThoughts, getThoughtsOnScreen, updateNeighborhoodThoughts } from './model/temporalThoughtsProvider';
 
 const COLOR_BACKGROUND = 0x020304;
 
@@ -21,11 +21,14 @@ const landscapeMode = initialStageSize.width > initialStageSize.height;
 const GraphPage: React.FC = () => {
     // navigation
     const navigate = useNavigate();
-    const [initialHighlightedThoughtId, setInitialHighlightedThoughtId] = useState(0);
+    const [initialHighlightedThoughtId, setInitialHighlightedThoughtId] = useState<number | null | undefined>(undefined);
     const { urlThoughtId } = useParams();
 
-    // data, 
-    const [thoughts, setThoughts] = useState<thoughtDto[]>([]);
+    // data
+    const temporalThoughts = useGraphStore((state) => state.temporalRenderedThoughts);
+    const neighborhoodThoughts = useGraphStore((state => state.neighborhoodThoughts));
+
+    const [replies, setReplies] = useState<thoughtNodeDto[]>([]);
 
     // screen state
     const [overlayVisible, setOverlayVisible] = useState(false);
@@ -41,39 +44,78 @@ const GraphPage: React.FC = () => {
     const setHighlightedThoughtId = useGraphStore((state) => state.setHighlightedThoughtId);
     const unsetHighlightedThought = useGraphStore((state) => state.unsetHighlightedThought);
 
+    const [fullHighlightedThought, setfullHighlightedThought] = useState<fullThoughtDto | null>(null);
+
     const timeShift = useGraphStore((state) => state.timeShift);
     const timeShiftControl = useGraphStore((state) => state.timeShiftControl);
     const setTimeShiftControl = useGraphStore((state) => state.setTimeShiftControl);
 
-    const setMaxThoughtsOnScreen = useGraphStore((state) => state.setMaxThoughtsOnScreen);
+    const [newestDate, setNewestDate] = useState<string>('...');//todo localize
+
+    useEffect(() => {
+        const visibleThoughts = getThoughtsOnScreen();
+
+        if (visibleThoughts && visibleThoughts.length > 0 && visibleThoughts[visibleThoughts.length - 1].dateCreated) {
+            // console.log("allRenderedThoughts: ", temporalThoughts)
+            if (timeShift > 0)
+            {
+                setNewestDate(visibleThoughts[visibleThoughts.length - 1].dateCreated || "...");
+            }
+            else
+            {
+                setNewestDate("právě teď...");
+            }
+        }
+    }, [timeShift]);
+
+    // const setMaxThoughtsOnScreen = useGraphStore((state) => state.setMaxThoughtsOnScreen);
 
     const scrollContainer = useRef<HTMLDivElement>(null);
 
-    // Fetch thoughts from the server
+    // Initialize the graph page
     useEffect(() => {
-        const fetchAndSetAsync = async () => {
-            const userSettings = await getUserSettings();
-            if (userSettings.ok) {
-                setMaxThoughtsOnScreen(userSettings.data?.maxThoughts!);
-            }
+        const graphState = useGraphStore.getState();
 
-            const response = await fetchThoughts();
-            if (response.ok) {
-                setThoughts(response.data!);
-                if (urlThoughtId) {
-                    const id = parseInt(urlThoughtId);
-                    if (!isNaN(id)) {
-                        setInitialHighlightedThoughtId(id);
-                    }
-                }
+        graphState.setTimeShift(0);
+        // set initial highlighted thought
+        if (urlThoughtId) {
+            const id = parseInt(urlThoughtId);
+            if (!isNaN(id)) {
+                // console.log('setting initial highlighted thought id', id);
+                setInitialHighlightedThoughtId(id);
             }
-        };
-        fetchAndSetAsync();
+        }
+        else {
+            setInitialHighlightedThoughtId(null);
+        }
     }, []);
 
-    // clickedThoughtEffect
+    //handle content fetching when highlighted thought changes
     useEffect(() => {
-        if (thoughts.length === 0)
+        if (highlightedThought !== null) {
+            fetchThought(highlightedThought.id).then(response => {
+                if (response.ok) {
+                    setfullHighlightedThought(response.data!);
+                    updateNeighborhoodThoughts(highlightedThought.id);
+                }
+            });
+
+            fetchReplies(highlightedThought.id).then(response => {
+                if (response.ok) {
+                    setReplies(response.data!);
+                }
+            });
+        } else{
+            clearNeighborhoodThoughts();
+        }
+
+
+    }, [highlightedThought]);
+
+    // handle ui changes when highlighted thought changes
+    useEffect(() => {
+
+        if (temporalThoughts.length === 0)
             return;
         if (highlightedThought === null) {
             window.history.pushState(null, '', '/graph');
@@ -82,6 +124,7 @@ const GraphPage: React.FC = () => {
             return;
         }
         window.history.pushState(null, '', `/graph/${highlightedThought.id}`);
+
         //set stage size half open
         if (landscapeMode)
             setStageSize({ width: Math.floor(initialStageSize.width / 2), height: initialStageSize.height });
@@ -98,12 +141,13 @@ const GraphPage: React.FC = () => {
         setZoomingControl(zoomingHeld);
     }, [zoomingHeld]);
 
-    //
+    // viewport size handler
     useEffect(() => {
         viewport.width = stageSize.width;
         viewport.height = stageSize.height;
     }, [stageSize]);
 
+    // handle overlay controls
     const handleUpButtonOverlay = () => {
         if (fullscreenPreview) {
             setFullscreenPreview(false);
@@ -125,16 +169,16 @@ const GraphPage: React.FC = () => {
         }
     }
 
-    // renders thoiught content including colorful clickable references
+    // renders thought content including colorful clickable references
     const renderContentWithReferences = (text: string) => {
-        const parts = text.split(/\[(.*?)\]\((.*?)\)/g);
+        const parts = text.split(/\[([0-9]*?)\]\((.*?)\)/g);
         const result = [];
         for (let i = 0; i < parts.length; i += 3) {
             const id = parseInt(parts[i + 1]);
             result.push(parts[i]);
             result.push(<span
                 className='in-text-thought-ref'
-                style={{ color: thoughts.find(t => t.id == id)?.color }} key={'link' + i}
+                style={{ color: neighborhoodThoughts.find(t => t.id == id)?.color }} key={'link' + i}
                 onClick={() => setHighlightedThoughtId(id)}>
                 {parts[i + 2]}
             </span>);
@@ -154,33 +198,36 @@ const GraphPage: React.FC = () => {
                         : landscapeMode
                             ? 'overlay-expanded-landscape'
                             : 'overlay-expanded-portrait'
-                    : ''}` //todo: this does nothing atm
+                    : ''}`
             }>
-                {overlayVisible && highlightedThought !== null &&
+                {overlayVisible && fullHighlightedThought !== null &&
                     <div className='text-scroll-container' ref={scrollContainer}>
                         <div className='text-flex-container'>
-                            <h2>{highlightedThought?.title}</h2>
-                            <h3>{highlightedThought.author} - {highlightedThought.dateCreated}</h3>
-                            <p className='thought-content'>{renderContentWithReferences(highlightedThought.content)}</p>
-                            <MediaContent id={highlightedThought.id}></MediaContent>
+                            <h2>{fullHighlightedThought.title}</h2>
+                            <h3>{fullHighlightedThought.author} - {fullHighlightedThought.dateCreated}</h3>
+                            {fullHighlightedThought.content && <p className='thought-content'>{renderContentWithReferences(fullHighlightedThought.content)}</p>}
+                            <MediaContent id={fullHighlightedThought.id}></MediaContent>
                         </div>
-                        {!fullscreenPreview && thoughts.filter(t => t.links.includes(highlightedThought?.id)).length > 0 &&
+                        {!fullscreenPreview && temporalThoughts.filter(t => t.links.includes(fullHighlightedThought?.id)).length > 0 &&
                             <div className='responses-container-half-screen'>
                                 <p className='responses-header'><b>{Localization.Replies}</b></p>
                                 <div>
-                                    {thoughts.filter(t => t.links.includes(highlightedThought?.id)).map(t =>
+                                    {replies.map(t =>
                                         <span key={`back-link-${t.id}`} className='search-result-item' style={{ borderColor: t.color }}
                                             onClick={_ => setHighlightedThoughtId(t.id)}>{t.title}</span>
                                     )}
+
+{/* TODO -> add dynamic loading of links here. */}
+
                                     {/* todo - the css here in search-result-item is borrowed from createThought*/}
                                 </div>
                             </div>}
                     </div>}
-                {fullscreenPreview && highlightedThought !== null && thoughts.filter(t => t.links.includes(highlightedThought?.id)).length > 0 &&
+                {fullscreenPreview && highlightedThought !== null && replies.length > 0 &&
                     <>
                         <p><b>{Localization.Replies}</b></p>
                         <div className='responses-container'>
-                            {thoughts.filter(t => t.links.includes(highlightedThought?.id)).map(t =>
+                            {replies.map(t =>
                                 <span key={`back-link-${t.id}`} className='search-result-item' style={{ borderColor: t.color }}
                                     onClick={_ => setHighlightedThoughtId(t.id)}>{t.title}</span>
                             )}
@@ -204,16 +251,17 @@ const GraphPage: React.FC = () => {
                 </p>
             </div>
 
-            {/* The visibilityCollapse here is a) to not start the graph in the initial position each time its opened again and b) there is problem with highlighting thoughts when the graphcontainer is lost completely
-I suspect it might be because of different references to viewport? (second initialization?) */}
+            {/* The visibility: collapse (instead of hidden) here is to not start the graph in the initial position each time its opened again */}
             <div className='graph-bottom-part' style={fullscreenPreview ? { visibility: 'collapse' } : {}}>
                 <div className='stage-container'>
                     <Stage className='graph-stage' width={stageSize.width} height={stageSize.height} options={{ backgroundColor: COLOR_BACKGROUND, antialias: true }}>
-                        <GraphContainer Thoughts={thoughts} initialHighlightedThoughtId={initialHighlightedThoughtId}></GraphContainer>
+                        <GraphContainer initialHighlightedThoughtId={initialHighlightedThoughtId}></GraphContainer>
                     </Stage>
 
-                    {timeShift && <div className='time-shift-label'>{-timeShift}</div> || <div className='time-shift-label'>0</div> //todo - why is timeshift undefined when zero?
-                    }
+                    {(newestDate
+                        && (<div className='time-shift-label'>{newestDate}</div>)
+                        || <div className='time-shift-label'>0</div>)}
+
                     <button className='graph-ui-button rewind-button'
                         onPointerDown={_ => setTimeShiftControl(1)} onPointerUp={_ => setTimeShiftControl(0)} onPointerLeave={_ => setTimeShiftControl(0)} onPointerOut={_ => setTimeShiftControl(0)}>
                         {timeShiftControl != 1 && <img draggable='false' src={PUBLIC_FOLDER + '/icons/rewind.svg'}></img>}

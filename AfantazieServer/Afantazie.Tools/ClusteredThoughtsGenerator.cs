@@ -99,7 +99,7 @@ namespace Afantazie.Tools
 
                 clusters[chosenClusterIndex].Add(i);
 
-                await thoughtRepo.InserertThoughtAsync(i.ToString(), i.ToString(), userId, references);
+                await thoughtRepo.InsertThoughtAsync(i.ToString(), i.ToString(), userId, references);
             }
 
             Console.WriteLine("Done.");
