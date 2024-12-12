@@ -607,3 +607,5 @@ sketch
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,csharp,dotnetcore,react
 
 DeploymentScripts/*
+/AfantazieServer/Afantazie.Data.Core/migrationsettings.json
+/AfantazieServer/Afantazie.Tools/appsettings.json
