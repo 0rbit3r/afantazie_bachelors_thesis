@@ -6,7 +6,7 @@ import { addDraggableViewport } from "./ViewportInitializer";
 import { XAndY } from "../model/xAndY";
 import tinycolor from "tinycolor2";
 import { useGraphStore } from "../GraphStore";
-import { getThoughtsOnScreen } from "../model/temporalThoughtsProvider";
+import { getThoughtsOnScreen } from "../model/thoughtsProvider";
 
 
 const DRAG_TIME_THRESHOLD = 200;
@@ -23,9 +23,9 @@ export const initGraphics = (
 
     const nodeContainer = new Graphics();
 
-    const viewport = addDraggableViewport(app, zSortedContainer);
+    const initialViewport = addDraggableViewport(app, zSortedContainer);
 
-    useGraphStore.getState().viewport = viewport;
+    useGraphStore.getState().setViewport(initialViewport);
 
     // nodeGraphics.sortableChildren = true;
     nodeContainer.zIndex = NODES_Z;
@@ -49,8 +49,8 @@ export const initGraphics = (
 
         circle.on('globalpointermove', e => {
             if (thought.held) {
-                thought.position.x += e.movementX / viewport.zoom;
-                thought.position.y += e.movementY / viewport.zoom;
+                thought.position.x += e.movementX / initialViewport.zoom;
+                thought.position.y += e.movementY / initialViewport.zoom;
             }
         });
 
@@ -61,7 +61,7 @@ export const initGraphics = (
         });
 
         circle.on('wheel', (e) => {
-            viewport.zoomByWheelDelta(-e.deltaY);
+            initialViewport.zoomByWheelDelta(-e.deltaY);
         });
 
         app.stage.on('pointerup', () => {
@@ -70,7 +70,7 @@ export const initGraphics = (
                 useGraphStore.getState().setHighlightedThought(thought);
             }
             thought.held = false;
-            viewport.dragged = false;
+            initialViewport.dragged = false;
         });
 
         nodeContainer.addChild(circle);
@@ -109,6 +109,12 @@ export const initGraphics = (
         // console.log('thoughtsInCurrentTimeWindow', thoughtsInCurrentTimeWindow);
 
         const graphState = useGraphStore.getState();
+
+        const stateViewport = graphState.viewport;
+        if (stateViewport === null){
+            return;
+        }
+
         nodeContainer.clear();
         nodeContainer.children.forEach(child => {
             if (child instanceof Graphics) {
@@ -127,31 +133,41 @@ export const initGraphics = (
                 initializeGraphicsForThought(thought);
             }
 
+            // indicate that htere are neighbors not currently on screen
+            const explorable = (thought.links.some(l => onScreenThoughts.filter(t => t.id === l).length === 0) || // any links or replies outside onscreen thoughts check 
+            thought.backlinks.some(l => onScreenThoughts.filter(t => t.id === l).length === 0));
+
             const circle = thought.graphics as Graphics;
 
 
             circle.clear();
 
-            const circleCoors = graphState.viewport.toViewportCoordinates({ x: thought.position.x, y: thought.position.y });
-            if (circleCoors.x < -thought.radius || circleCoors.x > graphState.viewport.width + thought.radius
-                || circleCoors.y < -thought.radius || circleCoors.y > graphState.viewport.height + thought.radius) {
+            const circleCoors = stateViewport.toViewportCoordinates({ x: thought.position.x, y: thought.position.y });
+            if (circleCoors.x < -thought.radius || circleCoors.x > stateViewport.width + thought.radius
+                || circleCoors.y < -thought.radius || circleCoors.y > stateViewport.height + thought.radius) {
                 return;
             }
 
             // draw node
             // pulsating color if the node is explorable
             const pulsingColor = graphState.frame % 150 < 50 &&
-            (thought.links.some(l => onScreenThoughts.filter(t => t.id === l).length === 0) || // any links or replies outside onscreen thoughts check 
-            thought.backlinks.some(l => onScreenThoughts.filter(t => t.id === l).length === 0))
+                explorable
                 ? tinycolor(thought.color).lighten(30 - (graphState.frame % 50) / 50 * 30).toString()
                 : thought.color;
             circle.beginFill(pulsingColor, 1);
-            circle.lineStyle(8 * graphState.viewport.zoom, tinycolor(thought.color).lighten(15).toString(), 0.5);
-            circle.drawCircle(circleCoors.x, circleCoors.y, graphState.viewport.zoom * thought.radius);
+            circle.lineStyle(8 * stateViewport.zoom, tinycolor(pulsingColor).lighten(15).toString(), 0.5);
+            circle.drawCircle(circleCoors.x, circleCoors.y, stateViewport.zoom * thought.radius);
             circle.endFill();
 
+            if (explorable){
+                circle.beginFill("black", 1);
+                circle.lineStyle(8 * stateViewport.zoom, tinycolor(thought.color).lighten(15).toString(), 0.5);
+                circle.drawCircle(circleCoors.x, circleCoors.y, stateViewport.zoom * thought.radius - 1);
+                circle.endFill();
+            }
+
             // muffins!
-            // if (thought.id == 318 || thought.id == 1) {
+            // if (thought.id == 318) {
             //     (async () => {
             //         const muffinSvg = await Assets.load(import.meta.env.VITE_PUBLIC_FOLDER + '/icons/muffin.svg');
             //         const muffinTexture = new Sprite(muffinSvg as Texture);;
@@ -167,20 +183,14 @@ export const initGraphics = (
 
             if (thought.highlighted) {
                 circle.lineStyle(6, "#ffffff", 0.4);
-                circle.drawCircle(circleCoors.x, circleCoors.y, graphState.viewport.zoom * thought.radius + 6);
+                circle.drawCircle(circleCoors.x, circleCoors.y, stateViewport.zoom * thought.radius + 6);
             }
 
             // if there is something to explore...
-            // if (thought.links.some(l => onScreenThoughts.filter(t => t.id === l).length === 0) ||
-            // thought.backlinks.some(l => onScreenThoughts.filter(t => t.id === l).length === 0))
-            // {
-            //     circle.lineStyle(6, "#22ff22", 0.4);
-            //     circle.drawCircle(circleCoors.x, circleCoors.y, graphStore.viewport.zoom * thought.radius + 6);
-            // }
 
             circle.lineStyle(0);
             circle.beginFill("#000000", 0.001);//this is here only to make the hit area bigger
-            circle.drawCircle(circleCoors.x, circleCoors.y, graphState.viewport.zoom * thought.radius + 10);
+            circle.drawCircle(circleCoors.x, circleCoors.y, stateViewport.zoom * thought.radius + 10);
             circle.endFill();
 
             // const text = thought.text as Text; UNCOMMENT BIG TODO ABOVE AND BELLOW
@@ -229,9 +239,9 @@ export const initGraphics = (
                             : UNHIGHLIGHTED_EDGE_ALPHA;
                     draw_edge(
                         nodeContainer,
-                        graphState.viewport.toViewportCoordinates({ x: referencedThought.position.x, y: referencedThought.position.y }),
-                        graphState.viewport.toViewportCoordinates({ x: thought.position.x, y: thought.position.y }),
-                        arrowColor, graphState.viewport.zoom, thought.radius, arrowThickness, arrowAlpha);
+                        stateViewport.toViewportCoordinates({ x: referencedThought.position.x, y: referencedThought.position.y }),
+                        stateViewport.toViewportCoordinates({ x: thought.position.x, y: thought.position.y }),
+                        arrowColor, stateViewport.zoom, thought.radius, arrowThickness, arrowAlpha);
                 }
             });
 
@@ -240,10 +250,10 @@ export const initGraphics = (
         // boundaries
         nodeContainer.lineStyle(2, "#400000", 1);
         nodeContainer.drawRect(
-            graphState.viewport.toViewportCoordinates({ x: 0, y: 0 }).x,
-            graphState.viewport.toViewportCoordinates({ x: 0, y: 0 }).y,
-            SIM_WIDTH * graphState.viewport.zoom,
-            SIM_HEIGHT * graphState.viewport.zoom
+            stateViewport.toViewportCoordinates({ x: 0, y: 0 }).x,
+            stateViewport.toViewportCoordinates({ x: 0, y: 0 }).y,
+            SIM_WIDTH * stateViewport.zoom,
+            SIM_HEIGHT * stateViewport.zoom
 
         );
         // lastZoom = graphStore.viewport.zoom;   BIG TODO BIG TODO BIG TODO BIG TODO BIG TODO - UNCOMMENT THIS
@@ -287,44 +297,45 @@ const draw_edge = (
     graphics.zIndex = ARROW_Z;
 
     // bezier curved edges
-    // graphics.lineStyle({ color: new Color(color), width: zoom * thickness, alpha: alpha });
-    // const normal = { x: y1 - y2, y: x2 - x1 };
-    // const bezier1 = { x: x1 - ((x1 - arrowTipX) / 3) + normal.x * 0.1, y: y1 - ((y1 - arrowTipY) / 3) + normal.y * 0.1 };
-    // const bezier2 = { x: x1 - ((x1 - arrowTipX) * 2 / 3), y: y1 - ((y1 - arrowTipY) * 2 / 3) };
-    // graphics.bezierCurveTo(bezier1.x, bezier1.y, bezier2.x, bezier2.y, arrowTipX, arrowTipY);
+    graphics.lineStyle({ color: new Color(color), width: zoom * thickness, alpha: alpha });
+    const normal = { x: y1 - y2, y: x2 - x1 };
+    const bezier1 = { x: x1 - ((x1 - arrowTipX) / 3) + normal.x * 0.1, y: y1 - ((y1 - arrowTipY) / 3) + normal.y * 0.1 };
+    const bezier2 = { x: x1 - ((x1 - arrowTipX) * 2 / 3), y: y1 - ((y1 - arrowTipY) * 2 / 3) };
+    graphics.bezierCurveTo(bezier1.x, bezier1.y, bezier2.x, bezier2.y, arrowTipX, arrowTipY);
 
 
 
     //animated edges
-    const segments: { x: number, y: number }[] = [];
-    const segmentSize = 8;
-    const edgeLength = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-    const segmentCount = Math.floor(edgeLength / segmentSize + 1);
+    // const segments: { x: number, y: number }[] = [];
+    // const segmentSize = 8;
+    // const edgeLength = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+    // const segmentCount = Math.floor(edgeLength / segmentSize + 1);
 
-    const frame = useGraphStore.getState().frame;
-    const cyclePeriod = 30;
-    const offset = frame % cyclePeriod;
+    // const frame = useGraphStore.getState().frame;
+    // const cyclePeriod = 30;
+    // const offset = frame % cyclePeriod;
 
-    for (let i = 0; i < segmentCount; i++) {
-        const segmentX = x1 + (x2 - x1) * (i - 1 + offset / cyclePeriod * 2) / segmentCount;
-        const segmentY = y1 + (y2 - y1) * (i - 1 + offset / cyclePeriod * 2) / segmentCount;
-        segments.push({ x: segmentX, y: segmentY });
-    }
+    // for (let i = 0; i < segmentCount; i++) {
+    //     const segmentX = x1 + (x2 - x1) * (i - 1 + offset / cyclePeriod * 2) / segmentCount;
+    //     const segmentY = y1 + (y2 - y1) * (i - 1 + offset / cyclePeriod * 2) / segmentCount;
+    //     segments.push({ x: segmentX, y: segmentY });
+    // }
 
-    segments.forEach((segment, index) => {
-        if (index % 2 === 0) {
-            graphics.lineStyle({ color: new Color(color), width: zoom * thickness * 5, alpha: alpha / 3 });
-        }
-        else {
-            graphics.lineStyle();
-        }
-        if (index < segments.length - 1) {
-            const nextSegment = segments[index + 1];
-            graphics.moveTo(segment.x, segment.y);
-            graphics.lineTo(nextSegment.x, nextSegment.y);
-        }
-    });
+    // segments.forEach((segment, index) => {
+    //     if (index % 2 === 0) {
+    //         graphics.lineStyle({ color: new Color(color), width: zoom * thickness * 5, alpha: alpha / 3 });
+    //     }
+    //     else {
+    //         graphics.lineStyle();
+    //     }
+    //     if (index < segments.length - 1) {
+    //         const nextSegment = segments[index + 1];
+    //         graphics.moveTo(segment.x, segment.y);
+    //         graphics.lineTo(nextSegment.x, nextSegment.y);
+    //     }
+    // });
 
+    // simple arrows    
     // graphics.lineTo(arrowTipX, arrowTipY);
     // graphics.beginFill();
 

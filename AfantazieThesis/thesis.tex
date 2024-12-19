@@ -110,6 +110,15 @@
 % A simple format with alphanumeric references:
 %\usepackage[natbib,style=alphabetic]{biblatex}
 
+% Generate glossarys
+\usepackage[acronym]{glossaries}
+\setglossarystyle{list} % 'list' style is simple
+\renewcommand*\glspostdescription{\dotfill}
+
+\makeglossaries
+
+\usepackage{url}
+
 % Load the file with bibliography entries
 \addbibresource{bibliography.bib}
 
@@ -123,9 +132,12 @@
 %%% A page with automatically generated table of contents of the thesis
 
 \tableofcontents
+%%% Abbreviations used in the thesis, if any, including their explanation
+%%% In mathematical theses, it could be better to move the list of abbreviations to the beginning of the thesis.
+
+\include{glossary}
 
 %%% Each chapter is kept in a separate file
-\include{usedTerms}
 \include{preface}
 \include{chap01}
 \include{chap02}
@@ -145,10 +157,6 @@
 %%% Tables used in the thesis (consider if this is needed)
 %%% In mathematical theses, it could be better to move the list of tables to the beginning of the thesis.
 \listoftables
-
-%%% Abbreviations used in the thesis, if any, including their explanation
-%%% In mathematical theses, it could be better to move the list of abbreviations to the beginning of the thesis.
-\chapwithtoc{List of Abbreviations}
 
 %%% Doctoral theses must contain a list of author's publications
 \ifx\ThesisType\TypePhD

@@ -1,0 +1,336 @@
+\glsdefs@newdocentry{graph}%
+{%
+name={graph},%
+sort={graph},%
+type={main},%
+first={graph},%
+firstplural={graphs},%
+text={graph},%
+plural={graphs},%
+description={- a set of \textbf {nodes} connected by \textbf {edges}},%
+descriptionplural={- a set of \textbf {nodes} connected by \textbf {edges}},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{node}%
+{%
+name={node},%
+sort={node},%
+type={main},%
+first={node},%
+firstplural={nodes},%
+text={node},%
+plural={nodes},%
+description={- a single entity in a \textbf {graph}},%
+descriptionplural={- a single entity in a \textbf {graph}},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{edge}%
+{%
+name={edge},%
+sort={edge},%
+type={main},%
+first={edge},%
+firstplural={edges},%
+text={edge},%
+plural={edges},%
+description={- a connection between two \textbf {nodes} in a \textbf {graph}},%
+descriptionplural={- a connection between two \textbf {nodes} in a \textbf {graph}},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{directed_edge}%
+{%
+name={directed edge},%
+sort={directed edge},%
+type={main},%
+first={directed edge},%
+firstplural={directed edges},%
+text={directed edge},%
+plural={directed edges},%
+description={- an \textbf {edge} with a direction from one \textbf {node} to another},%
+descriptionplural={- an \textbf {edge} with a direction from one \textbf {node} to another},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{cycle}%
+{%
+name={cycle},%
+sort={cycle},%
+type={main},%
+first={cycle},%
+firstplural={cycles},%
+text={cycle},%
+plural={cycles},%
+description={- a set of \textbf {nodes} connected by \textbf {edges} in a way that the first and last node are the same},%
+descriptionplural={- a set of \textbf {nodes} connected by \textbf {edges} in a way that the first and last node are the same},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{big_graph}%
+{%
+name={Big / Small graph},%
+sort={Big / Small graph},%
+type={main},%
+first={Big / Small graph},%
+firstplural={Big / Small graphs},%
+text={Big / Small graph},%
+plural={Big / Small graphs},%
+description={- for the purposes of this work big graphs are graphs containing at least thousand of \textbf {nodes}},%
+descriptionplural={- for the purposes of this work big graphs are graphs containing at least thousand of \textbf {nodes}},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{thought}%
+{%
+name={thought},%
+sort={thought},%
+type={main},%
+first={thought},%
+firstplural={thoughts},%
+text={thought},%
+plural={thoughts},%
+description={- a post on Afantázie - it has title, author, description, links and backlinks(also reffered to as replies)},%
+descriptionplural={- a post on Afantázie - it has title, author, description, links and backlinks(also reffered to as replies)},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{DAG}%
+{%
+name={DAG},%
+sort={DAG},%
+type={main},%
+first={DAG},%
+firstplural={DAGs},%
+text={DAG},%
+plural={DAGs},%
+description={- directed acyclic graph},%
+descriptionplural={- directed acyclic graph},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{GLA}%
+{%
+name={GLA},%
+sort={GLA},%
+type={main},%
+first={GLA},%
+firstplural={GLAs},%
+text={GLA},%
+plural={GLAs},%
+description={- graph Layout Algorithm - used for computing positions of \textbf {nodes} so that they make a nice or useful diagram},%
+descriptionplural={- graph Layout Algorithm - used for computing positions of \textbf {nodes} so that they make a nice or useful diagram},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{BFS}%
+{%
+name={BFS},%
+sort={BFS},%
+type={main},%
+first={BFS},%
+firstplural={BFSs},%
+text={BFS},%
+plural={BFSs},%
+description={- breath First search - an algorithm for traversing a \textbf {graph} while prioritizing earlier visited \textbf {nodes}},%
+descriptionplural={- breath First search - an algorithm for traversing a \textbf {graph} while prioritizing earlier visited \textbf {nodes}},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{path}%
+{%
+name={path},%
+sort={path},%
+type={main},%
+first={path},%
+firstplural={paths},%
+text={path},%
+plural={paths},%
+description={- in context of \textbf {graphs}, path is a sequence of \textbf {nodes} connected by \textbf {edges} without any \textbf {cycles}},%
+descriptionplural={- in context of \textbf {graphs}, path is a sequence of \textbf {nodes} connected by \textbf {edges} without any \textbf {cycles}},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{cithep_dataset}%
+{%
+name={CitHep},%
+sort={CitHep},%
+type={main},%
+first={CitHep},%
+firstplural={CitHeps},%
+text={CitHep},%
+plural={CitHeps},%
+description={- dataset of citations between papers in the field of high-energy physics. Contains 34546 \textbf {nodes}, 421578 \textbf {edges} and temporal data},%
+descriptionplural={- dataset of citations between papers in the field of high-energy physics. Contains 34546 \textbf {nodes}, 421578 \textbf {edges} and temporal data},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+

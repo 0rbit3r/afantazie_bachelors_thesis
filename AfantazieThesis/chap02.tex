@@ -15,7 +15,7 @@ But from the way its Graph view behaves it's safe to assume a variation of an FD
 and Gephi provides several variations of.
 The main idea behind FDL algorithms is a simple one - nodes are attracted to each other when connected by an edge and repelled otherwise.
 
-While elegant in concept and easy to implement, this approach is endlessly customizable.
+Elegant in concept and easy to implement, this approach is endlessly customizable.
 One fact we found especially useful is the fact that it's incremental and can be run real-time.
 This produces visually pleasing animations of the data and allows for user interaction (eg. dragging nodes around or changing parameters).
 
@@ -31,12 +31,13 @@ Basic version of FLA doesn't properly end and the it's up to the user to stop th
 These possitives are however balanced by its time complexity. The basic version of FDL has a time complexity of $O(n^2)$ per step
 where $n$ is the number of nodes in the graph.
 
-For stabilization time usualy n steps are considered sufficient with the whole formula for stabilized graph $O(n^3)$.
-But in our case we will just like obsidian allow user interaction and animation.
-Thus we are more interested in the time complexity per step.
+% For stabilization time usualy n steps are considered sufficient and thus time complexity for producing stabilized graph is usually coputed as $O(n^3)$.
+% Our software will however much like obsidian allow user interaction and animation. For that we will need to continually therefore we are more interested in the time complexity per step.
+% TODO: move this to place where selecting used algorithm is discussed (
+%     chap3?
+% )
 
 \subsection{ForceAtlas}
-
 
 \subsection{Fruchterman-Reingold}
 

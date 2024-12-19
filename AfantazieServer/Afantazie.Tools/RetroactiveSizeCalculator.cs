@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Afantazie.Tools
 {
+    // Calculates sizes of the thoughts based on the number of their backlinks.
     internal class RetroactiveSizeCalculator
     {
         public static async Task<Result> CalculateSizeMultipliers()

@@ -17,6 +17,7 @@ We are expecting to implement at least these following features:
   \item Graph filtering and search functionality
 \end{itemize}
 
+
 \section{Technologies and architecture}
 
 Afantázie will be a publicly accessible web application and as such we will need to set up the following:
@@ -39,7 +40,7 @@ While the main reason for this decision is familiarity with the technology the .
 \begin{itemize}
     \item It is linux compatible
     \item The provided Entity Framework library providesORM, complete Code-first solutions and makes it easy to replace database technology later on if needed.
-    \item It is just so good and sexy (cit. needed... statistics of usage by firms?) 
+    \item It is just good (cit. needed... statistics of usage by firms?)
 \end{itemize}
 
 Frontend is where the most interesting decisions will be made. It makes a lot of sense to use a modern frontend javascipt library.
@@ -49,18 +50,19 @@ We will use React.js with Typescript. React is a popular frontend library and Ty
 The reason for this choice is the fact that we will have to implement a rendering engine.
 React has unopinionated approach to architecture which should make it easier to integrate with our rendering solution.
 
+\xxx{todo - first more info about the different borad-strokes options we
+have and why we decided for our own simultaion and rendering solution - simulation in BE vs FE etc.}
+
 For rendering the graph we have two options - use an existing library or implement our own.
 We looked into one such library that might be usable in our case - Cytoscape.js.
 \xxx{But...}
 
-We will implement our own rendering engine using a rendering library for javascript. The reasoning behind this is two-fold:
+We will implement our own simulation and rendering engine using a rendering library for javascript. The reasoning behind this is two-fold:
 \begin{itemize}
     \item We will have more control over the rendering process and appearance of the graph
-    \item Rendering graphs is not a too difficult of a task and we should be able to implement a simple and extendable version in a reasonable time frame.
+    \item Rendering graphs and simultaing FDL is not a too difficult of a task and we should be able to implement a simple and extendable version in a reasonable time frame.
 \end{itemize}
 
-The last decision to be made is how to render the graph.
-Even if we implement our own graph layout algoritm we will need a way to render the result.
 We considered three possibilities:
 \begin{itemize}
     \item \textbf{Html and css} - the most barebones solution would be to use a set of divs to represent nodes and svg lines to represent edges.

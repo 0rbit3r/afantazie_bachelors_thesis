@@ -11,13 +11,18 @@ interface GraphStore {
     //Flag to indicate whether the app is fetching temporal thoughts from API (to prevent from multiple calls)
     fetchingTemporalThoughts: boolean;
     setFetchingTemporalThoughts: (value: boolean) => void;
-    // contains lowest and highest thought id present in the temporalRenderedThoughts
-    temporalBoundIds: { low: number, high: number };
-    setTemporalBoundIds: (low: number, high: number) => void; 
 
     // Neighborhood thoughts are thoughts that are in the neighborhood of the highlighted thought
     neighborhoodThoughts: RenderedThought[];
     setNeighborhoodThoughts: (thoughts: RenderedThought[]) => void;
+
+    // The temporaly first thought beyond which it is useless to fetch more data
+    beginningThoughtId: number | null;
+    setBeginningThoughtId: (id: number) => void;
+    // The temporaly last thought beyond which client enters live-preview mode (set at graph initialization as the last existing thought at the time of initialization)
+    endingThoughtId: number | null;
+    setEndingThoughtId:  (id: number) => void;
+
 
     viewport: Viewport;
     setViewport: (viewport: Viewport) => void;
@@ -28,7 +33,8 @@ interface GraphStore {
     setZoomingControl: (value: number) => void;
 
     highlightedThought: RenderedThought | null;
-    setHighlightedThoughtId: (id: number) => void;
+    // this is used for graph walk  and initial highlight on page load - the function expects the thought with the id be present in either neighborhood thoughts or temporal thoughts
+    setHighlightedThoughtById: (id: number) => void;
     setHighlightedThought: (thought: RenderedThought) => void;
     unsetHighlightedThought: () => void;
 
@@ -44,24 +50,24 @@ interface GraphStore {
     maxThoughtsOnScreen: number;
     setMaxThoughtsOnScreen: (value: number) => void;
 }
-
 export const useGraphStore = create<GraphStore>((set, get) => ({
     temporalRenderedThoughts: [],
     setTemporalRenderedThoughts: (thoughts: RenderedThought[]) => {
         set({ temporalRenderedThoughts: thoughts });
-        set({ temporalBoundIds: { low: thoughts[0].id, high: thoughts[thoughts.length - 1].id } });
     },
 
     fetchingTemporalThoughts: false,
     setFetchingTemporalThoughts: (value: boolean) => set({ fetchingTemporalThoughts: value }),
 
-    temporalBoundIds: { low: 0, high: 0 },
-    setTemporalBoundIds: (low: number, high: number) => set({ temporalBoundIds: { low, high } }),
-
     neighborhoodThoughts: [],
     setNeighborhoodThoughts: (thoughts: RenderedThought[]) => set({ neighborhoodThoughts: thoughts }),
 
-    viewport: new Viewport(0, 0),
+    beginningThoughtId: null,
+    setBeginningThoughtId: (id: number) => set({ beginningThoughtId: id }),
+    endingThoughtId: null,
+    setEndingThoughtId: (id: number) => set({ endingThoughtId: id }),
+
+    viewport: new Viewport(0,0),
     setViewport: (viewport: Viewport) => set({ viewport }),
     lockedOnHighlighted: false,
     freeLockOnHighlighted: () => set({ lockedOnHighlighted: false }),
@@ -70,8 +76,7 @@ export const useGraphStore = create<GraphStore>((set, get) => ({
     setZoomingControl: (value: number) => set({ zoomingControl: value }),
 
     highlightedThought: null,
-    // this is used for graph walk - the function expects the thought with the id be present in neighborhood thoughts
-    setHighlightedThoughtId: (id) => {
+    setHighlightedThoughtById: (id) => {
         const currentlyhighlighted = get().highlightedThought;
         if (currentlyhighlighted !== null)
             currentlyhighlighted.highlighted = false;
@@ -79,7 +84,9 @@ export const useGraphStore = create<GraphStore>((set, get) => ({
             set({ highlightedThought: null });
             return;
         }
-        const newlyHighlightedThought = get().neighborhoodThoughts.find((thought) => thought.id === id);
+
+        const newlyHighlightedThought = get().neighborhoodThoughts.find((thought) => thought.id === id)
+            ?? get().temporalRenderedThoughts.find((thought) => thought.id === id);
 
         set({ highlightedThought: newlyHighlightedThought || null });
         if (newlyHighlightedThought !== null && newlyHighlightedThought !== undefined) {
@@ -103,12 +110,12 @@ export const useGraphStore = create<GraphStore>((set, get) => ({
             currentlyhighlighted.highlighted = false;
 
         // //handle time shift on highlight
-        // const allRenderedThoughts = get().allRenderedThoughts;
-        // const newUnboundedTimeShift = allRenderedThoughts.length - 1 - allRenderedThoughts.indexOf(thought) - Math.floor(get().maxThoughtsOnScreen / 2);
+        // const temporalRenderedThoughts = get().temporalRenderedThoughts;
+        // const newUnboundedTimeShift = temporalRenderedThoughts.length - 1 - temporalRenderedThoughts.indexOf(thought) - Math.floor(get().maxThoughtsOnScreen / 2);
         // const newTimeshift = newUnboundedTimeShift < 0
         //     ? 0
-        //     : newUnboundedTimeShift > get().allRenderedThoughts.length - get().maxThoughtsOnScreen
-        //         ? get().allRenderedThoughts.length - get().maxThoughtsOnScreen
+        //     : newUnboundedTimeShift > get().temporalRenderedThoughts.length - get().maxThoughtsOnScreen
+        //         ? get().temporalRenderedThoughts.length - get().maxThoughtsOnScreen
         //         : newUnboundedTimeShift;
         // set({ timeShift: newTimeshift });
 
@@ -134,4 +141,9 @@ export const useGraphStore = create<GraphStore>((set, get) => ({
 
     maxThoughtsOnScreen: MAX_THOUGHTS_ON_SCREEN_FOR_LOGGED_OUT,
     setMaxThoughtsOnScreen: (value) => set({ maxThoughtsOnScreen: value }),
+    // getSimulationSize: () => {
+    //     const size = Math.floor(3000 + Math.max(2000, Math.pow(get().maxThoughtsOnScreen, 1.8)));
+    //     // console.log(size);
+    //     return { x: size, y: size };
+    // }
 }));

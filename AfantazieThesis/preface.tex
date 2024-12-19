@@ -4,17 +4,17 @@
 \section*{Motivation}
 
 Every social network with userbase past a certain threshold will at some point face a problem.
-This problem is in essence a question of filtering.
-Questions like what should we show to our users, in what order or how often have to be answered at the very least by every social network operating big-tech company.
-It can also arise with moderately big forums and communities online. 
+This problem is in essence a one of filtering.
+Questions like what posts should we show to our users, in what order or how often have to be answered at the very least by every social network operating big-tech company,
+though they can also arise with moderately big forums and any post-based online community. 
 
-It does not help that the amount of data to consider can be vast.
-Meta-owned social apps for example, have over 3.29 billion daily active users as of september 2024 \cite{metaDau2024}.
+It does not help that the amount of data to consider can be truly vast.
+Meta-owned social apps for example, have over 3.29 billion daily active users as of september 2024 \cite{meta_dau_2024}.
 \xxx{TODO - naučit se citovat}
 When different tastes and preferences of the userbase are to be taken into account
 this problem becomes a very interesting software engineering challenge indeed.
 
-It is safe to say that all the big contemporary social networks (Facebook, Twitter (newly rebranded to X), Instagram, Reddit or TikTok)
+It is safe to say that all the big contemporary social networks (Facebook, Twitter, Instagram, Reddit or TikTok)
 tackle this challenge in the same way.
 Commonly reffered to as "The algorithm",
 their solutions rely on machine learning to learn user preferences and maximize retention time.
@@ -34,7 +34,7 @@ While subjective, we believe that these are common experiences of users of socia
 \section*{Afantázie}
 Afantázie is the implementation part and the final product of this thesis.
 It is a website (with one instance currently accessible through domain afantazie.cz)
-on which we are going to attempt to give an alternative to how we interact with social networks.
+on which we will attempt to give an alternative to how we interact with post-based websites.
 
 This alternative is a graph-based approach.
 Users will be presented with a graph of nodes representing posts and edges representing connections between them.
@@ -59,10 +59,13 @@ If implemented properly, this solution could solve the problems mentioned:
     the addictiveness would stem from exploring the content on users own terms.
 \end{itemize}
 
-\xxx{To wrap up this introduction, I'm going to present a picture TODO. It is the header of a news article called 72 Hours of Gamergate}
+\xxx{72 Hours of Gamergate ? }
+
 
 The task ahead is going to require solving technical challenges regarding development and hosting of a public website
-as well as implementation and research about graph vizualization.
+as well as implementation and research about graph vizualization techniques.
 
-We will start by presenting and comparing a few existing software products that provide graph visualization,
-then we will move to graph layout algorithms that make these visualizations possible and finally we will implement the website itself.
+In chapter 1 we will start by introducing and comparing a few existing software products that provide graph visualization.
+In the chapter 2 we will briefly talk about different graph layout algorithms.
+Chapters 3 and 4 are where we design and implement Afantázie
+and lastly we will present the finished product in chapter 5 and provide documentation in chapter 6.

@@ -7,10 +7,10 @@ import { useGraphStore } from './GraphStore';
 import GraphContainer from './GraphContainer';
 import { Localization } from '../../locales/localization';
 import { MediaContent } from '../../components/MediaContent';
-import { fetchReplies, fetchThought } from '../../api/graphClient';
-import { clearNeighborhoodThoughts, getThoughtsOnScreen, updateNeighborhoodThoughts } from './model/temporalThoughtsProvider';
+import { fetchReplies, fetchTemporalThoughts, fetchThought } from '../../api/graphClient';
+import { clearNeighborhoodThoughts, getThoughtsOnScreen, updateNeighborhoodThoughts } from './model/thoughtsProvider';
 
-const COLOR_BACKGROUND = 0x020304;
+const COLOR_BACKGROUND = 0x000000;
 
 const PUBLIC_FOLDER = import.meta.env.VITE_PUBLIC_FOLDER;
 
@@ -26,7 +26,9 @@ const GraphPage: React.FC = () => {
 
     // data
     const temporalThoughts = useGraphStore((state) => state.temporalRenderedThoughts);
+    const setTemporalThoughts = useGraphStore((state) => state.setTemporalRenderedThoughts);
     const neighborhoodThoughts = useGraphStore((state => state.neighborhoodThoughts));
+    const setNeighborhoodThoughts = useGraphStore((state => state.setNeighborhoodThoughts));
 
     const [replies, setReplies] = useState<thoughtNodeDto[]>([]);
 
@@ -35,13 +37,14 @@ const GraphPage: React.FC = () => {
     const [stageSize, setStageSize] = useState(initialStageSize);
     const [fullscreenPreview, setFullscreenPreview] = useState(false);
     const viewport = useGraphStore((state) => state.viewport);
+    const maxThoughtsOnScreen = useGraphStore((state) => state.maxThoughtsOnScreen);
 
     // controls
     const [zoomingHeld, setZoomingHeld] = useState(0);
     const setZoomingControl = useGraphStore((state) => state.setZoomingControl);
 
     const highlightedThought = useGraphStore((state) => state.highlightedThought);
-    const setHighlightedThoughtId = useGraphStore((state) => state.setHighlightedThoughtId);
+    const setHighlightedThoughtId = useGraphStore((state) => state.setHighlightedThoughtById);
     const unsetHighlightedThought = useGraphStore((state) => state.unsetHighlightedThought);
 
     const [fullHighlightedThought, setfullHighlightedThought] = useState<fullThoughtDto | null>(null);
@@ -49,20 +52,21 @@ const GraphPage: React.FC = () => {
     const timeShift = useGraphStore((state) => state.timeShift);
     const timeShiftControl = useGraphStore((state) => state.timeShiftControl);
     const setTimeShiftControl = useGraphStore((state) => state.setTimeShiftControl);
+    const setTimeShift = useGraphStore((state) => state.setTimeShift);
+    const setEndingThoughtId = useGraphStore((state) => state.setEndingThoughtId);
 
-    const [newestDate, setNewestDate] = useState<string>('...');//todo localize
+    const [newestDate, setNewestDate] = useState<string>('-');//todo localize
 
     useEffect(() => {
-        const visibleThoughts = getThoughtsOnScreen();
+        const thoughtsInTimeWindow = getThoughtsOnScreen();
+        // console.log("visibleThoughts: ", thoughtsInTimeWindow)
 
-        if (visibleThoughts && visibleThoughts.length > 0 && visibleThoughts[visibleThoughts.length - 1].dateCreated) {
+        if (thoughtsInTimeWindow && thoughtsInTimeWindow.length > 0 && thoughtsInTimeWindow[thoughtsInTimeWindow.length - 1].dateCreated) {
             // console.log("allRenderedThoughts: ", temporalThoughts)
-            if (timeShift > 0)
-            {
-                setNewestDate(visibleThoughts[visibleThoughts.length - 1].dateCreated || "...");
+            if (timeShift > 0) {
+                setNewestDate(thoughtsInTimeWindow[thoughtsInTimeWindow.length - 1].dateCreated || "...");
             }
-            else
-            {
+            else {
                 setNewestDate("právě teď...");
             }
         }
@@ -72,16 +76,34 @@ const GraphPage: React.FC = () => {
 
     const scrollContainer = useRef<HTMLDivElement>(null);
 
-    // Initialize the graph page
+    // Initialize the graph page (including zusand store)
     useEffect(() => {
-        const graphState = useGraphStore.getState();
+        const fetchAndSetEndingThought = async () => {
+            fetchTemporalThoughts({amount: 1}).then(response => {
+                if (response.ok && response.data!.length > 0){
+                    setEndingThoughtId(response.data![0].id)
+                }
+            })
+            setEndingThoughtId(0);
+        }
+        fetchAndSetEndingThought();
 
-        graphState.setTimeShift(0);
+        unsetHighlightedThought();
+        setTimeShift(0);
+        setTemporalThoughts([]);
+        setNeighborhoodThoughts([]);
+
+
         // set initial highlighted thought
         if (urlThoughtId) {
+            if (urlThoughtId === 'now') {
+                setInitialHighlightedThoughtId(null);
+                setTimeShift(-maxThoughtsOnScreen + 10);
+                setNewestDate("právě teď...");
+                return;
+            }
             const id = parseInt(urlThoughtId);
             if (!isNaN(id)) {
-                // console.log('setting initial highlighted thought id', id);
                 setInitialHighlightedThoughtId(id);
             }
         }
@@ -92,6 +114,7 @@ const GraphPage: React.FC = () => {
 
     //handle content fetching when highlighted thought changes
     useEffect(() => {
+        // console.log("highlighted thought changed to ", highlightedThought)
         if (highlightedThought !== null) {
             fetchThought(highlightedThought.id).then(response => {
                 if (response.ok) {
@@ -105,7 +128,7 @@ const GraphPage: React.FC = () => {
                     setReplies(response.data!);
                 }
             });
-        } else{
+        } else {
             clearNeighborhoodThoughts();
         }
 
@@ -115,14 +138,14 @@ const GraphPage: React.FC = () => {
     // handle ui changes when highlighted thought changes
     useEffect(() => {
 
-        if (temporalThoughts.length === 0)
-            return;
         if (highlightedThought === null) {
             window.history.pushState(null, '', '/graph');
             setStageSize(_ => ({ width: window.innerWidth, height: window.innerHeight - 60 }));
             setOverlayVisible(false);
             return;
         }
+        if (temporalThoughts.length === 0)
+            return;
         window.history.pushState(null, '', `/graph/${highlightedThought.id}`);
 
         //set stage size half open
@@ -143,8 +166,10 @@ const GraphPage: React.FC = () => {
 
     // viewport size handler
     useEffect(() => {
-        viewport.width = stageSize.width;
-        viewport.height = stageSize.height;
+        if (viewport !== null) {
+            viewport.width = stageSize.width;
+            viewport.height = stageSize.height;
+        }
     }, [stageSize]);
 
     // handle overlay controls
@@ -208,7 +233,7 @@ const GraphPage: React.FC = () => {
                             {fullHighlightedThought.content && <p className='thought-content'>{renderContentWithReferences(fullHighlightedThought.content)}</p>}
                             <MediaContent id={fullHighlightedThought.id}></MediaContent>
                         </div>
-                        {!fullscreenPreview && temporalThoughts.filter(t => t.links.includes(fullHighlightedThought?.id)).length > 0 &&
+                        {!fullscreenPreview && replies.length > 0 &&
                             <div className='responses-container-half-screen'>
                                 <p className='responses-header'><b>{Localization.Replies}</b></p>
                                 <div>
@@ -217,7 +242,7 @@ const GraphPage: React.FC = () => {
                                             onClick={_ => setHighlightedThoughtId(t.id)}>{t.title}</span>
                                     )}
 
-{/* TODO -> add dynamic loading of links here. */}
+                                    {/* TODO -> add dynamic loading of links here. */}
 
                                     {/* todo - the css here in search-result-item is borrowed from createThought*/}
                                 </div>

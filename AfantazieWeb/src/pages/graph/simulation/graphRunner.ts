@@ -1,83 +1,99 @@
 import { Application } from 'pixi.js';
-import { pull_and_push } from './pullAndPush';
+import { simulate_one_frame } from './forcesSimulation';
 import { initGraphics } from '../view/GraphGraphics';
 import { SIMULATION_FRAMES, THOUGHTS_CACHE_FRAME } from '../model/graphParameters';
 import { useGraphStore } from '../GraphStore';
 import { ThoughtPositionCache } from '../model/thoughtPositionCache';
-import { updateTemporalThoughts } from '../model/temporalThoughtsProvider';
+import { updateTemporalThoughts } from '../model/thoughtsProvider';
 
 export default function runGraph(app: Application) {
+
 
     const thoughtGrabbed = () => {
         useGraphStore.getState().setFrame(1);
     };
 
-    const allRenderedThoughts = useGraphStore.getState().temporalRenderedThoughts; //after dynamic loading this might need to move to ticker.
+    const temporalThoughts = useGraphStore.getState().temporalRenderedThoughts; //after dynamic loading this might need to move to ticker.
 
-    const renderGraph = initGraphics(app, allRenderedThoughts, thoughtGrabbed);
+    const renderGraph = initGraphics(app, temporalThoughts, thoughtGrabbed);
 
     useGraphStore.getState().setFrame(0);
 
-    // main apploication loop
+    // main application loop
     app.ticker.add((_) => {
+        const graphState = useGraphStore.getState();
+
         // cache thoughts
-        if (useGraphStore.getState().frame === THOUGHTS_CACHE_FRAME) {
-            // console.log('caching thoughts positions');
-            localStorage.removeItem('thoughts-cache');
-            // console.log(useGraphStore.getState().allRenderedThoughts);
+        if (graphState.frame === THOUGHTS_CACHE_FRAME) {
+            console.log('caching thoughts positions');
 
-            localStorage.setItem('thoughts-cache',
-                JSON.stringify(useGraphStore.getState()
-                    .temporalRenderedThoughts.map<ThoughtPositionCache>(t => ({
-                        id: t.id,
-                        position: t.position,
-                    }))));
+            const storage = localStorage.getItem('thoughts-cache'); //todo use set?
+
+            const cachedPositions: ThoughtPositionCache[] = storage ? JSON.parse(storage) : [];
+            // console.log(graphState.allRenderedThoughts);
+
+            const combinedThoughts = [
+                ...cachedPositions,
+                ...graphState.temporalRenderedThoughts,
+                ...graphState.neighborhoodThoughts
+            ];
+            
+            // Use a Set to filter out duplicate thoughts by their id
+            const uniqueThoughts = Array.from(
+                new Map(
+                    combinedThoughts.map(t => [t.id, t])
+                ).values()
+            );
+            
+            const thoughtsCache: ThoughtPositionCache[] = uniqueThoughts.map(t => ({
+                id: t.id,
+                position: t.position,
+            }));
+            
+            localStorage.setItem('thoughts-cache', JSON.stringify(thoughtsCache));
         }
-
         
         // handle zoom input from user
-        const zoomingControl = useGraphStore.getState().zoomingControl;
+        const zoomingControl = graphState.zoomingControl;
         if (zoomingControl !== 0) {
-            useGraphStore.getState().viewport.zoomByButtonDelta(zoomingControl);
+            graphState.viewport.zoomByButtonDelta(zoomingControl);
         }
-        // handle TimeShift  control input from user
-        const timeShiftControl = useGraphStore.getState().timeShiftControl;
-        const timeShift = useGraphStore.getState().timeShift;
-        const maxThoughtsOnScreen = useGraphStore.getState().maxThoughtsOnScreen;
-        
-        // if live preview - update temporal thoughts
-        if (useGraphStore.getState().timeShift <= 0 && useGraphStore.getState().frame > 1 && useGraphStore.getState().frame % 300 === 0) {
-            updateTemporalThoughts();
-        }
-        else if ((timeShiftControl > 0 && timeShift < useGraphStore.getState().temporalRenderedThoughts.length)
-            || (timeShiftControl < 0 && timeShift > -maxThoughtsOnScreen)) { //todo check the one
-            useGraphStore.getState().setTimeShift(timeShift + timeShiftControl); //todo move this in store
-            useGraphStore.getState().setFrame(1);
 
-            updateTemporalThoughts();
+        // handle TimeShift  control input from user
+        const timeShiftControl = graphState.timeShiftControl;
+        const timeShift = graphState.timeShift;
+        const maxThoughtsOnScreen = graphState.maxThoughtsOnScreen;
+        
+        if ((timeShiftControl > 0 && timeShift < graphState.temporalRenderedThoughts.length)
+            || (timeShiftControl < 0 && timeShift > -maxThoughtsOnScreen)) { //todo check the one
+            graphState.setTimeShift(timeShift + timeShiftControl);
+            graphState.setFrame(1);
         }
+        
+        // Update temporal thoughts
+        updateTemporalThoughts();
 
         //move the viewport to the highlighted thought
-        const lockedOnHighlighted = useGraphStore.getState().lockedOnHighlighted;
+        const lockedOnHighlighted = graphState.lockedOnHighlighted;
         if (lockedOnHighlighted) {
-            const highlightedThought = useGraphStore.getState().highlightedThought;
-            const viewport = useGraphStore.getState().viewport;
+            const highlightedThought = graphState.highlightedThought;
+            const viewport = graphState.viewport;
             if (highlightedThought !== null) {
                 const dx = viewport.position.x + viewport.width / 2 / viewport.zoom - highlightedThought.position.x;
                 const dy = viewport.position.y + viewport.height / 2 / viewport.zoom - highlightedThought.position.y;
                 // console.log(dx, dy, lockedOnHighlighted);
                 if (Math.abs(dx) > 0.01 && Math.abs(dy) > 0.01) {
-                    useGraphStore.getState().viewport.moveBy({ x: dx / 10, y: dy / 10 });
+                    graphState.viewport.moveBy({ x: dx / 10, y: dy / 10 });
                 }
             }
         }
 
         // force simulation
-        const frame = useGraphStore.getState().frame;
+        const frame = graphState.frame;
         if (frame < SIMULATION_FRAMES) {
-            pull_and_push();
+            simulate_one_frame();
         }
-        useGraphStore.getState().setFrame(frame + 1);
+        graphState.setFrame(frame + 1);
 
         // render the graph
         renderGraph();

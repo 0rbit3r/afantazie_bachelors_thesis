@@ -1,0 +1,148 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{meta_dau_2024}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=8be4bc579e714ed92aa654e9ef52d376}{%
+           family={Meta\bibnamedelima Platforms},
+           familyi={M\bibinitperiod\bibinitdelim P\bibinitperiod},
+           given={Inc.},
+           giveni={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{8be4bc579e714ed92aa654e9ef52d376}
+      \strng{fullhash}{8be4bc579e714ed92aa654e9ef52d376}
+      \strng{fullhashraw}{8be4bc579e714ed92aa654e9ef52d376}
+      \strng{bibnamehash}{8be4bc579e714ed92aa654e9ef52d376}
+      \strng{authorbibnamehash}{8be4bc579e714ed92aa654e9ef52d376}
+      \strng{authornamehash}{8be4bc579e714ed92aa654e9ef52d376}
+      \strng{authorfullhash}{8be4bc579e714ed92aa654e9ef52d376}
+      \strng{authorfullhashraw}{8be4bc579e714ed92aa654e9ef52d376}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{9}
+      \field{note}{Accessed: 2024-11-03}
+      \field{title}{Meta-owned social apps have over 3.29 billion daily active users}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://investor.fb.com/investor-news/press-release-details/2024/Meta-Reports-Third-Quarter-2024-Results/default.aspx
+      \endverb
+      \verb{url}
+      \verb https://investor.fb.com/investor-news/press-release-details/2024/Meta-Reports-Third-Quarter-2024-Results/default.aspx
+      \endverb
+    \endentry
+    \entry{snap_cit_hep}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=97eef6fae0794d7a7a66e11dc0373d5d}{%
+           family={Project},
+           familyi={P\bibinitperiod},
+           given={Stanford\bibnamedelimb Network\bibnamedelima Analysis},
+           giveni={S\bibinitperiod\bibinitdelim N\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{97eef6fae0794d7a7a66e11dc0373d5d}
+      \strng{fullhash}{97eef6fae0794d7a7a66e11dc0373d5d}
+      \strng{fullhashraw}{97eef6fae0794d7a7a66e11dc0373d5d}
+      \strng{bibnamehash}{97eef6fae0794d7a7a66e11dc0373d5d}
+      \strng{authorbibnamehash}{97eef6fae0794d7a7a66e11dc0373d5d}
+      \strng{authornamehash}{97eef6fae0794d7a7a66e11dc0373d5d}
+      \strng{authorfullhash}{97eef6fae0794d7a7a66e11dc0373d5d}
+      \strng{authorfullhashraw}{97eef6fae0794d7a7a66e11dc0373d5d}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2024-09-10}
+      \field{title}{High-energy physics citation network}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://snap.stanford.edu/data/cit-HepPh.html
+      \endverb
+      \verb{url}
+      \verb https://snap.stanford.edu/data/cit-HepPh.html
+      \endverb
+    \endentry
+    \entry{cytoscapes_js_homepage}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=d792e549e1fed42ff079b71566c7f3c4}{%
+           family={Cytospace\bibnamedelimb -\bibnamedelimb should\bibnamedelimb we\bibnamedelimb use\bibnamedelimb his\bibnamedelimb name\bibnamedelimb here\bibnamedelimb when\bibnamedelimb citing\bibnamedelimb the\bibnamedelima website?)},
+           familyi={C\bibinitperiod\bibinitdelim \bibinithyphendelim \bibinitperiod\bibinitdelim s\bibinitperiod\bibinitdelim w\bibinitperiod\bibinitdelim u\bibinitperiod\bibinitdelim h\bibinitperiod\bibinitdelim n\bibinitperiod\bibinitdelim h\bibinitperiod\bibinitdelim w\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim t\bibinitperiod\bibinitdelim w\bibinitperiod},
+           given={Max\bibnamedelimb Franz\bibnamedelimb (TODO\bibnamedelimb -\bibnamedelima Max},
+           giveni={M\bibinitperiod\bibinitdelim F\bibinitperiod\bibinitdelim (\bibinitperiod\bibinitdelim \bibinithyphendelim \bibinitperiod\bibinitdelim M\bibinitperiod},
+           prefix={authored},
+           prefixi={a\bibinitperiod}}}%
+      }
+      \strng{namehash}{d792e549e1fed42ff079b71566c7f3c4}
+      \strng{fullhash}{d792e549e1fed42ff079b71566c7f3c4}
+      \strng{fullhashraw}{d792e549e1fed42ff079b71566c7f3c4}
+      \strng{bibnamehash}{d792e549e1fed42ff079b71566c7f3c4}
+      \strng{authorbibnamehash}{d792e549e1fed42ff079b71566c7f3c4}
+      \strng{authornamehash}{d792e549e1fed42ff079b71566c7f3c4}
+      \strng{authorfullhash}{d792e549e1fed42ff079b71566c7f3c4}
+      \strng{authorfullhashraw}{d792e549e1fed42ff079b71566c7f3c4}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2024-12-19}
+      \field{title}{Cytoscape.js homepage}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://js.cytoscape.org/
+      \endverb
+      \verb{url}
+      \verb https://js.cytoscape.org/
+      \endverb
+    \endentry
+    \entry{cytoscapes_js_github}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=8159564001ff2457139c10c428057293}{%
+           family={Franz},
+           familyi={F\bibinitperiod},
+           given={Max},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{8159564001ff2457139c10c428057293}
+      \strng{fullhash}{8159564001ff2457139c10c428057293}
+      \strng{fullhashraw}{8159564001ff2457139c10c428057293}
+      \strng{bibnamehash}{8159564001ff2457139c10c428057293}
+      \strng{authorbibnamehash}{8159564001ff2457139c10c428057293}
+      \strng{authornamehash}{8159564001ff2457139c10c428057293}
+      \strng{authorfullhash}{8159564001ff2457139c10c428057293}
+      \strng{authorfullhashraw}{8159564001ff2457139c10c428057293}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Accessed: 2024-12-19}
+      \field{title}{Cytoscape.js Euler demonstration - GitHub repository}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://github.com/cytoscape/cytoscape.js-euler
+      \endverb
+      \verb{url}
+      \verb https://github.com/cytoscape/cytoscape.js-euler
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

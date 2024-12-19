@@ -20,6 +20,8 @@ export class Viewport {
         this.position = { x: SIM_WIDTH / 2 - width / 2 / this.zoom, y: SIM_HEIGHT / 2 - height / 2 / this.zoom };
         this.dragged = false;
         this.lockedOnNode = false;
+        // console.log(simSize);
+        // console.log(this.position);
         // this.onScreenSizeChange = () => {};
     }
 

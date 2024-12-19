@@ -1,6 +1,6 @@
 \chapter{Related software}
 
-There are plenty of programs and libraries for graph visualization with different purposes.
+There are plenty of programs and libraries for \gls{graph} visualization with different purposes.
 Just to name a few there are D3.js, Neo4j, Graphviz, Tulip, Wolfram Grapher, Pajek and many more.
 
 In this chapter however I'm going to focus on just three software products - each with very different use-case and target userbase.
@@ -26,7 +26,7 @@ We will look into three aspects of these products:
 \end{itemize}
 
 As the source of data for testing the large-graph visualization capabilities I chose the dataset of citations between papers
-in the field of high-energy physics \xxx{(CitHep) \cite{snap_cit_hep}} (Later refered to as the CitHep dataset).
+in the field of high-energy physics \cite{snap_cit_hep} (Later refered to as the \gls{cithep_dataset}).
 It contains 34546 nodes, 421578 edges and temporal data.
 
 This dataset is suitable for my purposes because:
@@ -47,7 +47,7 @@ with maybe a slight bias towards graph/data visualization enthisuiasts.
 It's available for all the major operating systems and has a large community of users and plethera of extensions available through the
 community plugins.
 
-\subsection{Obsidian graph view}
+\subsection*{Obsidian graph view}
 
 The graph visualization in obsidian (called graph view) is based on a force-directed layout algorithm \xxx{(more in chapter TBD)}.
 It is easy to use and provides an appealing visual representation of the notes. It is also customizable to some extent.
@@ -89,7 +89,7 @@ It provides tens and with plugins hundreds \xxx{(cit. needed)} algorithms for gr
 Gephi can compute quantitative characteristics of graph-based data such as modularity, clustering coefficient, degree distribution and many more.
 It can not just vizualize the working data in the viewport but also export rather visually appealing images of the vizualized graph.
 
-\subsection{Gephi graph export}
+\subsection*{Gephi graph export}
 
 In figure \ref{obr:gephi_cithep_3k} you can see, again, the first 3000 nodes of the CitHep dataset visualized in Gephi.
 Compared with Obsidian the Gephi redner provides more visually identifiable characteristics of the data:
@@ -127,7 +127,40 @@ But the reward is the ability to visualize and analyze large graphs better than 
 \end{figure}
 
 \section{Cytoscape.js}
+
 Cytoscape.js is a javascript library for graph visualization in the browser.
+Its homepage starts with Demos section followed by headline 'Introduction' and almost 8200 lines of text \cite{cytoscapes_js_homepage}.
+
+Among the demos there are various examples of usage from simple FDLs, to some more complex use-cases such as an interactive graph of wine and cheese pairings. \xxx{cit here}
+
+In the beginning we attempted to create a prototype of Afantázie using cytoscape.
+We created a fresh vite + react ts project. We tried to follow the ofiicial instruction on the Cytoscape homepage to render a simple graph.
+
+% We managed to do so in the \xxx{github repo} in the Cytoscape_graph_test directory and you can see the result in figure \ref{obr:cytoscape_react_test}.
+
+\begin{figure}[p]\centering
+  \includegraphics[width=140mm, height=140mm]{img/cytoscape_react_10_nodes_path.png}
+  \caption{A simple application in react + cytoscape rendering a simple graph}
+  \label{obr:cytoscape_react_test}
+\end{figure}
+
+We also downloaded github repository of one of the official examples from the cytoscape.js homepage \cite{cytoscapes_js_github}.
+The example is called 'Euler' and it uses one of the versions of FDL Cytoscape.js provides.
+
+The example of a 'large graph' this demo showcases is a path of 5000 nodes and you can look the result in figure \ref{obr:cytoscape_5000_nodes_path}.
+
+\begin{figure}[p]\centering
+  \includegraphics[width=140mm, height=140mm]{img/cytoscape_5000_path_official_demo.png}
+  \caption{An official example of large graph rendering in Cytoscape.js (path of 5000 nodes)}
+  \label{obr:cytoscape_5000_nodes_path}
+\end{figure}
+
+This example is animated and on page refresh the graph stabilizes in real time.
+We had to increase the simulation time as the default value resulted in a tangled unhelpful layout. 
+
 \xxx{TODO - Vyzkoušet}
 
+
 \section{Final comparison}
+
+\xxx{Add a table comparing the technologies here}
