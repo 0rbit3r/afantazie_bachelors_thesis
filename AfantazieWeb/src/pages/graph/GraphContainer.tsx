@@ -12,7 +12,7 @@ const GraphContainer = (props: GraphRendererProps) => {
   let pixiApp = useApp();
 
   useEffect(() => {
-    console.log("initializing Container with id", props.initialHighlightedThoughtId);
+    // console.log("initializing Container with id", props.initialHighlightedThoughtId);
     // assigning variable an id from url is delayed for some reason -> waitfor either null or number
     if (props.initialHighlightedThoughtId === undefined) {
       return;

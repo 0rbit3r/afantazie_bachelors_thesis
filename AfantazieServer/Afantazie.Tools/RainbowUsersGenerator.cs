@@ -16,6 +16,7 @@ namespace Afantazie.Tools
             var usersRepo = services.GetRequiredService<IUserRepository>();
 
             Console.WriteLine("Generating users...");
+            Console.WriteLine("   Registering...");
 
             for (int i = 0; i < count; i++)
             {
@@ -23,9 +24,14 @@ namespace Afantazie.Tools
             }
 
             var minimumColorChanel = 100;
-
+            Console.WriteLine("   Assigning color...");
             for (int i = 0; i < count; i++)
             {
+                if (i % 100 == 0)
+                {
+                    Console.WriteLine($"   {i} / {count}");
+                }
+
                 int red, green, blue;
                 if (i < count / 3)
                 {

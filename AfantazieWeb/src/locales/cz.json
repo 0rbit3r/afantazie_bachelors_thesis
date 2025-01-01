@@ -45,7 +45,8 @@
         "Takový Facebook, ale bez všech ošklivých vlastností Facebooku",
         "Jakákoliv podobnost s neuronovými sítěmi je čistě náhodná",
         "Místo obrovské big-tech firmy provozovaná jedním medium-tech Alešem",
-        "Přestaň refreshovat, než to rozbiješ -_-"
+        "Přestaň refreshovat, než to rozbiješ -_-",
+        "Místo kde se grafuje"
     ],
     "LoginTitle": "Přihlášení",
     "NameOrEmail": "Jméno nebo email",
@@ -98,5 +99,7 @@
     "ThoughtsPositionsDeleted": "Pozice myšlenek byly vymazány",
     "CurrentlySavedThoughtsLabel": "Současný počet uložených pozic: ",
     "NoNotifications": "Žádné odpovědi. Napiš myšlenku a nějaké se tu objeví;-)",
-    "Notifications": "(ne)Notifikace"
+    "Notifications": "(ne)Notifikace",
+    "RightNow": "právě teď...",
+    "AllThoughtsButton": "Všechny myšlenky"
 }

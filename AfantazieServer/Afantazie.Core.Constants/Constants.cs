@@ -8,6 +8,6 @@ namespace Afantazie.Core.Constants
 {
     public static class Constants
     {
-        public static int DefaultMaximumThoughts = 300;
+        public static int DefaultMaximumThoughts = 100;
     }
 }

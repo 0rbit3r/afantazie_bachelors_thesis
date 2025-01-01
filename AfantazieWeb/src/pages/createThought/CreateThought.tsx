@@ -260,8 +260,10 @@ function CreateThought() {
                 </div>
             </div>}
             <div className='new-thought-form'>
-                <h1>{Localization.NewThought}</h1>
-
+                <div className='header-and-hint'>
+                    <h1>{Localization.NewThought}</h1>
+                    <button className='button-secondary tutorial-button' type="button" onClick={() => setTutorialOverlayVisible(true)}>{Localization.Hint}</button>
+                </div>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <input
@@ -285,7 +287,7 @@ function CreateThought() {
                     <p className='bottom-row-buttons'>
                         <span className='character-limit'>{formData.content.length} / {CONTENT_LENGTH_LIMIT}</span>
                         <button className='button-secondary' type="button"
-                        onClick={() => setSearchOverlayVisible(true)}>{Localization.AddReference}</button>
+                            onClick={() => setSearchOverlayVisible(true)}>{Localization.AddReference}</button>
                     </p>
                     {notFoundThoughtIds.map((id) => (
                         <p key={id} className='red-text'>{Localization.ThoughtId} <b>{id}</b> {Localization.NotFound}</p>
@@ -325,7 +327,6 @@ function CreateThought() {
                             className={`button-primary ${createButtonEnabled ? '' : 'button-primary-disabled'}`}
                             disabled={!createButtonEnabled}>{Localization.CreateButton}</button>
                     </p>
-                    <button className='button-secondary tutorial-button' type="button" onClick={() => setTutorialOverlayVisible(true)}>{Localization.Hint}</button>
                 </form>
             </div>
         </div>

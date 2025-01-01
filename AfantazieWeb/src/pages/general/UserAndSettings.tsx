@@ -116,7 +116,7 @@ function UserAndSettings() {
 
     function handleMaxThoughtsChange(e: ChangeEvent<HTMLInputElement>): void {
 
-        console.log(e.target.value);
+        // console.log(e.target.value);
         const number = parseInt(e.target.value)
             ? parseInt(e.target.value)
             : 0;

@@ -88,6 +88,7 @@ namespace Afantazie.Service.Thoughts
             if (!result.IsSuccess)
             {
                 _logger.LogWarning("Thought with id {id} not found.", id);
+                return result;
             }
             _logger.LogInformation("Requested thought [{id}] {title}", id, result.Payload!.Title);
             return result;

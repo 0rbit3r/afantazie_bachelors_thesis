@@ -25,7 +25,7 @@ export default function runGraph(app: Application) {
 
         // cache thoughts
         if (graphState.frame === THOUGHTS_CACHE_FRAME) {
-            console.log('caching thoughts positions');
+            // console.log('caching thoughts positions');
 
             const storage = localStorage.getItem('thoughts-cache'); //todo use set?
 

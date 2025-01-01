@@ -27,20 +27,22 @@ function About() {
           </li>
         </ul>
         <h2>Cookies</h2>
-        Až na funkční cookies pro přihlašování tu žádné nejsou. Jsi na tom posledním webu na světě, který tě nešmíruje.
+        Až na funkční cookies pro přihlašování a cachování pozic myšlenek tu žádné nejsou. Jsi možná na tom posledním webu na světě, který tě nešmíruje.
+
+
       </div>
     )
     :
     (
       <div className={"content-container about-page " + (window.innerWidth > 500 ? "avoid-navbar" : "")}>
-        <h2>What is Thought Web?</h2>
-        Thought Web is an idea of mine.
-        Its goal is to create a graph doohickey for interaction between users and their posts I'm calling Thoughts. (Not to be confused with thots.)<br />
+        <h2>What is Aphantasia?</h2>
+        Aphantasia is an idea of mine.
+        Its goal is to create a graph doohickey for interaction between users and their posts I'm calling Thoughts.<br />
         <br />
-        Thought is just a piece of text that can reference other thoughts.
+        A thought is just a piece of text that can reference other thoughts.
         It can continue some, reply to others while being mentioned by a good deal of more. I want to visualize these relationships and allow their exploration.
         <h2>Terms and conditions</h2><br />
-        Quickly Simply - by registering on this site:
+        Briefly said - by registering on this site:
         <ul>
           <li>You agree to behave yourself and not break any relevant laws.</li>
           <li>I agree to keep your data safe.</li>
@@ -49,13 +51,19 @@ function About() {
               <li>Username</li>
               <li>Email</li>
               <li>Password Hash</li>
-              <li>User settings (chosen color)</li>
-              <li>Logs of common technical data relating to hosting a website (time of access, IP address, type of browser etc.)</li>
+              <li>User settings (chosen color...)</li>
+              <li>Logs of common technical data related to hosting a website (time of access, IP address, type of browser etc.)
+              </li>
             </ul>
           </li>
         </ul>
         <h2>Cookies</h2>
-       I only use a single cookie and that's for logging you in. Chances are you're on the last website in the world that doesn't track you.
+        I only use local storage cookies to:
+        <ul>
+          <li>keep you logged in</li>
+          <li>cache thought positions</li>
+        </ul>
+        No tracking cookies here I'm afraid.
       </div>
     )
 }

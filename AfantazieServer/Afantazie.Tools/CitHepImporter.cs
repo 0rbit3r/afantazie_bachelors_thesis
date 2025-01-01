@@ -13,10 +13,11 @@ namespace Afantazie.Tools
         public async static Task ImportCitHepFileAsync(IServiceProvider services)
         {
             bool LIMIT_TO_5_CITATIONS = false;
+            int NODES_LIMIT = 3000;
 
+            // file size
             int nodes = 34546;
             int edges = 421578;
-            int NODES_LIMIT = 700;
 
             string path = "C:/Users/kakos/Downloads/cit-HepPh.txt/Cit-HepPh.txt";
 

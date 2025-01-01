@@ -1,5 +1,5 @@
 import { useGraphStore } from "../GraphStore";
-import { pullForce, backlinksNumberForceDivisor, pushForce, PUSH_THRESH, MOMENTUM_DAMPENING_RATE, FRAMES_WITH_OVERLAP, SLOW_SIM_EVERY_N_FRAMES, NODE_MASS_ON, MAX_MASS_DIFFERENCE_PULL_FORCE_MULTIPLIER, MIN_MASS_DIFFERENCE_PULL_FORCE_MULTIPLIER, SIM_HEIGHT, SIM_WIDTH, FRAMES_WITH_LESS_INFLUENCE, MAX_MOVEMENT_SPEED, MAX_MASS_DIFFERENCE_PUSH_FORCE_MULTIPLIER, MIN_MASS_DIFFERENCE_PUSH_FORCE_MULTIPLIER, GRAVITY_FREE_RADIUS, gravityForce } from "../model/graphParameters";
+import { pullForce, backlinksNumberForceDivisor, pushForce, PUSH_THRESH, MAX_MOMENTUM_DAMPENING, FRAMES_WITH_OVERLAP, SLOW_SIM_EVERY_N_FRAMES, NODE_MASS_ON, MAX_MASS_DIFFERENCE_PULL_FORCE_MULTIPLIER, MIN_MASS_DIFFERENCE_PULL_FORCE_MULTIPLIER, SIM_HEIGHT, SIM_WIDTH, FRAMES_WITH_LESS_INFLUENCE, MAX_MOVEMENT_SPEED, MAX_MASS_DIFFERENCE_PUSH_FORCE_MULTIPLIER, MIN_MASS_DIFFERENCE_PUSH_FORCE_MULTIPLIER, GRAVITY_FREE_RADIUS, gravityForce, MOMENTUM_DAMPENING_EASE_IN_FRAMES, MOMENTUM_DAMPENING_START_AT, GRAVITY_ON } from "../model/graphParameters";
 import { RenderedThought } from "../model/renderedThought";
 import { getThoughtsOnScreen } from "../model/thoughtsProvider";
 
@@ -44,7 +44,9 @@ export const simulate_one_frame = () => {
                 }
             }
         }
-        gravity_pull(thought);
+        if (GRAVITY_ON){
+            gravity_pull(thought);
+        }
     }
 
     const frame = useGraphStore.getState().frame;
@@ -62,8 +64,14 @@ export const simulate_one_frame = () => {
         thought.momentum.x += thought.forces.x;
         thought.momentum.y += thought.forces.y;
 
-        thought.momentum.x /= MOMENTUM_DAMPENING_RATE;
-        thought.momentum.y /= MOMENTUM_DAMPENING_RATE;
+        const frameAdjustedDampeningRate = 
+            MOMENTUM_DAMPENING_START_AT + 
+            Math.min(frame, MOMENTUM_DAMPENING_EASE_IN_FRAMES) / MOMENTUM_DAMPENING_EASE_IN_FRAMES * (MAX_MOMENTUM_DAMPENING - MOMENTUM_DAMPENING_START_AT);
+
+        // console.log("frameAdjustedDampeningRate: ", frameAdjustedDampeningRate);
+
+        thought.momentum.x /= frameAdjustedDampeningRate;
+        thought.momentum.y /= frameAdjustedDampeningRate;
 
         // thought.momentum.x = Math.min(thought.momentum.x, MAX_MOMENTUM);
         // thought.momentum.y = Math.min(thought.momentum.y, MAX_MOMENTUM);
@@ -71,8 +79,8 @@ export const simulate_one_frame = () => {
         thought.position.x += Math.max(Math.min(thought.momentum.x / (Math.floor(frame / SLOW_SIM_EVERY_N_FRAMES) + 1), MAX_MOVEMENT_SPEED), -MAX_MOVEMENT_SPEED); // not taking angle into account...
         thought.position.y += Math.max(Math.min(thought.momentum.y / (Math.floor(frame / SLOW_SIM_EVERY_N_FRAMES) + 1), MAX_MOVEMENT_SPEED), -MAX_MOVEMENT_SPEED); // not taking angle into account...
 
-        thought.forces.x /= MOMENTUM_DAMPENING_RATE;
-        thought.forces.y /= MOMENTUM_DAMPENING_RATE;
+        thought.forces.x /= frameAdjustedDampeningRate;
+        thought.forces.y /= frameAdjustedDampeningRate;
     });
 
 }
@@ -183,5 +191,10 @@ const handleOutOfBounds = (thought: RenderedThought) => {
     }
     if (thought.position.y > SIM_HEIGHT - thought.radius * 2.5) {
         thought.position.y = SIM_HEIGHT - thought.radius * 2.5;
+    }
+    if (!thought.position.x || !thought.position.y) {
+        console.log("thought out of bounds: ", thought.id);
+        thought.position.x = SIM_WIDTH / 2;
+        thought.position.y = SIM_HEIGHT / 2;
     }
 }

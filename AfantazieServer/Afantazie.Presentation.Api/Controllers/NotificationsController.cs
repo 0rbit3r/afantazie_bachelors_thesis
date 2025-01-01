@@ -30,7 +30,7 @@ namespace Afantazie.Presentation.Api.Controllers
             return result.Select(t => new NotificationDto
             {
                 Color = t.Author.Color,
-                Title = $"odpověď od {t.Author.Username}", // todo localization
+                Title = $"{t.Author.Username}",
                 Link = $"/graph/{t.Id}",
                 Time = ConvertSecondsToReadable(DateTime.Now - t.DateCreated),
                 Text = t.Title

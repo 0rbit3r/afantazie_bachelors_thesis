@@ -26,12 +26,14 @@ builder.Services.AddCors(options =>
         builder =>
         {
             //todo - production?
-            builder.WithOrigins("http://localhost:4200", 
-                "http://localhost:5173", "https://afantazie.cz", 
-                "https://www.afantazie.cz", "https://www.thoughtweb.net")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .AllowCredentials();
+            builder.WithOrigins(
+                "http://localhost:4200", "http://localhost:5173",
+                "https://afantazie.cz", "https://www.afantazie.cz",
+                "https://aphantasia.io", "https://www.aphantasia.io"//todo rework this
+                )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
         });
 });
 

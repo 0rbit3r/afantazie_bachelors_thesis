@@ -3,7 +3,7 @@ import { fetchNeighborhoodThoughts, fetchTemporalThoughts } from "../../../api/g
 import { getUserSettings } from "../../../api/UserSettingsApiClient";
 import { useGraphStore } from "../GraphStore";
 import { computeSize } from "../simulation/simpleSizeComputer";
-import { BASE_RADIUS, INITIAL_POSITIONS_RADIUS, MAX_THOUGHTS_ON_SCREEN_FOR_LOGGED_OUT, SIM_HEIGHT, SIM_WIDTH } from "./graphParameters";
+import { BASE_RADIUS, INITIAL_POSITIONS_RADIUS, MAX_THOUGHTS_ON_SCREEN_FOR_LOGGED_OUT, NEIGHBORHOOD_DEPTH, SIM_HEIGHT, SIM_WIDTH } from "./graphParameters";
 import { mapDtosToRenderedThoughts, RenderedThought } from "./renderedThought";
 import { ThoughtPositionCache } from "./thoughtPositionCache";
 
@@ -36,7 +36,7 @@ export function getThoughtsInTimeWindow() {
 
 // this function will initialize temporal array either in the latest time window or around a given thought if provided.
 export function initializeTemporalThoughts(initialHighligthedId: number | null) {
-  //  console.log("initializing temporal thoughts with id", initialHighligthedId);
+  // console.log("initializing temporal thoughts with id", initialHighligthedId);
 
   var fetchedThoughts = [] as thoughtNodeDto[];
 
@@ -98,9 +98,9 @@ export function initializeTemporalThoughts(initialHighligthedId: number | null) 
   });
 
   graphState.setTemporalRenderedThoughts(newThoughts);
-  if (initialHighligthedId && initialHighligthedId !== 0) {
-    graphState.setHighlightedThoughtById(initialHighligthedId);
-  }
+  // if (initialHighligthedId && initialHighligthedId !== 0) {
+  //   graphState.setHighlightedThoughtById(initialHighligthedId);
+  // }
 }
 
 // if the time window is exceded, this function will fetch new thoughts from api and update the temporal thoughts array
@@ -127,15 +127,15 @@ export const updateTemporalThoughts = () => {
         graphState.temporalRenderedThoughts.push(...convertedToRenderedThoughts);
 
         //handle time shift based on whether user is in live preview mode
-        console.log("ending thought is: ", graphState.endingThoughtId);
+        // console.log("ending thought is: ", graphState.endingThoughtId);
         if (graphState.endingThoughtId !== null 
           && convertedToRenderedThoughts[0].id <= graphState.endingThoughtId){ //-> not in preview mode
-            console.log("not live preview - timeshift from ", graphState.timeShift);
-            console.log("to: ", convertedToRenderedThoughts.length + graphState.timeShift);
+            // console.log("not live preview - timeshift from ", graphState.timeShift);
+            // console.log("to: ", convertedToRenderedThoughts.length + graphState.timeShift);
             graphState.setTimeShift(convertedToRenderedThoughts.length + graphState.timeShift);
         }
         else { // -> live preview
-          console.log("live preview - timeshift stays at: ", graphState.timeShift);
+          // console.log("live preview - timeshift stays at: ", graphState.timeShift);
         }
       }
       setTimeout(() => graphState.setFetchingTemporalThoughts(false), 2000); // this might be a hack but it seems to work well... (to only fetch new thoughts every two seconds)
@@ -183,7 +183,7 @@ export const updateNeighborhoodThoughts = (thoughtId: number) => {
   const graphState = useGraphStore.getState();
 
   const fetchAndSetStateAsync = async () => {
-    const response = await fetchNeighborhoodThoughts(thoughtId, 3);
+    const response = await fetchNeighborhoodThoughts(thoughtId, NEIGHBORHOOD_DEPTH);
     // console.log('neighborhood-thoughts', response);
     const newNeighborhoodThoughts: RenderedThought[] = [];
 

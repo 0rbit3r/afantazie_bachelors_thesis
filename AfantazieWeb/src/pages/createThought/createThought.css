@@ -7,6 +7,20 @@
     min-height: 90vh;
     margin: auto;
 
+
+    .header-and-hint {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        margin-right: 20px;
+
+        .tutorial-button {
+            font-size: medium;
+            margin: 0;
+        }
+    }
+
     h1 {
         margin-top: 0px;
         color: var(--white-color);
@@ -28,7 +42,7 @@
         .character-limit {
             color: gray;
         }
-        
+
         .title-input {
             width: 100%;
             background-color: var(--black-color);
@@ -89,7 +103,7 @@
     background-color: rgba(0, 0, 0, 0.95);
     z-index: 1000;
     overflow: hidden;
-    
+
     top: 0;
     bottom: 0;
     left: 0;
@@ -298,9 +312,4 @@
             color: var(--primary-color);
         }
     }
-}
-
-.tutorial-button {
-    font-size: medium;
-    padding: 2px;
 }

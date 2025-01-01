@@ -67,7 +67,7 @@ const GraphPage: React.FC = () => {
                 setNewestDate(thoughtsInTimeWindow[thoughtsInTimeWindow.length - 1].dateCreated || "...");
             }
             else {
-                setNewestDate("právě teď...");
+                setNewestDate(Localization.RightNow);
             }
         }
     }, [timeShift]);
@@ -96,10 +96,11 @@ const GraphPage: React.FC = () => {
 
         // set initial highlighted thought
         if (urlThoughtId) {
+            // console.log("urlThoughtId: ", urlThoughtId)
             if (urlThoughtId === 'now') {
                 setInitialHighlightedThoughtId(null);
                 setTimeShift(-maxThoughtsOnScreen + 10);
-                setNewestDate("právě teď...");
+                setNewestDate(Localization.RightNow);
                 return;
             }
             const id = parseInt(urlThoughtId);

@@ -13,24 +13,32 @@ export const THOUGHTS_CACHE_FRAME = 1000;
 
 // size and positions of nodes
 export const BASE_RADIUS = 50;
-export const REFERENCE_RADIUS_MULTIPLIER = 1.3;
+export const REFERENCE_RADIUS_MULTIPLIER = 1.2;
 export const MAX_RADIUS = 700;
 
 export const INITIAL_POSITIONS_RADIUS = 3000;
 
 // forces simulation
 export const IDEAL_LINKED_DISTANCE = 300;
-export const EDGE_COMPRESSIBILITY_FACTOR = 1.5;
+// > 1 numbers make the connected nodes' push force of conected nodes weaker than the pull force and vice versa
+export const EDGE_COMPRESSIBILITY_FACTOR = 1.05;
 export const MAX_PULL_FORCE = 100;
 
-export const PUSH_THRESH = 1000;
+export const PUSH_THRESH = 1250;
 export const MAX_PUSH_FORCE = 100;
 
+export const GRAVITY_ON = false;
 export const GRAVITY_FREE_RADIUS = 1600;
 
+// When thoughts "appear" on screen they should not immediatelly start influenxcing other thoughts.
+// This parameter is the length of the "ease-in" period for influencing other thoughts
 export const FRAMES_WITH_LESS_INFLUENCE = 100;
 
-export const MOMENTUM_DAMPENING_RATE = 1.55; //1.55
+export const MAX_MOMENTUM_DAMPENING = 1.8; //1.55
+
+// These parameters are the ease-in starting value for the momentum dampening rate
+export const MOMENTUM_DAMPENING_START_AT = 1.4;
+export const MOMENTUM_DAMPENING_EASE_IN_FRAMES = 400;
 
 export const MAX_MOVEMENT_SPEED = 50;
 
@@ -58,6 +66,9 @@ export const INITIAL_ZOOM = 0.1;
 export const ZOOM_TEXT_VISIBLE_THRESHOLD = 0.3;
 export const ZOOM_STEP_MULTIPLICATOR_WHEEL = 1.04;
 export const ZOOM_STEP_MULTIPLICATOR_BUTTONS = 1.02;
+
+// Graph walk - BFS depth
+export const NEIGHBORHOOD_DEPTH = 1;
 
 
 // export const pushForce = (centerDistance: number) => {

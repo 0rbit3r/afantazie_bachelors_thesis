@@ -18,18 +18,30 @@ var configuration = new ConfigurationBuilder()
 
 services.AddSingleton<IConfiguration>(configuration);
 
+Console.WriteLine(configuration.GetConnectionString("DefaultConnection"));
+
+Console.WriteLine("Continue? y|n");
+var confirmation = Console.ReadLine();
+
+if (confirmation != "y")
+{
+    return;
+}
+
 var serviceProvider = services.BuildServiceProvider();
 
 Console.WriteLine(
-@"[0] - Exit
-[1] - Generate Random Thoughts
-[2] - Generate random clustered thoughts
-[3] - Generate random rainbow thoughts
-[4] - Generate Rainbow Tree
-[5] - Import citHep
-[6] - Import citHep to Markdown
-[7] - Retroactively add links to content
-[8] - Retroactively compute sizes");
+@"[0]  - Exit
+[1]  - Generate Random Thoughts
+[2]  - Generate random clustered thoughts
+[3]  - Generate random rainbow thoughts
+[4]  - Generate Rainbow Tree
+[5]  - Import citHep
+[6]  - Import citHep to Markdown
+[7]  - Retroactively add links to content
+[8]  - Retroactively compute sizes
+[9]  - Generate javascript cithep array for Cytoscape.js
+[10] - Import programming languages influences dataset");
 
 var choice = Console.ReadLine();
 if (!int.TryParse(choice, out var choiceInt))
@@ -38,42 +50,50 @@ if (!int.TryParse(choice, out var choiceInt))
     return;
 }
 
-if (choiceInt == 0)
+else if (choiceInt == 0)
 {
     return;
 }
 
-if (choiceInt == 1)
+else if (choiceInt == 1)
 {
     await RandomThoughtsGenerator.GenerateData(serviceProvider);
 }
-if (choiceInt == 2)
+else if (choiceInt == 2)
 {
     await ClusteredThoughtsGenerator.GenerateData(serviceProvider);
 }
-if (choiceInt == 3)
+else if (choiceInt == 3)
 {
     await RainbowClustersGenerator.GenerateData(serviceProvider);
 }
-if (choiceInt == 4)
+else if (choiceInt == 4)
 {
     await RainbowTreeGenerator.GenerateData(serviceProvider);
 }
-if (choiceInt == 5)
+else if (choiceInt == 5)
 {
-    await CitHepImporter.ImportCitHepFileAsync(serviceProvider);
+    await CitHepImporterTemporal.ImportCitHepFileAsync(serviceProvider);
 }
-if (choiceInt == 6)
+else if (choiceInt == 6)
 {
     await CitHepObsidianImporter.ImportCitHepFileToObsidianAsync(serviceProvider);
 }
-if (choiceInt == 7)
+else if (choiceInt == 7)
 {
     await RetroactiveResponseAdder.AddResponses();
 }
-if (choiceInt == 8)
+else if (choiceInt == 8)
 {
     await RetroactiveSizeCalculator.CalculateSizeMultipliers();
+}
+else if (choiceInt == 9)
+{
+    CitHepCytoscapeImporter.GenerateJavascriptArray();
+}
+else if (choiceInt == 10)
+{
+    await PLInfluenceImporter.ImportPLInfluence(serviceProvider);
 }
 else
 {
@@ -81,4 +101,5 @@ else
     return;
 }
 
+Console.WriteLine("Press Enter to exit");
 Console.ReadLine();

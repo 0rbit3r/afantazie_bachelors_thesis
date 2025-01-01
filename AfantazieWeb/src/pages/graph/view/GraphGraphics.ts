@@ -1,6 +1,6 @@
-import { Application, Color, Container, Graphics } from "pixi.js";
+import { Application, Color, Container, Graphics, TextStyle, Text } from "pixi.js";
 import { ARROW_Z, NODES_Z, TEXT_Z } from "./zIndexes";
-import { BASE_EDGE_ALPHA, BASE_EDGE_WIDTH, HIGHLIGHTED_EDGE_ALPHA, HIGHLIGHTED_EDGE_WIDTH, SIM_HEIGHT, SIM_WIDTH, UNHIGHLIGHTED_EDGE_ALPHA, UNHIGHLIGHTED_EDGE_WIDTH } from "../model/graphParameters";
+import { BASE_EDGE_ALPHA, BASE_EDGE_WIDTH, BASE_RADIUS, HIGHLIGHTED_EDGE_ALPHA, HIGHLIGHTED_EDGE_WIDTH, SIM_HEIGHT, SIM_WIDTH, UNHIGHLIGHTED_EDGE_ALPHA, UNHIGHLIGHTED_EDGE_WIDTH, ZOOM_TEXT_VISIBLE_THRESHOLD } from "../model/graphParameters";
 import { RenderedThought } from "../model/renderedThought";
 import { addDraggableViewport } from "./ViewportInitializer";
 import { XAndY } from "../model/xAndY";
@@ -75,35 +75,37 @@ export const initGraphics = (
 
         nodeContainer.addChild(circle);
 
-        // const style = new TextStyle({
-        //     breakWords: false,
-        //     wordWrap: true,
-        //     fontFamily: 'Arial',
-        //     fontSize: 13,
-        //     fontWeight: 'bold',
-        //     fill: 'white',
-        //     wordWrapWidth: thought.radius * 4,
-        //     stroke: "#000000",
-        //     strokeThickness: 3,
-        //     // dropShadow: true,
-        //     // dropShadowDistance: 2,
-        // });
+        const style = new TextStyle({
+            breakWords: false,
+            wordWrap: true,
+            fontFamily: 'Arial',
+            fontSize: 13,
+            fontWeight: 'bold',
+            fill: 'white',
+            wordWrapWidth: thought.radius * 4,
+            stroke: "#000000",
+            strokeThickness: 3,
+            // dropShadow: true,
+            // dropShadowDistance: 2,
+        });
 
-        // const text = new Text(thought.title, style);
-        // text.zIndex = TEXT_Z;
-        // text.x = thought.position.x - text.width / 2;
-        // text.y = thought.position.y - text.height / 2 + text.height / 2 + BASE_RADIUS + 5;
-        // thought.text = text;
+        const text = new Text(thought.title, style);
+        text.zIndex = TEXT_Z;
+        text.x = thought.position.x - text.width / 2;
+        text.y = thought.position.y - text.height / 2 + text.height / 2 + BASE_RADIUS + 5;
+        thought.text = text;
 
-        // textContainer.addChild(text);
+        textContainer.addChild(text);
     };
 
     renderedThoughts.forEach(thought => {
         initializeGraphicsForThought(thought);
     });
 
-    // let lastZoom = 1;                                    BIG TODO BIG TODO BIG TODO BIG TODO BIG TODO - UNCOMMENT THIS
+    // let lastZoom = 1;                                    //BIG TODO BIG TODO BIG TODO BIG TODO BIG TODO - UNCOMMENT THIS
     const renderGraph = () => {
+        // clear textContainer
+        textContainer.removeChildren();
 
         const onScreenThoughts = getThoughtsOnScreen();
         // console.log('thoughtsInCurrentTimeWindow', thoughtsInCurrentTimeWindow);
@@ -139,12 +141,12 @@ export const initGraphics = (
 
             const circle = thought.graphics as Graphics;
 
-
             circle.clear();
 
+            // if the node is out of screen, don't draw it
             const circleCoors = stateViewport.toViewportCoordinates({ x: thought.position.x, y: thought.position.y });
-            if (circleCoors.x < -thought.radius || circleCoors.x > stateViewport.width + thought.radius
-                || circleCoors.y < -thought.radius || circleCoors.y > stateViewport.height + thought.radius) {
+            if (circleCoors.x < -thought.radius * 3|| circleCoors.x > stateViewport.width + thought.radius * 3
+                || circleCoors.y < -thought.radius * 3 || circleCoors.y > stateViewport.height + thought.radius * 3) {
                 return;
             }
 
@@ -193,21 +195,25 @@ export const initGraphics = (
             circle.drawCircle(circleCoors.x, circleCoors.y, stateViewport.zoom * thought.radius + 10);
             circle.endFill();
 
-            // const text = thought.text as Text; UNCOMMENT BIG TODO ABOVE AND BELLOW
-            // if (graphStore.viewport.zoom > ZOOM_TEXT_VISIBLE_THRESHOLD) {
+            const text = thought.text as Text;
+            // console.log(graphState.viewport.zoom, ZOOM_TEXT_VISIBLE_THRESHOLD);
+            if (graphState.viewport.zoom > ZOOM_TEXT_VISIBLE_THRESHOLD) {
 
-            //     const textCoors = graphStore.viewport.toViewportCoordinates({
-            //         x: thought.position.x,
-            //         y: thought.position.y + thought.radius + 5
-            //     });
-            //     textCoors.x -= text.width / 2;
-            //     text.x = textCoors.x;
-            //     text.y = textCoors.y;
+                const textCoors = graphState.viewport.toViewportCoordinates({
+                    x: thought.position.x,
+                    y: thought.position.y + thought.radius + 5
+                });
+                textCoors.x -= text.width / 2;
+                text.x = textCoors.x;
+                text.y = textCoors.y;
 
-            //     if (lastZoom <= ZOOM_TEXT_VISIBLE_THRESHOLD) {
-            //         textContainer.addChild(text);
-            //     }
-            // }
+                textContainer.addChild(text);
+
+                // console.log(lastZoom, ZOOM_TEXT_VISIBLE_THRESHOLD)
+                // if (lastZoom <= ZOOM_TEXT_VISIBLE_THRESHOLD) {
+                //     textContainer.addChild(text);
+                // }
+            }
             // else if (lastZoom > ZOOM_TEXT_VISIBLE_THRESHOLD) {
             //     textContainer.removeChild(text);
             // }
@@ -256,7 +262,7 @@ export const initGraphics = (
             SIM_HEIGHT * stateViewport.zoom
 
         );
-        // lastZoom = graphStore.viewport.zoom;   BIG TODO BIG TODO BIG TODO BIG TODO BIG TODO - UNCOMMENT THIS
+        // lastZoom = graphState.viewport.zoom;  // BIG TODO BIG TODO BIG TODO BIG TODO BIG TODO - UNCOMMENT THIS
     };
 
     renderGraph();
@@ -302,8 +308,6 @@ const draw_edge = (
     const bezier1 = { x: x1 - ((x1 - arrowTipX) / 3) + normal.x * 0.1, y: y1 - ((y1 - arrowTipY) / 3) + normal.y * 0.1 };
     const bezier2 = { x: x1 - ((x1 - arrowTipX) * 2 / 3), y: y1 - ((y1 - arrowTipY) * 2 / 3) };
     graphics.bezierCurveTo(bezier1.x, bezier1.y, bezier2.x, bezier2.y, arrowTipX, arrowTipY);
-
-
 
     //animated edges
     // const segments: { x: number, y: number }[] = [];
