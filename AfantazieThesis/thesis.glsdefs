@@ -175,36 +175,8 @@ first={thought},%
 firstplural={thoughts},%
 text={thought},%
 plural={thoughts},%
-description={- a post on Afantázie - it has title, author, description, links and backlinks(also reffered to as replies)},%
-descriptionplural={- a post on Afantázie - it has title, author, description, links and backlinks(also reffered to as replies)},%
-symbol={\relax },%
-symbolplural={\relax },%
-user1={},%
-user2={},%
-user3={},%
-user4={},%
-user5={},%
-user6={},%
-long={},%
-longplural={},%
-short={},%
-shortplural={},%
-counter={page},%
-parent={},%
-%
-}%
-
-\glsdefs@newdocentry{DAG}%
-{%
-name={DAG},%
-sort={DAG},%
-type={main},%
-first={DAG},%
-firstplural={DAGs},%
-text={DAG},%
-plural={DAGs},%
-description={- directed acyclic graph},%
-descriptionplural={- directed acyclic graph},%
+description={- a post on Aphantasia - it has title, author, description, links and backlinks(also reffered to as replies)},%
+descriptionplural={- a post on Aphantasia - it has title, author, description, links and backlinks(also reffered to as replies)},%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -233,6 +205,34 @@ text={GLA},%
 plural={GLAs},%
 description={- graph Layout Algorithm - used for computing positions of \textbf {nodes} so that they make a nice or useful diagram},%
 descriptionplural={- graph Layout Algorithm - used for computing positions of \textbf {nodes} so that they make a nice or useful diagram},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{FDL}%
+{%
+name={FDL},%
+sort={FDL},%
+type={main},%
+first={FDL},%
+firstplural={FDLs},%
+text={FDL},%
+plural={FDLs},%
+description={- force-directed layout - a type of \textbf {GLA} that simulates physical forces between \textbf {nodes} to determine their positions},%
+descriptionplural={- force-directed layout - a type of \textbf {GLA} that simulates physical forces between \textbf {nodes} to determine their positions},%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -317,6 +317,230 @@ text={CitHep},%
 plural={CitHeps},%
 description={- dataset of citations between papers in the field of high-energy physics. Contains 34546 \textbf {nodes}, 421578 \textbf {edges} and temporal data},%
 descriptionplural={- dataset of citations between papers in the field of high-energy physics. Contains 34546 \textbf {nodes}, 421578 \textbf {edges} and temporal data},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{fps}%
+{%
+name={FPS},%
+sort={FPS},%
+type={main},%
+first={FPS},%
+firstplural={FPSs},%
+text={FPS},%
+plural={FPSs},%
+description={- frames per second - a measure of fluidity of animation and speed of a simulation},%
+descriptionplural={- frames per second - a measure of fluidity of animation and speed of a simulation},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{sha256}%
+{%
+name={SHA256},%
+sort={SHA256},%
+type={main},%
+first={SHA256},%
+firstplural={SHA256s},%
+text={SHA256},%
+plural={SHA256s},%
+description={- cryptographic hash function commonly used to securely hash passwords and tokens},%
+descriptionplural={- cryptographic hash function commonly used to securely hash passwords and tokens},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{jwt}%
+{%
+name={JWT},%
+sort={JWT},%
+type={main},%
+first={JWT},%
+firstplural={JWTs},%
+text={JWT},%
+plural={JWTs},%
+description={- JSON Web Tokens, a compact and self-contained way to securely transmit information between parties as a JSON object},%
+descriptionplural={- JSON Web Tokens, a compact and self-contained way to securely transmit information between parties as a JSON object},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{local_storage}%
+{%
+name={local storage},%
+sort={local storage},%
+type={main},%
+first={local storage},%
+firstplural={local storages},%
+text={local storage},%
+plural={local storages},%
+description={- web storage feature that allows JavaScript to store and retrieve data in the browser betwen sessions},%
+descriptionplural={- web storage feature that allows JavaScript to store and retrieve data in the browser betwen sessions},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{vite}%
+{%
+name={Vite},%
+sort={Vite},%
+type={main},%
+first={Vite},%
+firstplural={Vites},%
+text={Vite},%
+plural={Vites},%
+description={- frontend build tool that provides configuration and optimized production builds},%
+descriptionplural={- frontend build tool that provides configuration and optimized production builds},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{zustand}%
+{%
+name={Zustand},%
+sort={Zustand},%
+type={main},%
+first={Zustand},%
+firstplural={Zustands},%
+text={Zustand},%
+plural={Zustands},%
+description={- state management library for React, allows better integration with external (ie. non-react) libraries},%
+descriptionplural={- state management library for React, allows better integration with external (ie. non-react) libraries},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{localization}%
+{%
+name={localization},%
+sort={localization},%
+type={main},%
+first={localization},%
+firstplural={localizations},%
+text={localization},%
+plural={localizations},%
+description={- adaption of a product to a specific locale or market (language, currency, time format etc.)},%
+descriptionplural={- adaption of a product to a specific locale or market (language, currency, time format etc.)},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{production}%
+{%
+name={production},%
+sort={production},%
+type={main},%
+first={production},%
+firstplural={productions},%
+text={production},%
+plural={productions},%
+description={(environment) - the instance of an application that is accessible to its userbase, as opposed to development or testing environments},%
+descriptionplural={(environment) - the instance of an application that is accessible to its userbase, as opposed to development or testing environments},%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%

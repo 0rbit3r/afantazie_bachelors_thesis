@@ -2,8 +2,29 @@
 \begin{theglossary}\glossaryheader
 \glsgroupheading{C}\relax \glsresetentrylist %
 \glossentry{cithep_dataset}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{11}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{9}\delimN 
+		\setentrycounter[]{page}\glsnumberformat{33}}}\glsgroupskip
+\glsgroupheading{F}\relax \glsresetentrylist %
+\glossentry{fps}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{13}}}\glsgroupskip
 \glsgroupheading{G}\relax \glsresetentrylist %
 \glossentry{graph}{\glossaryentrynumbers{\relax 
-		\setentrycounter[]{page}\glsnumberformat{11}}}%
+		\setentrycounter[]{page}\glsnumberformat{9}}}\glsgroupskip
+\glsgroupheading{J}\relax \glsresetentrylist %
+\glossentry{jwt}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{28}}}\glsgroupskip
+\glsgroupheading{L}\relax \glsresetentrylist %
+\glossentry{local_storage}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{28}}}%
+\glossentry{localization}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{29}}}\glsgroupskip
+\glsgroupheading{S}\relax \glsresetentrylist %
+\glossentry{sha256}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{28}}}\glsgroupskip
+\glsgroupheading{V}\relax \glsresetentrylist %
+\glossentry{vite}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{29}}}\glsgroupskip
+\glsgroupheading{W}\relax \glsresetentrylist %
+\glossentry{production}{\glossaryentrynumbers{\relax 
+		\setentrycounter[]{page}\glsnumberformat{33}}}%
 \end{theglossary}\glossarypostamble

@@ -19,7 +19,7 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global/global}
-    \entry{meta_dau_2024}{online}{}{}
+    \entry{meta_dau}{online}{}{}
       \name{author}{1}{}{%
         {{hash=8be4bc579e714ed92aa654e9ef52d376}{%
            family={Meta\bibnamedelima Platforms},
@@ -80,29 +80,132 @@
       \verb https://snap.stanford.edu/data/cit-HepPh.html
       \endverb
     \endentry
-    \entry{cytoscapes_js_homepage}{online}{}{}
+    \entry{obsidian_website}{online}{}{}
       \name{author}{1}{}{%
-        {{hash=d792e549e1fed42ff079b71566c7f3c4}{%
-           family={Cytospace\bibnamedelimb -\bibnamedelimb should\bibnamedelimb we\bibnamedelimb use\bibnamedelimb his\bibnamedelimb name\bibnamedelimb here\bibnamedelimb when\bibnamedelimb citing\bibnamedelimb the\bibnamedelima website?)},
-           familyi={C\bibinitperiod\bibinitdelim \bibinithyphendelim \bibinitperiod\bibinitdelim s\bibinitperiod\bibinitdelim w\bibinitperiod\bibinitdelim u\bibinitperiod\bibinitdelim h\bibinitperiod\bibinitdelim n\bibinitperiod\bibinitdelim h\bibinitperiod\bibinitdelim w\bibinitperiod\bibinitdelim c\bibinitperiod\bibinitdelim t\bibinitperiod\bibinitdelim w\bibinitperiod},
-           given={Max\bibnamedelimb Franz\bibnamedelimb (TODO\bibnamedelimb -\bibnamedelima Max},
-           giveni={M\bibinitperiod\bibinitdelim F\bibinitperiod\bibinitdelim (\bibinitperiod\bibinitdelim \bibinithyphendelim \bibinitperiod\bibinitdelim M\bibinitperiod},
-           prefix={authored},
-           prefixi={a\bibinitperiod}}}%
+        {{hash=a1b97edc1a72ab1252ed75a4241a657d}{%
+           family={Obsidian},
+           familyi={O\bibinitperiod}}}%
       }
-      \strng{namehash}{d792e549e1fed42ff079b71566c7f3c4}
-      \strng{fullhash}{d792e549e1fed42ff079b71566c7f3c4}
-      \strng{fullhashraw}{d792e549e1fed42ff079b71566c7f3c4}
-      \strng{bibnamehash}{d792e549e1fed42ff079b71566c7f3c4}
-      \strng{authorbibnamehash}{d792e549e1fed42ff079b71566c7f3c4}
-      \strng{authornamehash}{d792e549e1fed42ff079b71566c7f3c4}
-      \strng{authorfullhash}{d792e549e1fed42ff079b71566c7f3c4}
-      \strng{authorfullhashraw}{d792e549e1fed42ff079b71566c7f3c4}
+      \strng{namehash}{a1b97edc1a72ab1252ed75a4241a657d}
+      \strng{fullhash}{a1b97edc1a72ab1252ed75a4241a657d}
+      \strng{fullhashraw}{a1b97edc1a72ab1252ed75a4241a657d}
+      \strng{bibnamehash}{a1b97edc1a72ab1252ed75a4241a657d}
+      \strng{authorbibnamehash}{a1b97edc1a72ab1252ed75a4241a657d}
+      \strng{authornamehash}{a1b97edc1a72ab1252ed75a4241a657d}
+      \strng{authorfullhash}{a1b97edc1a72ab1252ed75a4241a657d}
+      \strng{authorfullhashraw}{a1b97edc1a72ab1252ed75a4241a657d}
       \field{sortinit}{3}
       \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{note}{Accessed: 2024-12-19}
+      \field{title}{Obsidian homepage}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://obsidian.md/
+      \endverb
+      \verb{url}
+      \verb https://obsidian.md/
+      \endverb
+    \endentry
+    \entry{obsidian_reddit_large_graph}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=b3a68714a75c60b33bc444a77b630e82}{%
+           family={image4n6},
+           familyi={i\bibinitperiod}}}%
+      }
+      \strng{namehash}{b3a68714a75c60b33bc444a77b630e82}
+      \strng{fullhash}{b3a68714a75c60b33bc444a77b630e82}
+      \strng{fullhashraw}{b3a68714a75c60b33bc444a77b630e82}
+      \strng{bibnamehash}{b3a68714a75c60b33bc444a77b630e82}
+      \strng{authorbibnamehash}{b3a68714a75c60b33bc444a77b630e82}
+      \strng{authornamehash}{b3a68714a75c60b33bc444a77b630e82}
+      \strng{authorfullhash}{b3a68714a75c60b33bc444a77b630e82}
+      \strng{authorfullhashraw}{b3a68714a75c60b33bc444a77b630e82}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Graphview: At the beginning it starts with cool patterns, then turns into total chaos, and then surprisingly structures emerge from the chaos! (22k nodes)}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.reddit.com/r/ObsidianMD/comments/1fyw2te/graphview_at_the_beginning_it_starts_with_cool/
+      \endverb
+      \verb{url}
+      \verb https://www.reddit.com/r/ObsidianMD/comments/1fyw2te/graphview_at_the_beginning_it_starts_with_cool/
+      \endverb
+    \endentry
+    \entry{gephi_homepage}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=198e1746eaaf235d823038597e3c6de1}{%
+           family={Gephi},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{198e1746eaaf235d823038597e3c6de1}
+      \strng{fullhash}{198e1746eaaf235d823038597e3c6de1}
+      \strng{fullhashraw}{198e1746eaaf235d823038597e3c6de1}
+      \strng{bibnamehash}{198e1746eaaf235d823038597e3c6de1}
+      \strng{authorbibnamehash}{198e1746eaaf235d823038597e3c6de1}
+      \strng{authornamehash}{198e1746eaaf235d823038597e3c6de1}
+      \strng{authorfullhash}{198e1746eaaf235d823038597e3c6de1}
+      \strng{authorfullhashraw}{198e1746eaaf235d823038597e3c6de1}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Gephi homepage}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb https://gephi.org/
+      \endverb
+      \verb{url}
+      \verb https://gephi.org/
+      \endverb
+    \endentry
+    \entry{gephi_big_graph_forum}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=b4ff61f7d5be6821696f5011ce8fbfb1}{%
+           family={pegerp},
+           familyi={p\bibinitperiod}}}%
+      }
+      \strng{namehash}{b4ff61f7d5be6821696f5011ce8fbfb1}
+      \strng{fullhash}{b4ff61f7d5be6821696f5011ce8fbfb1}
+      \strng{fullhashraw}{b4ff61f7d5be6821696f5011ce8fbfb1}
+      \strng{bibnamehash}{b4ff61f7d5be6821696f5011ce8fbfb1}
+      \strng{authorbibnamehash}{b4ff61f7d5be6821696f5011ce8fbfb1}
+      \strng{authornamehash}{b4ff61f7d5be6821696f5011ce8fbfb1}
+      \strng{authorfullhash}{b4ff61f7d5be6821696f5011ce8fbfb1}
+      \strng{authorfullhashraw}{b4ff61f7d5be6821696f5011ce8fbfb1}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Large Steam network visualization with Google Maps + Gephi}
+      \field{year}{2012}
+      \verb{urlraw}
+      \verb https://forum-gephi.org/viewtopic.php?f=28&t=2314
+      \endverb
+      \verb{url}
+      \verb https://forum-gephi.org/viewtopic.php?f=28&t=2314
+      \endverb
+    \endentry
+    \entry{cytoscapes_js_homepage}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=0d91dc78421d00e82fd8e32a763031af}{%
+           family={Cytoscape.js},
+           familyi={C\bibinitperiod}}}%
+      }
+      \strng{namehash}{0d91dc78421d00e82fd8e32a763031af}
+      \strng{fullhash}{0d91dc78421d00e82fd8e32a763031af}
+      \strng{fullhashraw}{0d91dc78421d00e82fd8e32a763031af}
+      \strng{bibnamehash}{0d91dc78421d00e82fd8e32a763031af}
+      \strng{authorbibnamehash}{0d91dc78421d00e82fd8e32a763031af}
+      \strng{authornamehash}{0d91dc78421d00e82fd8e32a763031af}
+      \strng{authorfullhash}{0d91dc78421d00e82fd8e32a763031af}
+      \strng{authorfullhashraw}{0d91dc78421d00e82fd8e32a763031af}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
       \field{title}{Cytoscape.js homepage}
       \field{year}{2024}
       \verb{urlraw}
@@ -110,6 +213,36 @@
       \endverb
       \verb{url}
       \verb https://js.cytoscape.org/
+      \endverb
+    \endentry
+    \entry{wine_and_cheese}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=8159564001ff2457139c10c428057293}{%
+           family={Franz},
+           familyi={F\bibinitperiod},
+           given={Max},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{8159564001ff2457139c10c428057293}
+      \strng{fullhash}{8159564001ff2457139c10c428057293}
+      \strng{fullhashraw}{8159564001ff2457139c10c428057293}
+      \strng{bibnamehash}{8159564001ff2457139c10c428057293}
+      \strng{authorbibnamehash}{8159564001ff2457139c10c428057293}
+      \strng{authornamehash}{8159564001ff2457139c10c428057293}
+      \strng{authorfullhash}{8159564001ff2457139c10c428057293}
+      \strng{authorfullhashraw}{8159564001ff2457139c10c428057293}
+      \field{extraname}{1}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Wine and cheese graph - Interactive demonstration}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb http://www.wineandcheesemap.com/
+      \endverb
+      \verb{url}
+      \verb http://www.wineandcheesemap.com/
       \endverb
     \endentry
     \entry{cytoscapes_js_github}{online}{}{}
@@ -128,11 +261,11 @@
       \strng{authornamehash}{8159564001ff2457139c10c428057293}
       \strng{authorfullhash}{8159564001ff2457139c10c428057293}
       \strng{authorfullhashraw}{8159564001ff2457139c10c428057293}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{extraname}{2}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{note}{Accessed: 2024-12-19}
       \field{title}{Cytoscape.js Euler demonstration - GitHub repository}
       \field{year}{2024}
       \verb{urlraw}
@@ -140,6 +273,33 @@
       \endverb
       \verb{url}
       \verb https://github.com/cytoscape/cytoscape.js-euler
+      \endverb
+    \endentry
+    \entry{graph_layout_demos}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=3be3ba947f4c72fa6d392f7a34ddb32b}{%
+           family={yFiles},
+           familyi={y\bibinitperiod}}}%
+      }
+      \strng{namehash}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{fullhash}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{fullhashraw}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{bibnamehash}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{authorbibnamehash}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{authornamehash}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{authorfullhash}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{authorfullhashraw}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{yFiles Demos - Layout styles}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.yworks.com/demos/showcase/layoutstyles/
+      \endverb
+      \verb{url}
+      \verb https://www.yworks.com/demos/showcase/layoutstyles/
       \endverb
     \endentry
   \enddatalist

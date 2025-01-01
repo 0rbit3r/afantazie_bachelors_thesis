@@ -1,11 +1,11 @@
 \chapter{Software design}
 
-Before implementing Afantázie we will introduce the application, set up expectations, decide on technologies used and plan the execution.
+Before implementing Aphantasia we will introduce the application, set up expectations, decide on technologies used and plan the execution.
 
 \section{Requirements and use-cases}
 
-In short, Afantázie can be described as web-based multi-user Obsidian.
-It will allow users to collectively create and link posts and view them in a graph view.
+In short, Aphantasia can be described as an attempt to create web-based multi-user Obsidian.
+It will allow users to collectively create posts, interlink them and view them in a graph view.
 
 We are expecting to implement at least these following features:
 \begin{itemize}
@@ -20,7 +20,7 @@ We are expecting to implement at least these following features:
 
 \section{Technologies and architecture}
 
-Afantázie will be a publicly accessible web application and as such we will need to set up the following:
+Aphantasia will be a publicly accessible web application and as such we will need to set up the following:
 \begin{itemize}
   \item Frontend - a webpage serving an interactive graph and UI
   \item Backend - for bussiness logic and data processing
@@ -63,24 +63,21 @@ We will implement our own simulation and rendering engine using a rendering libr
     \item Rendering graphs and simultaing FDL is not a too difficult of a task and we should be able to implement a simple and extendable version in a reasonable time frame.
 \end{itemize}
 
-We considered three possibilities:
+We considered four possibilities:
 \begin{itemize}
-    \item \textbf{Html and css} - the most barebones solution would be to use a set of divs to represent nodes and svg lines to represent edges.
-    \item \textbf{HTML5 canvas} - a more sophisticated solution to draw both nodes and edges in HTML5 Canvas api.
-    \item \textbf{PIXI.js} - a library for 2D rendering in the browser.
-    \item \textbf{Three.js} - a library for 3D rendering in the browser.
+    \item \textbf{Html and css} - the most barebones solution would be to use a set of divs to represent nodes and svg lines to represent edges
+    \item \textbf{HTML5 canvas} - a more sophisticated solution to draw both nodes and edges in HTML5 Canvas api
+    \item \textbf{PIXI.js} - library for 2D rendering in the browser
+    \item \textbf{Three.js} - library for 3D rendering in the browser
+    \footnote{Three.js is capable of 2D rendering. However it is evident that 2D rendering is achieved by rendering objects 3D space and orthographic camera.} \xxx{cit?}
 \end{itemize}
 
-We chose to use \textbf{PIXI.js} as it seemes to be simple to use and performant library for 2D rendering in the browser
-(out of presented ones including three.js).
-\xxx{NOTE: The reason might be that Pixi whilce capable of 2D only simulates it by rendering 3D objects in orthographic projection.}\xxx{TODO - verify this}
-
+We chose to use \textbf{PIXI.js} as it seemed to provide good compromise between ease of use and performance for 2D rendering in the browser.
 
 \section{Utilized algorithms}
 
 We will use a force-directed layout algorithm to render the graph. It's easy to implement and provides visually pleasing results.
 There as 
-
 
 \section{Data}
 
@@ -88,7 +85,7 @@ There as
 \begin{enumerate}
     \item set up the hosting and database
     \item build and host a simple web application in react
-    \item set up user and author management
+    \item create user management 
     \item implement a proof of concept of the graph engine for small graphs
     \item extend the application to handle large graphs
 \end{enumerate}

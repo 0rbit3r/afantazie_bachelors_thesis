@@ -16,7 +16,7 @@ but provides a graph view of the notes as an interesting and easy to use feature
 
 \end{itemize}
 
-I chose these in particular because Afantázie could be viewed as a hybrid of the trio.
+We chose these in particular because Aphantasia could be viewed as a hybrid of the trio.
 
 We will look into three aspects of these products:
 \begin{itemize}
@@ -25,19 +25,19 @@ We will look into three aspects of these products:
   \item Ability to visualize large graphs
 \end{itemize}
 
-As the source of data for testing the large-graph visualization capabilities I chose the dataset of citations between papers
-in the field of high-energy physics \cite{snap_cit_hep} (Later refered to as the \gls{cithep_dataset}).
+As the source of data for testing the large-graph visualization capabilities we chose the dataset of citations between papers
+in the field of high-energy physics \cite{snap_cit_hep} (Later refered to as \gls{cithep_dataset}).
 It contains 34546 nodes, 421578 edges and temporal data.
 
-This dataset is suitable for my purposes because:
+This dataset is suitable for our purposes because:
 \begin{itemize}
-  \item It's large enough to test the the capabilities of both the mentioned software and Afantázie
-  \item It's a real-world dataset with temporal data which is going to play a role in visualizing the contents of Afantázie
+  \item It's large enough to test the the capabilities of both the mentioned software and Aphantasia
+  \item It's a real-world dataset with temporal data which is going to play a role in visualizing the contents of Aphantasia
 \end{itemize}
 
 \section{Obsidian}
 
-Obsidian was a direct inspiration for Afantázie. It allows users to create, edit and most importantly interlink markdown file notes in the file system.
+Obsidian \cite{obsidian_website} was a direct inspiration for Aphantasia. It allows users to create, edit and most importantly interlink markdown file notes in the file system.
 One Obsidian project is just a system directory called a Vault. It is a set of markdown notes, user settings, plugins and other files.
 The interlinked notes in a Vault form a directed graph which can be visualized with just a click of a button.
 The graph is animated and has the ability to replay the history of the Vault from the very first note to the current state.
@@ -49,42 +49,49 @@ community plugins.
 
 \subsection*{Obsidian graph view}
 
-The graph visualization in obsidian (called graph view) is based on a force-directed layout algorithm \xxx{(more in chapter TBD)}.
-It is easy to use and provides an appealing visual representation of the notes. It is also customizable to some extent.
+The graph visualization in obsidian (called graph view) is easy to use and provides an appealing visual representation of the notes.
+The graph is animated and interactive, meaning that the user can drag nodes around, zoom in and out and click on nodes to open the associated note.
 
+It is also customizable to some extent.
 Colors of the nodes can be set based on different filters such as path, tags or text-search.
 Users can also adjust four sliders - central force, repel force, link force and link distance.
 The graph view is sufficient for small graphs but for larger graphs the program needs to spend some time indexing the notes.
 (Though, this is a one-time operation and the indexes are then saved in the Vault).
 
-In figure \ref{obr:obsidian_common} you can see a typical Obsidian graph view depicting a small Vault of one of my personal projects.
+In figure \ref{obr:obsidian_common} you can see a typical Obsidian graph view depicting a small Vault of one of our personal projects.
 
-In figure \ref{obr:obsidian_3000} I converted a part of the CitHep dataset with only the first 3000 nodes to markdown notes and visualized it in Obsidian.
-It took my machine over 10 minutes to index this graph and I was unable to visualize the whole dataset without the program crashing or taking too long to index.
+In figure \ref{obr:obsidian_3000} we converted a part of the CitHep dataset with only the first 3000 nodes
+\footnote{The first as in the order they are stored in the dataset file.}
+to markdown notes and visualized it in Obsidian.
+It took our machine over 10 minutes to index this graph.
 Once indexed however the application ran smoothly.
 
-Obsidian is not very good at clustering nodes with high degree of connectivity.
-To my knowledge it also has no support for automatic colouring of the nodes based on clusters, modularity  or other data indicators.
-Color has to be user defined which is why the graph in figure \ref{obr:obsidian_3000} is all default gray.
+We were unable to visualize the whole dataset without the program crashing or taking too long to index.
+We did however find several examples of larger datasets rendered in Obsidian online
+\cite{obsidian_reddit_large_graph}.
 
-\xxx{TODO - proportions of the image(s)}
+Obsidian is not very good at clustering nodes with high degree of connectivity.
+To our knowledge it also has no support for automatic colouring of the nodes based on clusters, modularity  or other data indicators.
+Color has to be user defined based on content and location of the notes.
+CitHep nodes do not contain any content apart from id and date which is why the graph in figure \ref{obr:obsidian_3000} is all default gray.
+
 \begin{figure}[p]\centering
-  \includegraphics[width=140mm, height=140mm]{img/obsidian_common_notes.png}
+  \includegraphics[width=140mm, keepaspectratio]{img/obsidian_common_notes.png}
   \caption{A common graph view of a small Vault in Obsidian}
   \label{obr:obsidian_common}
 \end{figure}
 
 
 \begin{figure}[p]\centering
-  \includegraphics[width=140mm, height=140mm]{img/Obsidian_3000}
+  \includegraphics[width=140mm, keepaspectratio]{img/Obsidian_3000}
   \caption{The first 3000 nodes of the CitHep dataset visualized in Obsidian}
   \label{obr:obsidian_3000}
 \end{figure}
 
 \section{Gephi}
 
-Much more specialized than Obsidian, Gephi is an open source software focused on visualization and quantitative analysis of large graphs.
-It provides tens and with plugins hundreds \xxx{(cit. needed)} algorithms for graph layout and quantitative analysis of various data.
+Much more specialized than Obsidian, Gephi \cite{gephi_homepage} is an open source software focused on visualization and quantitative analysis of large graphs.
+It provides several algorithms for graph layout and quantitative analysis of various data and is extendable through community plugins.
 
 Gephi can compute quantitative characteristics of graph-based data such as modularity, clustering coefficient, degree distribution and many more.
 It can not just vizualize the working data in the viewport but also export rather visually appealing images of the vizualized graph.
@@ -92,36 +99,37 @@ It can not just vizualize the working data in the viewport but also export rathe
 \subsection*{Gephi graph export}
 
 In figure \ref{obr:gephi_cithep_3k} you can see, again, the first 3000 nodes of the CitHep dataset visualized in Gephi.
-Compared with Obsidian the Gephi redner provides more visually identifiable characteristics of the data:
+Compared with Obsidian the Gephi render export provides more visually identifiable characteristics of the data:
 
 \begin{itemize}
   \item The layout is more structured and communities are more visible
   \item Colors of the nodes represent their associated modularity class
-  \item Size of the nodes represents the number of citations the associated paper has (or in-degree)
+  \item Size of the nodes represents the number of citations the associated paper has
 \end{itemize}
 
 Figure \ref{obr:gephi_cithep} is an exported image of the entire CitHep dataset visualized in Gephi.
 The process of exporting this image took a few hours.
-I had to learn to use the program itself, import the data,
-tweak the layout using various provided algorithms (though I mostly relied on ForceAtlas 2) and finally I exported the resulting image.
+We had to learn to use the program itself, import the data,
+tweak the layout using various provided algorithms (though we mostly relied on ForceAtlas 2) and finally we exported the resulting image.
 
-The software crashed a few times during the process and with the citHep dataset loaded in memory wasn't awlays buttery smooth but it was otherwise very usable.
+The software crashed a few times during the process and with the citHep dataset loaded in memory wasn't always buttery smooth but it was otherwise very usable.
 Considering the amount of data that's a commendable feat.
 
-% Online you can find even larger datasets visualized using Gephi. This one \link{https://forum-gephi.org/viewtopic.php?f=28&t=2314} for example consists of 212 600 nodes and 4 045 203 edges.
+Again, you can find even larger datasets visualized using Gephi.
+One post on Gephi forum \cite{gephi_big_graph_forum} shows exported image made of 212 600 nodes and 4 045 203 edges.
 
 The user experience of Gephi is one of a technical tool - something you have to learn to use and spend time with to get the most out of.
-But the reward is the ability to visualize and analyze large graphs better than with any other software I could find.
+But the reward is the ability to visualize and analyze large graphs better than with any other software we could find.
 
 \begin{figure}[p]\centering
-  \includegraphics[width=140mm, height=140mm]{img/gephi_first_3000.png}
+  \includegraphics[width=140mm, keepaspectratio]{img/gephi_first_3000.png}
   \caption{The first 3000 nodes of the CitHep dataset visualized in Gephi}
   \label{obr:gephi_cithep_3k}
 \end{figure}
 
 
 \begin{figure}[p]\centering
-  \includegraphics[width=140mm, height=140mm]{img/gephi_cithep_35k.png}
+  \includegraphics[width=140mm, keepaspectratio]{img/gephi_cithep_35k.png}
   \caption{CitHep dataset visualized in Gephi (34546 nodes)}
   \label{obr:gephi_cithep}
 \end{figure}
@@ -130,37 +138,73 @@ But the reward is the ability to visualize and analyze large graphs better than 
 
 Cytoscape.js is a javascript library for graph visualization in the browser.
 Its homepage starts with Demos section followed by headline 'Introduction' and almost 8200 lines of text \cite{cytoscapes_js_homepage}.
+Among the demos there are various examples of usage ranging from simple \glspl{FDL} to more complex use-cases such as an interactive graph of wine and cheese pairings.
+\cite{wine_and_cheese}
 
-Among the demos there are various examples of usage from simple FDLs, to some more complex use-cases such as an interactive graph of wine and cheese pairings. \xxx{cit here}
+To assess the software we used two projects - a simple project of our own and one official template showcasing \gls{FDL} features of the library.
 
-In the beginning we attempted to create a prototype of Afantázie using cytoscape.
-We created a fresh vite + react ts project. We tried to follow the ofiicial instruction on the Cytoscape homepage to render a simple graph.
+Firstly we attempted to create a react + cytroscpe.js project.
+We initialized a fresh react ts project using \gls{vite}, added the dependency to cytoscpape and using the official instructions on the Cytoscape.js homepage we
+created a simple application capable of rendering a graph.
+See the result in figure \ref{obr:cytoscape_react_test}.
+There is nothing particulary noteworthy about this attempt apart from the fact the the web application uses cytoscpe.js alongside react typescript
+and seems to be a valid combination of libraries.
 
-% We managed to do so in the \xxx{github repo} in the Cytoscape_graph_test directory and you can see the result in figure \ref{obr:cytoscape_react_test}.
 
 \begin{figure}[p]\centering
-  \includegraphics[width=140mm, height=140mm]{img/cytoscape_react_10_nodes_path.png}
+  \includegraphics[width=140mm, keepaspectratio]{img/cytoscape_react_10_nodes_path.png}
   \caption{A simple application in react + cytoscape rendering a simple graph}
   \label{obr:cytoscape_react_test}
 \end{figure}
 
-We also downloaded github repository of one of the official examples from the cytoscape.js homepage \cite{cytoscapes_js_github}.
-The example is called 'Euler' and it uses one of the versions of FDL Cytoscape.js provides.
+The second project was an attempt to render the CitHep dataset in Cytoscape.js.
+In order to do so we cloned github repository of one of the official examples from the cytoscape.js homepage \cite{cytoscapes_js_github}.
+The example is called 'Euler' and showcases several small demos using a cytoscape proprietary \gls{FDL}.
 
-The example of a 'large graph' this demo showcases is a path of 5000 nodes and you can look the result in figure \ref{obr:cytoscape_5000_nodes_path}.
+The demo called 'Large graph' showcases path of 5000 nodes and you can look the result in figure \ref{obr:cytoscape_5000_nodes_path}.
 
 \begin{figure}[p]\centering
-  \includegraphics[width=140mm, height=140mm]{img/cytoscape_5000_path_official_demo.png}
+  \includegraphics[width=140mm, keepaspectratio]{img/cytoscape_5000_path_official_demo.png}
   \caption{An official example of large graph rendering in Cytoscape.js (path of 5000 nodes)}
   \label{obr:cytoscape_5000_nodes_path}
 \end{figure}
 
 This example is animated and on page refresh the graph stabilizes in real time.
-We had to increase the simulation time as the default value resulted in a tangled unhelpful layout. 
+We had to increase the simulation time as the default value resulted in a tangled unhelpful layout.
+In this case the animation was realtively smooth and with the simulation time set to 10 seconds the graph layout worked well.
 
-\xxx{TODO - Vyzkoušet}
+We modified this project to use, again, the first 3000 nodes from the CitHep dataset.
+We tweaked several parameters such as force strength, edge length and repulsion strength and in the end we achieved layout shown in figure \ref{obr:cytoscape_3000_nodes}.
+The performance during the runtime of the \gls{FDL} data dropped under 10 \gls{fps} but the application remained usable and stable.
+The produced layout was very similar to the one we made with Obsidian.
 
+\begin{figure}[p]\centering
+  \includegraphics[width=140mm, keepaspectratio]{img/cytoscapejs_cithep_first_3000_nodes.png}
+  \caption{The first 3000 nodes of the CitHep dataset visualized in Cytoscape.js}
+  \label{obr:cytoscape_3000_nodes}
+\end{figure}
+We also attempted to render the entire cithep dataset but unfortionately the application could not handle it and crashed.
+
+While we did not use the full capabilities of the library, the experience with Cytoscape.js was very positive.
+The animations are smooth, there's plenty of parametrization options and the resulting layout was satisfactory.
 
 \section{Final comparison}
 
-\xxx{Add a table comparing the technologies here}
+\begin{table}[ht]
+  \centering
+  \caption{Comparison of Obsidian, Gephi, and Cytoscape.js}
+  \label{tab:comparison}
+  \begin{tabularx}{\textwidth}{|l|X|X|X|}
+    \hline
+    \textbf{}                     & \textbf{Obsidian}       & \textbf{Gephi}                      & \textbf{Cytoscape.js} \\ \hline
+    \textbf{Use-case}             & note-taking             & data analysis and visualization     & graph visualization in browser \\ \hline
+    \textbf{Target Userbase}      & general audience        & researchers,                        & web developers  \\ 
+                                  &                         & technical users                     & \\ \hline
+    \textbf{User Experience}      & easy to use             & technical,                          & programmatic, \\ 
+                                  &                         & steep learning curve                & mostly parametrization\\ \hline
+    \textbf{3000 nodes}           & slow indexing           & stable,                             & stable but  \\ 
+    \textbf{handling}             & but smooth afterwards   & smooth                              & visibly lower FPS\\ \hline
+    \textbf{34546 nodes}          & skipped as              & mostly stable,                      & crashed \\
+    \textbf{handling}             & indexing took too long  & lower FPS while running FDL         & immediately\\ \hline
+  \end{tabularx}
+\end{table}

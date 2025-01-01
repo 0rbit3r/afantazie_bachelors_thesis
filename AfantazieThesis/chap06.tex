@@ -1,12 +1,102 @@
 \chapter{Documentation}
 
 \section{User documentation}
+All of the pages are accessible from the homepage and/or the collapsable navbar in the top right.
 
-\subsection{Navigating the small graph}
+\subsection{Registering and logging in}
+While not logged in only graph view, about page and homepage are accessible.
 
-\subsection{Navigating the big graph}
+To register click on the register button on the homescreen. The registration requires selecting a unique username, email and password.
+The password has security requirements which are displayed immediately after opening the form and in case of not meeting the criteria on submit.
 
-\subsection{Creating a new post}
+To log in click on the login button on the homescreen. The login requires a username or email and password.
+
+At this point the email is not used anywhere and is only included in preparation for email verification feature.
+
+\subsection{Opening a thought}
+There are multiple ways to open a thought:
+\begin{itemize}
+  \item \textbf{New thoughts log on homepage} - On homepage there is a feed of the last three thoughts created on the website.
+  Clicking on one of them will open the thought in graph view.
+  
+  Clicking on the "All Thoughts" button under the feed leads to all thoughts list. (This feature lacks paging and is to be improved in the future \xxx{todo?})
+  \item \textbf{Notifications} - The Notifications button and the bell icon in the navbar lead to the list of replies.
+  Replies are thoughts of other users that linked to any of the logged-in user's thoughts.
+  \item \textbf{Graph view} - The main way to access thoughts is through the graph view. We will take a closer look at it in the next section.
+  \item \textbf{Direct link} - Every thought has a unique ID which can be shared and accessed directly using the URL in format '/graph/\{thoughtId\}'.
+
+  Example of the full URI leading to the thought with ID 1: https://afantazie.cz/graph/1
+\end{itemize}
+
+\subsection{Graph view}
+To access graph view either click the "Graph" button on the main page or or click on the second icon in the navbar (three conected nodes). \xxx{figure?}
+
+In graph view you can use the following controls:
+\begin{itemize}
+  \item \textbf{Mouse wheel or bottom right buttons} - Zooms in and out
+
+  Once zoomed past a threshold titles of the thoughts appear.
+  \item \textbf{Draging the background} - Pans the viewport
+  \item \textbf{Dragging a node} - Moves the grabbed thought around
+  
+  This is useful for customizing the layout, "untying" thoughts that are too close to each other or to speed up the process of the layout algorithm. 
+  \item \textbf{Clicking a thought} - Highlights a thought and switches to highlighted mode. (more info below)
+\end{itemize}
+
+\subsubsection*{Highlighted mode}
+
+In default mode the whole display is used to view the graph and the user can interact with it as described above.
+When a thought is accessed (either by clicking on it or opening it directly through the URL) \xxx{todo - describe this feature} the graph view switches to highlighted mode.
+
+In highlighted mode half of the screen gets dedicated to the highlighted thought preview and the other half to the graph view. \xxx{figures}
+
+The graph view in highlighted mode shares almost all behavior with the default mode with a few exceptions:
+\begin{itemize}
+  \item \textbf{Visual node highlight} - The currently opened thought is also visually highlighted by a white circle \xxx{(todo - figure)}
+  
+  \item \textbf{Visual edges highlight} - All edges connected to the opened thought are exaggerated in thickness and color while all other egdes are dimmed.
+  \item \textbf{Neighborhood thoughts} - On highlighting a thought the application loads its neighborhood. \xxx{figure and see more below?}
+\end{itemize}
+This behavior helps users to distinguish highlighted thought from the others.
+Every time a thought is selected the viewport also smoothly centers on it.
+
+The thought preview shows title, author, time of creation, content with clickable links and replies section. \xxx{figure?}
+
+Both the links in content and titles in replies section are color-coded based on authors selected color and on click will highlight the respective thought.
+
+At the bottom of the preview there are Reply button and a close button (up icon on mobile and X on desktop).
+
+On mobile devices a down arrow is also included which stretches the preview half of the screen to the full height
+hiding the graph view and giving more screen real state to the textful information.
+
+\subsubsection*{Neighborhood thoughts and graph walk}
+
+When a thought is highlighted the application loads its neighborhood.
+The neighborhood is defined as thoughts accessible through BFS \xxx{todo glossary} up to a given depth.
+The currently used depth of the search is fixed at 3.
+
+Some of the thoughts rendered on screen can be filled with black color. \xxx{todo figure}
+This indicates that some neighbors of the node are not visible on screen and thus the node is explorable.
+  
+\subsection{Creating a new thought}
+
+There are two ways to access the create thought page:
+\begin{itemize}
+  \item \textbf{From the graph view} - Click on the "New thought" button on the bottom of the graph view.
+  \item \textbf{From the thought preview} - Click on the "Reply" button at the bottom of the thought preview.
+\end{itemize}
+
+Both of these ways lead to the Create thought page.
+The difference between them is that when accessed through the Reply button the respective thought link is automatically added to the content input.
+
+The Create thought page consists of two text fields: Title and Content.
+
+Both the title and content are required. Title has a minimum length of 1 character. The content's minimum length is 5 characters.
+Both of these requirements are enforced by validation rules and the user is notified by notification messages if the submit fails.
+
+\subsubsection*{Linking other thoughts}
+
+\subsection{Settings}
 
 \section{Developer documentation}
 

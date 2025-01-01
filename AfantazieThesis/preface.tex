@@ -9,8 +9,7 @@ Questions like what posts should we show to our users, in what order or how ofte
 though they can also arise with moderately big forums and any post-based online community. 
 
 It does not help that the amount of data to consider can be truly vast.
-Meta-owned social apps for example, have over 3.29 billion daily active users as of september 2024 \cite{meta_dau_2024}.
-\xxx{TODO - naučit se citovat}
+Meta-owned social apps for example, have over 3.29 billion daily active users as of september 2024 \cite{meta_dau}.
 When different tastes and preferences of the userbase are to be taken into account
 this problem becomes a very interesting software engineering challenge indeed.
 
@@ -31,10 +30,9 @@ This approach while for sure effective at maximizing ad revenue and user retenti
 \end{itemize}
 While subjective, we believe that these are common experiences of users of social networks.
 
-\section*{Afantázie}
-Afantázie is the implementation part and the final product of this thesis.
-It is a website (with one instance currently accessible through domain afantazie.cz)
-on which we will attempt to give an alternative to how we interact with post-based websites.
+\section*{Aphantasia}
+Aphantasia is the implementation part and the final product of this thesis.
+It is a website on which we will attempt to give an alternative to how we interact with post-based websites.
 
 This alternative is a graph-based approach.
 Users will be presented with a graph of nodes representing posts and edges representing connections between them.
@@ -45,7 +43,7 @@ Our eyes and brains can only process so much information at once
 and rendering potentially billions of nodes is even bigger challenge than the aforementioned infinite feed approach.
 
 But we believe there is a way to make this idea work.
-While seeing the entirety of the content is practically impossible,
+While presenting the entirety of the content is difficult and impractical,
 giving users the ability to see currently relevant content as a graph might be feasable.
 If we also add the ability to zoom and dynamically load more content related to the area of interest (ie. zoomed-in coordinates of the graph),
 this approach might become a viable way to interact with at least smaller-scale social networks.
@@ -55,17 +53,16 @@ If implemented properly, this solution could solve the problems mentioned:
   \item Users would have more control over the content they see. They could zoom in on the parts of the graph they find interesting.
   \item Echo chambers could be mitigated by showing the user the graph-based context of the entire site.
   \item While from the perspective of software makers, an addictive product is not a bad thing, it is not necessarily good for the users.
-    Graph-based interaction doesn't rely on addictive patterns and if in anyway adictive,
-    the addictiveness would stem from exploring the content on users own terms.
+    Graph-based interaction doesn't rely on addictive patterns and if in anyway addictive,
+    the addiction would stem from exploring the content on users own terms.
 \end{itemize}
 
-\xxx{72 Hours of Gamergate ? }
-
+% \xxx{72 Hours of Gamergate ? }
 
 The task ahead is going to require solving technical challenges regarding development and hosting of a public website
 as well as implementation and research about graph vizualization techniques.
 
 In chapter 1 we will start by introducing and comparing a few existing software products that provide graph visualization.
 In the chapter 2 we will briefly talk about different graph layout algorithms.
-Chapters 3 and 4 are where we design and implement Afantázie
+Chapters 3 and 4 are where we design and implement Aphantasia
 and lastly we will present the finished product in chapter 5 and provide documentation in chapter 6.
