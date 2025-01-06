@@ -1,2 +1,35 @@
-\chapter*{Conclusion}
-\addcontentsline{toc}{chapter}{Conclusion}
+\chapter{Conclusion}
+
+In this thesis we have presented a novel approach to social network content presentation using graph view
+instead of the traditional infinite feed.
+We discussed the motivation behind such approach and potential benefits it might bring.
+
+We have implemented a proof-of-concept web application called Aphantasia which utilizes such approach including 
+a custom \gls{GLA} implementation and a rendering engine based on PIXI.js.
+During the development we have solved several technical challenges regarding user management,
+server-client communication, hosting, cache busting, and of course graph rendering.
+
+The finished application provides:
+\begin{itemize}
+    \item Graph view able to render several hundred nodes at once
+    \item Dynamic loading ensuring capability to explore large graphs in order of tens of thousands nodes (and potentially much more)
+    \item User management including registration and login
+    \item User interface, including not just graph view, but also pages with user settings, post creation form, chat
+    and rudimentary notifications
+    \item Live preview of the graph view
+\end{itemize}
+
+Aphantasia is now ready to be used by general public and we are hosting two localized instances at:
+\begin{itemize}
+    \item \url{https://aphantasia.io}
+    \item \url{and https://afantazie.cz}
+\end{itemize}
+
+The source code to the application is available at \url{https://github.com/0rbit3r/afantazie_bachelors_thesis}.
+\xxx{The application is licensed under .... a license I guess. TODO}
+
+While we did not manage to implement all the features we expected (namely zoom-based dynamic loading and filtering),
+we are satisfied with the result and believe that the application is a good starting point for further development.
+
+We also believe that we have proven graph view to be a viable alternative to interact with social media content.
+Graph view might not be suitable for everyone but it certainly attracts a niche of users who can appreciate the benefits it brings.

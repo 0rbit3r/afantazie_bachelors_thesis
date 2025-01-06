@@ -1,7 +1,7 @@
-import { useGraphStore } from "../GraphStore";
-import { pullForce, backlinksNumberForceDivisor, pushForce, PUSH_THRESH, MAX_MOMENTUM_DAMPENING, FRAMES_WITH_OVERLAP, SLOW_SIM_EVERY_N_FRAMES, NODE_MASS_ON, MAX_MASS_DIFFERENCE_PULL_FORCE_MULTIPLIER, MIN_MASS_DIFFERENCE_PULL_FORCE_MULTIPLIER, SIM_HEIGHT, SIM_WIDTH, FRAMES_WITH_LESS_INFLUENCE, MAX_MOVEMENT_SPEED, MAX_MASS_DIFFERENCE_PUSH_FORCE_MULTIPLIER, MIN_MASS_DIFFERENCE_PUSH_FORCE_MULTIPLIER, GRAVITY_FREE_RADIUS, gravityForce, MOMENTUM_DAMPENING_EASE_IN_FRAMES, MOMENTUM_DAMPENING_START_AT, GRAVITY_ON } from "../model/graphParameters";
+import { useGraphStore } from "../state_and_parameters/GraphStore";
+import { pullForce, backlinksNumberForceDivisor, pushForce, PUSH_THRESH, MAX_MOMENTUM_DAMPENING, FRAMES_WITH_OVERLAP, SLOW_SIM_EVERY_N_FRAMES, NODE_MASS_ON, MAX_MASS_DIFFERENCE_PULL_FORCE_MULTIPLIER, MIN_MASS_DIFFERENCE_PULL_FORCE_MULTIPLIER, SIM_HEIGHT, SIM_WIDTH, FRAMES_WITH_LESS_INFLUENCE, MAX_MOVEMENT_SPEED, MAX_MASS_DIFFERENCE_PUSH_FORCE_MULTIPLIER, MIN_MASS_DIFFERENCE_PUSH_FORCE_MULTIPLIER, GRAVITY_FREE_RADIUS, gravityForce, MOMENTUM_DAMPENING_EASE_IN_FRAMES, MOMENTUM_DAMPENING_START_AT, GRAVITY_ON } from "../state_and_parameters/graphParameters";
 import { RenderedThought } from "../model/renderedThought";
-import { getThoughtsOnScreen } from "../model/thoughtsProvider";
+import { getThoughtsOnScreen } from "./thoughtsProvider";
 
 export const get_border_distance = (thought1: RenderedThought, thought2: RenderedThought) => {
     const x1 = thought1.position.x;

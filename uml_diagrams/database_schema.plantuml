@@ -1,0 +1,32 @@
+@startuml
+!theme reddress-darkblue
+hide empty members
+
+object Users {
++ Id
++ Email
++ Username
++ Password hash
++ Color
++ MaxThoughts
+}
+
+object Thoughts {
++ Id
++ AuthorId
++ Title
++ Content
++ DateCreated
++ SizeMultiplier
+}
+
+object ThoughtReferences {
++ Id
++ SourceId
++ TargetId
+}
+
+Thoughts -> Users : "AuthorId"
+ThoughtReferences -> Thoughts : "SourceId"
+ThoughtReferences -> Thoughts : "TargetId"
+@enduml

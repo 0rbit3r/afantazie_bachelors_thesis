@@ -1,0 +1,53 @@
+@startuml
+!theme reddress-darkblue
+hide empty members
+
+package React {
+  object GraphPage {
+  }
+
+  object GraphContainer {
+  }
+}
+
+
+package "State and parameters" {
+  object GraphStore {
++ Holds the state of the graph view application
++ Accessed by most other graph-related source code
+  }
+  object GraphParameters {
++ constants for FDL and other behavior
++ Accessed by most other graph-related source code
+  }
+}
+
+package Simulation {
+  object GraphRunner {
++ Main logic loop of the graph simulation
+  }
+
+  object ForcesSimulation {
++ FDL implementation
+  }
+  object ThoughtsProvider {
++ Provides and updates neighborhood and time window thoughts
++ Accessed by most other graph-related source code
+  }
+}
+
+package View {
+  object GraphGraphics {
++ Pixi.js rendering logic
+  }
+  object ViewportInitializer {
+  }
+}
+
+
+GraphPage -> GraphContainer : "Contains"
+GraphContainer --> GraphRunner : "Runs"
+GraphRunner --> GraphGraphics
+ViewportInitializer <- GraphGraphics
+ForcesSimulation <- GraphRunner
+@enduml

@@ -68,7 +68,7 @@ export const ZOOM_STEP_MULTIPLICATOR_WHEEL = 1.04;
 export const ZOOM_STEP_MULTIPLICATOR_BUTTONS = 1.02;
 
 // Graph walk - BFS depth
-export const NEIGHBORHOOD_DEPTH = 1;
+export const NEIGHBORHOOD_DEPTH = 3;
 
 
 // export const pushForce = (centerDistance: number) => {

@@ -3,12 +3,12 @@ import { Stage } from '@pixi/react';
 import { fullThoughtDto, thoughtNodeDto } from '../../api/dto/ThoughtDto';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { LocationState } from '../../interfaces/LocationState';
-import { useGraphStore } from './GraphStore';
+import { useGraphStore } from './state_and_parameters/GraphStore';
 import GraphContainer from './GraphContainer';
 import { Localization } from '../../locales/localization';
 import { MediaContent } from '../../components/MediaContent';
 import { fetchReplies, fetchTemporalThoughts, fetchThought } from '../../api/graphClient';
-import { clearNeighborhoodThoughts, getThoughtsOnScreen, updateNeighborhoodThoughts } from './model/thoughtsProvider';
+import { clearNeighborhoodThoughts, getThoughtsOnScreen, updateNeighborhoodThoughts } from './simulation/thoughtsProvider';
 
 const COLOR_BACKGROUND = 0x000000;
 

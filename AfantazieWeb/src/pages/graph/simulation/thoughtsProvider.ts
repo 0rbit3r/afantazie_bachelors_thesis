@@ -1,11 +1,10 @@
 import { thoughtNodeDto } from "../../../api/dto/ThoughtDto";
 import { fetchNeighborhoodThoughts, fetchTemporalThoughts } from "../../../api/graphClient";
 import { getUserSettings } from "../../../api/UserSettingsApiClient";
-import { useGraphStore } from "../GraphStore";
-import { computeSize } from "../simulation/simpleSizeComputer";
-import { BASE_RADIUS, INITIAL_POSITIONS_RADIUS, MAX_THOUGHTS_ON_SCREEN_FOR_LOGGED_OUT, NEIGHBORHOOD_DEPTH, SIM_HEIGHT, SIM_WIDTH } from "./graphParameters";
-import { mapDtosToRenderedThoughts, RenderedThought } from "./renderedThought";
-import { ThoughtPositionCache } from "./thoughtPositionCache";
+import { useGraphStore } from "../state_and_parameters/GraphStore";
+import { BASE_RADIUS, INITIAL_POSITIONS_RADIUS, MAX_THOUGHTS_ON_SCREEN_FOR_LOGGED_OUT, NEIGHBORHOOD_DEPTH, SIM_HEIGHT, SIM_WIDTH } from "../state_and_parameters/graphParameters";
+import { mapDtosToRenderedThoughts, RenderedThought } from "../model/renderedThought";
+import { ThoughtPositionCache } from "../model/thoughtPositionCache";
 
 // selects and returns thoughts to render and animate or consider highlighting in graph walk
 export function getThoughtsOnScreen() {
@@ -76,8 +75,6 @@ export function initializeTemporalThoughts(initialHighligthedId: number | null) 
     position: { x: 0, y: 0 }, momentum: { x: 0, y: 0 }, forces: { x: 0, y: 0 },
     held: false, highlighted: false, timeOnScreen: 0
   }));
-
-  computeSize(newThoughts);
 
   //set position either by cache or by initial positions circle
   let angle = 0;

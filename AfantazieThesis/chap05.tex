@@ -114,7 +114,7 @@ This is a non-exhaustive list and there are many more parameters controlling the
     \caption{Animated edges in the graph view}
     \label{obr:afantazie_animated_edges}
 \end{figure}
-    
+
 \subsubsection*{On-screen thoughts limit}
 The On-screen thoughts limit is a critical part of our big graph rendering solution.
 The default value is 100, but users can adjust it in the settings.
@@ -141,7 +141,13 @@ When the time slider moves beyond the last thought, the application enters live 
 In this mode the client listens for new thoughts and adds them to the graph in real time.
 
 While this feature enhances interactivity, it has only been tested with two users creating thoughts simultaneously.
-Higher activity levels could potentially overwhelm the interface but until there is an active userbase this remains a theoretical concern.
+Higher activity levels could potentially overwhelm the interface but until there is an active userbase this remains
+a theoretical concern.
+
+We implemented this feature using long polling, meaning that the client periodically sends
+requests to the server to check for new thoughts. This approach is a bit wasteful, especially considering that we already have active
+signalR connection to use across the entire appliction.
+In the future we will replace long polling with the active signalR connection.
 
 \subsubsection*{Graph Walk}
 The neighborhood API endpoint powers Graph walk demonstrated in figure \ref{obr:afantazie_mobile_graph_view}.
@@ -266,9 +272,19 @@ After refining the prototype and fixing the problems, we plan to add new feature
 \item Streamlining UI and UX
 \item Filtering/Search
 \item More graph algorithms besides \gls{FDL}
+\item Extend the dynamic loading to a zoom-based approach with pre-simulated layout on the server
 \item Email Verification
 \item Password Reset functionality
 \end{itemize}
+
+\subsection*{Testing}
+
+We would also like to add support for testing.
+We ommited this part of the development as the backend is mostly CRUD (Create, Read, Update and Delete operations)
+with little to no business logic
+and frontend is focused on grpah view which would be very difficult to write tests for.
+
+As the application matures however tests should be added to ensure stability and prevent regressions.
 
 \section{User Feedback}
 We advertised the application on Reddit, sharing both the Czech and English versions across several subreddits.

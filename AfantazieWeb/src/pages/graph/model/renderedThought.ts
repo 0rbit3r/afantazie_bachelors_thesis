@@ -1,7 +1,7 @@
 import { Graphics, Text } from "pixi.js";
 import { XAndY } from "./xAndY";
 import { thoughtNodeDto } from "../../../api/dto/ThoughtDto";
-import { BASE_RADIUS, INITIAL_POSITIONS_RADIUS, MAX_RADIUS, REFERENCE_RADIUS_MULTIPLIER, SIM_HEIGHT, SIM_WIDTH } from "./graphParameters";
+import { BASE_RADIUS, INITIAL_POSITIONS_RADIUS, MAX_RADIUS, REFERENCE_RADIUS_MULTIPLIER, SIM_HEIGHT, SIM_WIDTH } from "../state_and_parameters/graphParameters";
 import { ThoughtPositionCache } from "./thoughtPositionCache";
 
 export interface RenderedThought {

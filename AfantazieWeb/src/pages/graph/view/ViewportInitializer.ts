@@ -1,6 +1,6 @@
 import { Application, Container, Rectangle } from "pixi.js";
 import { Viewport } from "../model/Viewport";
-import { useGraphStore } from "../GraphStore";
+import { useGraphStore } from "../state_and_parameters/GraphStore";
 
 export const addDraggableViewport = (app: Application, zSortedContainer: Container) => {
     const viewport = new Viewport(app.screen.width, app.screen.height);

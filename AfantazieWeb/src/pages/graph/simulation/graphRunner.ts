@@ -1,10 +1,10 @@
 import { Application } from 'pixi.js';
 import { simulate_one_frame } from './forcesSimulation';
 import { initGraphics } from '../view/GraphGraphics';
-import { SIMULATION_FRAMES, THOUGHTS_CACHE_FRAME } from '../model/graphParameters';
-import { useGraphStore } from '../GraphStore';
+import { SIMULATION_FRAMES, THOUGHTS_CACHE_FRAME } from '../state_and_parameters/graphParameters';
+import { useGraphStore } from '../state_and_parameters/GraphStore';
 import { ThoughtPositionCache } from '../model/thoughtPositionCache';
-import { updateTemporalThoughts } from '../model/thoughtsProvider';
+import { updateTemporalThoughts } from './thoughtsProvider';
 
 export default function runGraph(app: Application) {
 

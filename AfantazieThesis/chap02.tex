@@ -7,7 +7,8 @@ These algorithms accept graph-representing data as input and produce positions o
 In this work, we are going to assume that GLAs produce 2-dimensional layouts,
 but it is worth mentioning that the number of dimensions can be arbitrarily high.
 
-There are many types of GLAs, each with its own strengths and weaknesses. Let'S look at some of the common ones.
+There are many types of GLAs, each with its own strengths and weaknesses.
+Let us look at some of the common ones.
 
 \section{Circular Layout}
 
@@ -59,7 +60,7 @@ Elegant in concept and easy to implement, this approach is endlessly customizabl
 One particularly useful feature is that FDL algorithms are incremental and update the layout continuously.
 This can be utilized to produce visually pleasing animations of the data and allows for user interaction
 (e.g., dragging nodes around or changing parameters).
-The draging feature can also be used to aid the layout algorithm towards a more desired layout.
+The draging feature can also be used to aid the algorithm towards a more desired layout during its run.
 
 Thanks to this aspect, a developer implementing an FDL algorithm has the ability to adjust the strength of the forces, add new ones,
 or implement entirely new behaviors and parameters to fit specific use cases 
@@ -79,4 +80,7 @@ These positives are, however, balanced by two drawbacks:
     some of which can be very sensitive and radically change the resulting layout with only a small change in value.
     This can be a challenge for users who are not familiar with the algorithm or the data they are working with.
     Achieving a specific look or quality for the final graph render often requires time spent tweaking the parameters.
+
+    This fact also means that it is difficult to create a "one size fits all" FDL algorithm
+    - the parameters that work well for one dataset might not work well for another.
 \end{itemize}

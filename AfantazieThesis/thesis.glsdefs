@@ -259,8 +259,8 @@ first={BFS},%
 firstplural={BFSs},%
 text={BFS},%
 plural={BFSs},%
-description={- breath First search - an algorithm for traversing a \textbf {graph} while prioritizing earlier visited \textbf {nodes}},%
-descriptionplural={- breath First search - an algorithm for traversing a \textbf {graph} while prioritizing earlier visited \textbf {nodes}},%
+description={- breath first search - algorithm for traversing a \textbf {graph} while prioritizing earlier visited \textbf {nodes}},%
+descriptionplural={- breath first search - algorithm for traversing a \textbf {graph} while prioritizing earlier visited \textbf {nodes}},%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -541,6 +541,202 @@ text={production},%
 plural={productions},%
 description={(environment) - the instance of an application that is accessible to its userbase, as opposed to development or testing environments},%
 descriptionplural={(environment) - the instance of an application that is accessible to its userbase, as opposed to development or testing environments},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{ORM}%
+{%
+name={ORM},%
+sort={ORM},%
+type={main},%
+first={ORM},%
+firstplural={ORMs},%
+text={ORM},%
+plural={ORMs},%
+description={- Object-Relational Mapping - a programming technique for converting data between backend and database},%
+descriptionplural={- Object-Relational Mapping - a programming technique for converting data between backend and database},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{code_first}%
+{%
+name={code-first},%
+sort={code-first},%
+type={main},%
+first={code-first},%
+firstplural={code-firsts},%
+text={code-first},%
+plural={code-firsts},%
+description={- a development approach where the database schema is generated from the code, as opposed to the database-first approach},%
+descriptionplural={- a development approach where the database schema is generated from the code, as opposed to the database-first approach},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{auth_x_y}%
+{%
+name={authX/Y},%
+sort={authX/Y},%
+type={main},%
+first={authX/Y},%
+firstplural={authX/Ys},%
+text={authX/Y},%
+plural={authX/Ys},%
+description={- authentication and authorization, set of systems verifying user identity and granting access to resources},%
+descriptionplural={- authentication and authorization, set of systems verifying user identity and granting access to resources},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{dependency_injection}%
+{%
+name={dependency injection},%
+sort={dependency injection},%
+type={main},%
+first={dependency injection},%
+firstplural={dependency injections},%
+text={dependency injection},%
+plural={dependency injections},%
+description={- a programming technique in which class instances resolve their dependencies using a DI container set up during the startup},%
+descriptionplural={- a programming technique in which class instances resolve their dependencies using a DI container set up during the startup},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{business_logic}%
+{%
+name={business logic},%
+sort={business logic},%
+type={main},%
+first={business logic},%
+firstplural={business logics},%
+text={business logic},%
+plural={business logics},%
+description={- the code that implements the business rules of a program (ie. what the application is designed for)},%
+descriptionplural={- the code that implements the business rules of a program (ie. what the application is designed for)},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{websockets}%
+{%
+name={websockets},%
+sort={websockets},%
+type={main},%
+first={websockets},%
+firstplural={websocketss},%
+text={websockets},%
+plural={websocketss},%
+description={- a two-way communication protocol allowing server sending messages to the client without client requesting them},%
+descriptionplural={- a two-way communication protocol allowing server sending messages to the client without client requesting them},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{memory_leak}%
+{%
+name={memory leak},%
+sort={memory leak},%
+type={main},%
+first={memory leak},%
+firstplural={memory leaks},%
+text={memory leak},%
+plural={memory leaks},%
+description={- a situation where a program fails to release memory it no longer needs, leading to wasting memory and potentialy lower performance},%
+descriptionplural={- a situation where a program fails to release memory it no longer needs, leading to wasting memory and potentialy lower performance},%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%

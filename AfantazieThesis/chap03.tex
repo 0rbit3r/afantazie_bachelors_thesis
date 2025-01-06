@@ -1,22 +1,21 @@
 \chapter{Software design}
 
-Before implementing Aphantasia we will introduce the application, set up expectations, decide on technologies used and plan the execution.
+Before implementing Aphantasia we will introduce the application,
+set up expectations, decide on technologies used and plan the execution.
 
 \section{Requirements and use-cases}
 
-In short, Aphantasia can be described as an attempt to create web-based multi-user Obsidian.
+In short, Aphantasia can be described as an attempt to create web-based multi-user Obsidian that can handle big amounts of data.
 It will allow users to collectively create posts, interlink them and view them in a graph view.
 
 We are expecting to implement at least these following features:
 \begin{itemize}
   \item User registration and login
   \item Post creation and linking
-  \item Graph view of the posts
-  \item Zooming and panning of the graph
+  \item Obsidian-like graph view of the posts 
   \item Large graph handling
   \item Graph filtering and search functionality
 \end{itemize}
-
 
 \section{Technologies and architecture}
 
@@ -28,64 +27,91 @@ Aphantasia will be a publicly accessible web application and as such we will nee
   \item Hosting - to make the website accessible
 \end{itemize}
 
-Let's start from the bottom with hosting.
+\subsection{Hosting, database and backend}
+Let us start from the bottom with hosting.
 We will use a Virtual Private Server (VPS) from a hosting company Váš hosting.
 This will provide us with a linux server fully prepared for hosting including
 SSL certificates, domains, databases and a lot of tools to manage the server.
 
 For database will use PostgreSQL as it is one of the most popular database engines and is known for its reliability and performance.
+We will use \gls{code_first} approach to database design and will use Entity Framework Core to migrate the database
+(programmatically create the database schema based on defined Entities in the project).
 
 For the backend we will use ASP.NET Core with C\#.
 While the main reason for this decision is familiarity with the technology the .NET platform is regardles a good choice as:
 \begin{itemize}
     \item It is linux compatible
-    \item The provided Entity Framework library providesORM, complete Code-first solutions and makes it easy to replace database technology later on if needed.
-    \item It is just good (cit. needed... statistics of usage by firms?)
+    \item The provided Entity Framework library provides \gls{ORM}, complete \gls{code_first} solutions and makes it easy to replace database technology later on if needed.
 \end{itemize}
 
-Frontend is where the most interesting decisions will be made. It makes a lot of sense to use a modern frontend javascipt library.
-We have experience with two - Angular and React.
+\subsection{Frontend and graph view}
+Frontend is where the most interesting decisions will be made.
 
-We will use React.js with Typescript. React is a popular frontend library and Typescript is a superset of Javascript that provides static typing.
-The reason for this choice is the fact that we will have to implement a rendering engine.
-React has unopinionated approach to architecture which should make it easier to integrate with our rendering solution.
+Before getting into technologies we need to decide on the architecture of the application with emphasis on the
+graph view - layout and rendering.
 
-\xxx{todo - first more info about the different borad-strokes options we
-have and why we decided for our own simultaion and rendering solution - simulation in BE vs FE etc.}
+\subsubsection{Graph view}
+We already saw a library that might be usable in our case in chapter 1 - Cytoscape.js.
+We decided against using it as we would use only fraction of its features and it might be an overkill for our needs.
+Instead we will implement our own graph rendering engine using a custom \gls{GLA}
+implementation and render the nodes using a rendering library.
 
-For rendering the graph we have two options - use an existing library or implement our own.
-We looked into one such library that might be usable in our case - Cytoscape.js.
-\xxx{But...}
+The reasoning behind is primarily based on customizability
+- we will be able to implement only the features we need and optimize the rendering for our use-case.
 
-We will implement our own simulation and rendering engine using a rendering library for javascript. The reasoning behind this is two-fold:
-\begin{itemize}
-    \item We will have more control over the rendering process and appearance of the graph
-    \item Rendering graphs and simultaing FDL is not a too difficult of a task and we should be able to implement a simple and extendable version in a reasonable time frame.
-\end{itemize}
-
-We considered four possibilities:
+For rendering the graph we will use an existing javascript library cabable of 2D graphics.
+We considered four possibilities to render the graph:
 \begin{itemize}
     \item \textbf{Html and css} - the most barebones solution would be to use a set of divs to represent nodes and svg lines to represent edges
     \item \textbf{HTML5 canvas} - a more sophisticated solution to draw both nodes and edges in HTML5 Canvas api
     \item \textbf{PIXI.js} - library for 2D rendering in the browser
     \item \textbf{Three.js} - library for 3D rendering in the browser
-    \footnote{Three.js is capable of 2D rendering. However it is evident that 2D rendering is achieved by rendering objects 3D space and orthographic camera.} \xxx{cit?}
 \end{itemize}
 
 We chose to use \textbf{PIXI.js} as it seemed to provide good compromise between ease of use and performance for 2D rendering in the browser.
 
-\section{Utilized algorithms}
+We plan to implement a graph view that will be able to handle large graphs using dynamic loading.
+This can tke mutliple different forms:
+\begin{itemize}
+    \item \textbf{Server-side GLA} - the server will run the GLA and return nodes with fixed positions to the client.
 
-We will use a force-directed layout algorithm to render the graph. It's easy to implement and provides visually pleasing results.
-There as 
+    This approach will enable us zoom-based dynamic loading of the graph but might not allow for interactable graph.
+    \item \textbf{Client-side GLA} - Client will run the GLA and render the graph based on positionless data comming from backend.
 
-\section{Data}
+    This way the graph can be animated and interactive but at the cost of performance of the application.
+    \item \textbf{Hybrid approach} - both server and client will run GLA - positions will be precalculated but interactable in the client.
+
+    A good compromise between the two but might be overkill for our needs.
+\end{itemize}
+
+We will implement the application in three stages:
+\begin{itemize}
+    \item In the first stage we will implement tha base of the application including user management and a real time chat.
+
+    \item In the second stage we will use the \textbf{client-side GLA} approach to render small graphs. 
+    The result of this stage should contain an Obsidian-like graph view capable of rendering at least few hundred nodes.
+
+    \item And lastly we will extend the application to handle large graphs.
+    In this stage we might try to implement the \textbf{server-side GLA} approach.
+    But we will utlimately decide based on the results of the first stage.
+\end{itemize}
+
+\subsubsection{Paages and UI}
+To implement graph view UI and pages for user management, login and post creation we will use a frontend library.
+We have experience with two - Angular and React.
+
+We will use React.js with Typescript.
+React has unopinionated approach to architecture which should make it easier to integrate with our rendering solution.
+We have already seen that React can be integrated with Cytoscape.js in chapter 1.
+Hopefully we will be able to do the same with PIXI.js.
 
 \section{Plan of execution}
+With these decisions made, the roadmap for the implementation of Aphantasia is as follows:
+
 \begin{enumerate}
-    \item set up the hosting and database
-    \item build and host a simple web application in react
-    \item create user management 
-    \item implement a proof of concept of the graph engine for small graphs
-    \item extend the application to handle large graphs
+    \item Set up the hosting and database
+    \item Build and host a simple web application in react
+    \item Create user management and chat functionality
+    \item Implement a graph engine capable of rendering small graphs
+    \item Extend the application to handle large graphs
 \end{enumerate}

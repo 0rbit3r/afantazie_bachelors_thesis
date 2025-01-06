@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-import { Viewport } from './model/Viewport';
-import { RenderedThought } from './model/renderedThought';
-import { MAX_THOUGHTS_ON_SCREEN_FOR_LOGGED_OUT } from './model/graphParameters';
+import { Viewport } from '../model/Viewport';
+import { RenderedThought } from '../model/renderedThought';
+import { MAX_THOUGHTS_ON_SCREEN_FOR_LOGGED_OUT } from './graphParameters';
 
 interface GraphStore {
     // Temporal thoughts are thoughts viewed using time slider

@@ -1,0 +1,59 @@
+@startuml
+!theme reddress-darkblue
+hide empty members
+
+package Backend {
+  package Presentation {
+    object API {
+      + API controllers
+      + SignalR hubs
+      
+    }
+    object "Presentation Model" {
+      + DTOs
+      + DTO - Core Model mapping
+    }
+  }
+  package Service { 
+    object "Service Interfaces"
+    object "Services" {
+      + Business logic
+      + In reality 5 specialized Service projects
+    }
+  }
+  package Data {
+    object "Repository Interface"
+    object "Repository" {
+      + Database Access
+    }
+    object "Data Model" {
+      + Database Entities
+      + Entity - Core Model mapping
+      + Tools for Database migrations
+    }
+  }
+  
+  package Core {
+    object "Core Model" {
+      + Domain classes
+    }
+  }
+
+  API -> "Presentation Model"
+  API --> "Service Interfaces"
+  "Service Interfaces" <-- Services
+  Services --> "Repository Interface"
+  "Repository Interface" <-- Repository
+  Repository --> "Data Model"
+  "Repository Interface" -> "Core Model"
+  "Service Interfaces" -> "Core Model"
+}
+
+object "Afantazie Server" {
+  + Entry point of the application
+  + Bootsraps the API
+  + Sets up Dependency Injection Container
+}
+
+Backend <- "Afantazie Server"
+@enduml

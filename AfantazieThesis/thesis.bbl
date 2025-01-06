@@ -302,6 +302,118 @@
       \verb https://www.yworks.com/demos/showcase/layoutstyles/
       \endverb
     \endentry
+    \entry{onion_architecture}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=44f0cf3459a0ddeb7da2de90c0ceb018}{%
+           family={Kapoor},
+           familyi={K\bibinitperiod},
+           given={Ritesh},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{44f0cf3459a0ddeb7da2de90c0ceb018}
+      \strng{fullhash}{44f0cf3459a0ddeb7da2de90c0ceb018}
+      \strng{fullhashraw}{44f0cf3459a0ddeb7da2de90c0ceb018}
+      \strng{bibnamehash}{44f0cf3459a0ddeb7da2de90c0ceb018}
+      \strng{authorbibnamehash}{44f0cf3459a0ddeb7da2de90c0ceb018}
+      \strng{authornamehash}{44f0cf3459a0ddeb7da2de90c0ceb018}
+      \strng{authorfullhash}{44f0cf3459a0ddeb7da2de90c0ceb018}
+      \strng{authorfullhashraw}{44f0cf3459a0ddeb7da2de90c0ceb018}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Onion architecture}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb https://medium.com/expedia-group-tech/onion-architecture-deed8a554423
+      \endverb
+      \verb{url}
+      \verb https://medium.com/expedia-group-tech/onion-architecture-deed8a554423
+      \endverb
+    \endentry
+    \entry{pixijs_official_react_guide}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=ea72ef2e93c769b7b04d22e5f76803ab}{%
+           family={PixiJS},
+           familyi={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{ea72ef2e93c769b7b04d22e5f76803ab}
+      \strng{fullhash}{ea72ef2e93c769b7b04d22e5f76803ab}
+      \strng{fullhashraw}{ea72ef2e93c769b7b04d22e5f76803ab}
+      \strng{bibnamehash}{ea72ef2e93c769b7b04d22e5f76803ab}
+      \strng{authorbibnamehash}{ea72ef2e93c769b7b04d22e5f76803ab}
+      \strng{authornamehash}{ea72ef2e93c769b7b04d22e5f76803ab}
+      \strng{authorfullhash}{ea72ef2e93c769b7b04d22e5f76803ab}
+      \strng{authorfullhashraw}{ea72ef2e93c769b7b04d22e5f76803ab}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{PixiJS official React guide}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://pixijs.io/pixi-react/#1-create-a-new-react-project-with-vite
+      \endverb
+      \verb{url}
+      \verb https://pixijs.io/pixi-react/#1-create-a-new-react-project-with-vite
+      \endverb
+    \endentry
+    \entry{pixijs_adam_emery_guide}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=a5f42e880de471b952f6f7a37e5e1d3f}{%
+           family={Emery},
+           familyi={E\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{a5f42e880de471b952f6f7a37e5e1d3f}
+      \strng{fullhash}{a5f42e880de471b952f6f7a37e5e1d3f}
+      \strng{fullhashraw}{a5f42e880de471b952f6f7a37e5e1d3f}
+      \strng{bibnamehash}{a5f42e880de471b952f6f7a37e5e1d3f}
+      \strng{authorbibnamehash}{a5f42e880de471b952f6f7a37e5e1d3f}
+      \strng{authornamehash}{a5f42e880de471b952f6f7a37e5e1d3f}
+      \strng{authorfullhash}{a5f42e880de471b952f6f7a37e5e1d3f}
+      \strng{authorfullhashraw}{a5f42e880de471b952f6f7a37e5e1d3f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{PixiJS guide by Adam Emery}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://adamemery.dev/articles/pixi-react
+      \endverb
+      \verb{url}
+      \verb https://adamemery.dev/articles/pixi-react
+      \endverb
+    \endentry
+    \entry{zustand_homepage}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=7f5acff9d1957e4d771d513b1794812a}{%
+           family={Zustand},
+           familyi={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{7f5acff9d1957e4d771d513b1794812a}
+      \strng{fullhash}{7f5acff9d1957e4d771d513b1794812a}
+      \strng{fullhashraw}{7f5acff9d1957e4d771d513b1794812a}
+      \strng{bibnamehash}{7f5acff9d1957e4d771d513b1794812a}
+      \strng{authorbibnamehash}{7f5acff9d1957e4d771d513b1794812a}
+      \strng{authornamehash}{7f5acff9d1957e4d771d513b1794812a}
+      \strng{authorfullhash}{7f5acff9d1957e4d771d513b1794812a}
+      \strng{authorfullhashraw}{7f5acff9d1957e4d771d513b1794812a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Zustand homepage}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://zustand.docs.pmnd.rs/getting-started/introduction
+      \endverb
+      \verb{url}
+      \verb https://zustand.docs.pmnd.rs/getting-started/introduction
+      \endverb
+    \endentry
   \enddatalist
 \endrefsection
 \endinput

@@ -1,7 +1,7 @@
 import { useApp } from '@pixi/react';
 import { useEffect } from 'react';
 import runGraph from './simulation/graphRunner';
-import { initializeTemporalThoughts as initializeTemporalRenderedThoughts } from './model/thoughtsProvider';
+import { initializeTemporalThoughts as initializeTemporalRenderedThoughts } from './simulation/thoughtsProvider';
 
 
 interface GraphRendererProps {
