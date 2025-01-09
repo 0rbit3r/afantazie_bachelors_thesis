@@ -1,0 +1,22 @@
+@startuml
+!theme plain
+
+start
+
+:Open Graph view;
+repeat
+:Simulate FDL;
+:Render Graph;
+if (UserInput?) then (Yes)
+if (Input type) then (Thought Highlight)
+    :Fetch Neighborhood Thoughts;
+   
+else (Time window move)
+    if (Time window exceded loaded array) then (Yes)
+       :Fetch Temporal Thoughts;
+    else (No)
+    endif
+endif
+else (No)
+endif
+@enduml

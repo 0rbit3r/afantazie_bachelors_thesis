@@ -1,5 +1,5 @@
 @startuml
-!theme reddress-darkblue
+!theme plain
 hide empty members
 
 package Backend {
@@ -55,5 +55,5 @@ object "Afantazie Server" {
   + Sets up Dependency Injection Container
 }
 
-Backend <- "Afantazie Server"
+Backend <-up- "Afantazie Server"
 @enduml

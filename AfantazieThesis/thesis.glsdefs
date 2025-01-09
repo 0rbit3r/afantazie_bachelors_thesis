@@ -26,6 +26,34 @@ parent={},%
 %
 }%
 
+\glsdefs@newdocentry{thought}%
+{%
+name={thought},%
+sort={thought},%
+type={main},%
+first={thought},%
+firstplural={thoughts},%
+text={thought},%
+plural={thoughts},%
+description={ - a post on Aphantasia represented by a colored node in the graph view},%
+descriptionplural={ - a post on Aphantasia represented by a colored node in the graph view},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
 \glsdefs@newdocentry{node}%
 {%
 name={node},%
@@ -166,17 +194,45 @@ parent={},%
 %
 }%
 
-\glsdefs@newdocentry{thought}%
+\glsdefs@newdocentry{DAG}%
 {%
-name={thought},%
-sort={thought},%
+name={DAG},%
+sort={DAG},%
 type={main},%
-first={thought},%
-firstplural={thoughts},%
-text={thought},%
-plural={thoughts},%
-description={- a post on Aphantasia - it has title, author, description, links and backlinks(also reffered to as replies)},%
-descriptionplural={- a post on Aphantasia - it has title, author, description, links and backlinks(also reffered to as replies)},%
+first={DAG},%
+firstplural={DAGs},%
+text={DAG},%
+plural={DAGs},%
+description={- directed acyclic graph, a \textbf {graph} with \textbf {directed edges} and no \textbf {cycles}},%
+descriptionplural={- directed acyclic graph, a \textbf {graph} with \textbf {directed edges} and no \textbf {cycles}},%
+symbol={\relax },%
+symbolplural={\relax },%
+user1={},%
+user2={},%
+user3={},%
+user4={},%
+user5={},%
+user6={},%
+long={},%
+longplural={},%
+short={},%
+shortplural={},%
+counter={page},%
+parent={},%
+%
+}%
+
+\glsdefs@newdocentry{tree}%
+{%
+name={tree},%
+sort={tree},%
+type={main},%
+first={tree},%
+firstplural={trees},%
+text={tree},%
+plural={trees},%
+description={- a \textbf {graph} with no \textbf {cycles} and exactly one path between any two \textbf {nodes}},%
+descriptionplural={- a \textbf {graph} with no \textbf {cycles} and exactly one path between any two \textbf {nodes}},%
 symbol={\relax },%
 symbolplural={\relax },%
 user1={},%
@@ -700,13 +756,13 @@ parent={},%
 
 \glsdefs@newdocentry{websockets}%
 {%
-name={websockets},%
-sort={websockets},%
+name={WebSockets},%
+sort={WebSockets},%
 type={main},%
-first={websockets},%
-firstplural={websocketss},%
-text={websockets},%
-plural={websocketss},%
+first={WebSockets},%
+firstplural={WebSocketss},%
+text={WebSockets},%
+plural={WebSocketss},%
 description={- a two-way communication protocol allowing server sending messages to the client without client requesting them},%
 descriptionplural={- a two-way communication protocol allowing server sending messages to the client without client requesting them},%
 symbol={\relax },%

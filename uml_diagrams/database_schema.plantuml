@@ -1,32 +1,33 @@
 @startuml
-!theme reddress-darkblue
+!theme plain
 hide empty members
 
-object Users {
-+ Id
-+ Email
-+ Username
-+ Password hash
-+ Color
-+ MaxThoughts
+class User {
++ Id : Integer
++ Email : String
++ Username : String
++ PasswordHash : String
++ Color : String
++ MaxThoughts : Integer
 }
 
-object Thoughts {
-+ Id
-+ AuthorId
-+ Title
-+ Content
-+ DateCreated
-+ SizeMultiplier
+class Thought {
++ Id : Integer
++ AuthorId : Integer
++ Title : String
++ Content : String
++ DateCreated : DateTime
++ SizeMultiplier : Integer
 }
 
-object ThoughtReferences {
-+ Id
-+ SourceId
-+ TargetId
+class ThoughtReference {
++ Id : Integer
++ SourceId : Integer
++ TargetId : Integer
 }
 
-Thoughts -> Users : "AuthorId"
-ThoughtReferences -> Thoughts : "SourceId"
-ThoughtReferences -> Thoughts : "TargetId"
+User "1" o- "0..*" Thought : "Author"
+
+Thought "1" o-- "0..*" ThoughtReference : "Outgoing References"
+Thought "1" --o "0..5" ThoughtReference : "Incoming References"
 @enduml

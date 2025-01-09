@@ -19,35 +19,91 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global/global}
-    \entry{meta_dau}{online}{}{}
+    \entry{echo_chamber_wiki}{online}{}{}
       \name{author}{1}{}{%
-        {{hash=8be4bc579e714ed92aa654e9ef52d376}{%
-           family={Meta\bibnamedelima Platforms},
-           familyi={M\bibinitperiod\bibinitdelim P\bibinitperiod},
-           given={Inc.},
-           giveni={I\bibinitperiod}}}%
+        {{hash=ae5bf0524ea5794fd313f21c86313a70}{%
+           family={Wikitionary},
+           familyi={W\bibinitperiod}}}%
       }
-      \strng{namehash}{8be4bc579e714ed92aa654e9ef52d376}
-      \strng{fullhash}{8be4bc579e714ed92aa654e9ef52d376}
-      \strng{fullhashraw}{8be4bc579e714ed92aa654e9ef52d376}
-      \strng{bibnamehash}{8be4bc579e714ed92aa654e9ef52d376}
-      \strng{authorbibnamehash}{8be4bc579e714ed92aa654e9ef52d376}
-      \strng{authornamehash}{8be4bc579e714ed92aa654e9ef52d376}
-      \strng{authorfullhash}{8be4bc579e714ed92aa654e9ef52d376}
-      \strng{authorfullhashraw}{8be4bc579e714ed92aa654e9ef52d376}
+      \strng{namehash}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{fullhash}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{fullhashraw}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{bibnamehash}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{authorbibnamehash}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{authornamehash}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{authorfullhash}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{authorfullhashraw}{ae5bf0524ea5794fd313f21c86313a70}
+      \field{extraname}{1}
       \field{sortinit}{1}
       \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{month}{9}
-      \field{note}{Accessed: 2024-11-03}
-      \field{title}{Meta-owned social apps have over 3.29 billion daily active users}
+      \field{title}{Echo chamber wikipedia page}
       \field{year}{2024}
       \verb{urlraw}
-      \verb https://investor.fb.com/investor-news/press-release-details/2024/Meta-Reports-Third-Quarter-2024-Results/default.aspx
+      \verb https://en.wikipedia.org/wiki/Echo_chamber_(media)
       \endverb
       \verb{url}
-      \verb https://investor.fb.com/investor-news/press-release-details/2024/Meta-Reports-Third-Quarter-2024-Results/default.aspx
+      \verb https://en.wikipedia.org/wiki/Echo_chamber_(media)
+      \endverb
+    \endentry
+    \entry{doomscrolling_wiki}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=ae5bf0524ea5794fd313f21c86313a70}{%
+           family={Wikitionary},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{fullhash}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{fullhashraw}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{bibnamehash}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{authorbibnamehash}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{authornamehash}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{authorfullhash}{ae5bf0524ea5794fd313f21c86313a70}
+      \strng{authorfullhashraw}{ae5bf0524ea5794fd313f21c86313a70}
+      \field{extraname}{2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Doomscrolling wikipedia page}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://en.wikipedia.org/wiki/Doomscrolling
+      \endverb
+      \verb{url}
+      \verb https://en.wikipedia.org/wiki/Doomscrolling
+      \endverb
+    \endentry
+    \entry{the_algorithm_wikitionary}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=03073b65a8d7ee310c1fa8783c4e4751}{%
+           family={page},
+           familyi={p\bibinitperiod},
+           given={Wikitionary},
+           giveni={W\bibinitperiod},
+           prefix={wikitionary},
+           prefixi={w\bibinitperiod}}}%
+      }
+      \strng{namehash}{03073b65a8d7ee310c1fa8783c4e4751}
+      \strng{fullhash}{03073b65a8d7ee310c1fa8783c4e4751}
+      \strng{fullhashraw}{03073b65a8d7ee310c1fa8783c4e4751}
+      \strng{bibnamehash}{03073b65a8d7ee310c1fa8783c4e4751}
+      \strng{authorbibnamehash}{03073b65a8d7ee310c1fa8783c4e4751}
+      \strng{authornamehash}{03073b65a8d7ee310c1fa8783c4e4751}
+      \strng{authorfullhash}{03073b65a8d7ee310c1fa8783c4e4751}
+      \strng{authorfullhashraw}{03073b65a8d7ee310c1fa8783c4e4751}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Algorithm}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://en.wiktionary.org/wiki/algorithm#Noun
+      \endverb
+      \verb{url}
+      \verb https://en.wiktionary.org/wiki/algorithm#Noun
       \endverb
     \endentry
     \entry{snap_cit_hep}{online}{}{}
@@ -66,8 +122,8 @@
       \strng{authornamehash}{97eef6fae0794d7a7a66e11dc0373d5d}
       \strng{authorfullhash}{97eef6fae0794d7a7a66e11dc0373d5d}
       \strng{authorfullhashraw}{97eef6fae0794d7a7a66e11dc0373d5d}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2024-09-10}
@@ -94,8 +150,8 @@
       \strng{authornamehash}{a1b97edc1a72ab1252ed75a4241a657d}
       \strng{authorfullhash}{a1b97edc1a72ab1252ed75a4241a657d}
       \strng{authorfullhashraw}{a1b97edc1a72ab1252ed75a4241a657d}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Obsidian homepage}
@@ -121,8 +177,8 @@
       \strng{authornamehash}{b3a68714a75c60b33bc444a77b630e82}
       \strng{authorfullhash}{b3a68714a75c60b33bc444a77b630e82}
       \strng{authorfullhashraw}{b3a68714a75c60b33bc444a77b630e82}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Graphview: At the beginning it starts with cool patterns, then turns into total chaos, and then surprisingly structures emerge from the chaos! (22k nodes)}
@@ -148,8 +204,8 @@
       \strng{authornamehash}{198e1746eaaf235d823038597e3c6de1}
       \strng{authorfullhash}{198e1746eaaf235d823038597e3c6de1}
       \strng{authorfullhashraw}{198e1746eaaf235d823038597e3c6de1}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Gephi homepage}
@@ -175,8 +231,8 @@
       \strng{authornamehash}{b4ff61f7d5be6821696f5011ce8fbfb1}
       \strng{authorfullhash}{b4ff61f7d5be6821696f5011ce8fbfb1}
       \strng{authorfullhashraw}{b4ff61f7d5be6821696f5011ce8fbfb1}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Large Steam network visualization with Google Maps + Gephi}
@@ -202,8 +258,8 @@
       \strng{authornamehash}{0d91dc78421d00e82fd8e32a763031af}
       \strng{authorfullhash}{0d91dc78421d00e82fd8e32a763031af}
       \strng{authorfullhashraw}{0d91dc78421d00e82fd8e32a763031af}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Cytoscape.js homepage}
@@ -232,8 +288,8 @@
       \strng{authorfullhash}{8159564001ff2457139c10c428057293}
       \strng{authorfullhashraw}{8159564001ff2457139c10c428057293}
       \field{extraname}{1}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Wine and cheese graph - Interactive demonstration}
@@ -262,8 +318,8 @@
       \strng{authorfullhash}{8159564001ff2457139c10c428057293}
       \strng{authorfullhashraw}{8159564001ff2457139c10c428057293}
       \field{extraname}{2}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Cytoscape.js Euler demonstration - GitHub repository}
@@ -345,8 +401,8 @@
       \strng{authornamehash}{ea72ef2e93c769b7b04d22e5f76803ab}
       \strng{authorfullhash}{ea72ef2e93c769b7b04d22e5f76803ab}
       \strng{authorfullhashraw}{ea72ef2e93c769b7b04d22e5f76803ab}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{PixiJS official React guide}
@@ -374,8 +430,8 @@
       \strng{authornamehash}{a5f42e880de471b952f6f7a37e5e1d3f}
       \strng{authorfullhash}{a5f42e880de471b952f6f7a37e5e1d3f}
       \strng{authorfullhashraw}{a5f42e880de471b952f6f7a37e5e1d3f}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{PixiJS guide by Adam Emery}

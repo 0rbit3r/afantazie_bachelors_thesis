@@ -1,117 +1,102 @@
-\chapter{Software design}
+\chapter{Design Analysis}
+\label{chap:design}
 
-Before implementing Aphantasia we will introduce the application,
-set up expectations, decide on technologies used and plan the execution.
+Before implementing Aphantasia, we will introduce its requirements and set expectations.
+In short, Aphantasia will be a social network based on an Obsidian-like graph view.
 
-\section{Requirements and use-cases}
+\section{Intended Use}
+The use case of Aphantasia is very similar to other social networks.
+Users will be incentivized to create text-based posts called \glspl{thought}, link them to other thoughts, and try to collect replies from other users.
 
-In short, Aphantasia can be described as an attempt to create web-based multi-user Obsidian that can handle big amounts of data.
-It will allow users to collectively create posts, interlink them and view them in a graph view.
+Apart from the graph aspect, Aphantasia will be novel in the structure of its content.
+Whereas most other similar social networks allow only one link per post, Aphantasia will allow up to 5.
+In graph theory, the structural difference between the two approaches is that while other networks contain forests,
+Aphantasia will be made of \gls{DAG} components.
 
-We are expecting to implement at least these following features:
+We expect this element to make the posts more interconnected.
+On that basis, we want to create an online experience that encourages two aspects:
 \begin{itemize}
-  \item User registration and login
-  \item Post creation and linking
-  \item Obsidian-like graph view of the posts 
-  \item Large graph handling
-  \item Graph filtering and search functionality
+  \item \textbf{Exploration} of the thoughts of others
+  \item and creation of new \textbf{associations} between them.
 \end{itemize}
 
-\section{Technologies and architecture}
+The ability to reply to more than one thought at once combined with graph view means users will be able to 
+interlink two separate connected components together and thus create bridges of associations.
 
-Aphantasia will be a publicly accessible web application and as such we will need to set up the following:
+\section{Functional Requirements}
+The functional requirements of Aphantasia are as follows:
+
+\subsection{Graph View}
+The focus of Aphantasia is the graph view.
+We want to create a comparable user experience to Obsidian's graph view, and thus, we will need to implement the following features:
 \begin{itemize}
-  \item Frontend - a webpage serving an interactive graph and UI
-  \item Backend - for bussiness logic and data processing
-  \item Database - for persistence of data
-  \item Hosting - to make the website accessible
+  \item \textbf{Node Rendering} - Each thought should be rendered as a node
+  \item \textbf{Edge Rendering} - Links between thoughts should be rendered as edges
+  \item \textbf{Animated Graph Layout} - The graph should stabilize using an FDL algorithm and animate the stabilization process
+  \item \textbf{Interactivity} - Nodes should be draggable to influence the layout algorithm
+  \item \textbf{Movement and Zoom} - A viewport with the ability to move around and zoom in and out through the graph
+  \item \textbf{Content Preview} - Users should be able to click on a thought to see its content
+  \item \textbf{Clickable links and backlinks} - The content preview needs to provide clickable links and backlinks (i.e., replies)
+  \item \textbf{Floating Titles} - When zoomed in past a certain threshold, titles of thoughts should be displayed under their nodes in the graph view
 \end{itemize}
 
-\subsection{Hosting, database and backend}
-Let us start from the bottom with hosting.
-We will use a Virtual Private Server (VPS) from a hosting company Váš hosting.
-This will provide us with a linux server fully prepared for hosting including
-SSL certificates, domains, databases and a lot of tools to manage the server.
-
-For database will use PostgreSQL as it is one of the most popular database engines and is known for its reliability and performance.
-We will use \gls{code_first} approach to database design and will use Entity Framework Core to migrate the database
-(programmatically create the database schema based on defined Entities in the project).
-
-For the backend we will use ASP.NET Core with C\#.
-While the main reason for this decision is familiarity with the technology the .NET platform is regardles a good choice as:
+To then elevate the experience beyond Obsidian and towards its own online shared experience, we will need to implement the following features:
 \begin{itemize}
-    \item It is linux compatible
-    \item The provided Entity Framework library provides \gls{ORM}, complete \gls{code_first} solutions and makes it easy to replace database technology later on if needed.
+  \item \textbf{User-specific Coloring} - Thoughts in graph view should be colored according to the user who created them
+  \item \textbf{Replies-dependent Node Size} - Thoughts that have more replies should appear larger to indicate their importance
+  \footnote{Obsidian does have this feature as well, but it is not as pronounced as we would like}
+  \item \textbf{Graph Exploration} - The graph should be explorable by traversing the thoughts through their edges
+  \item \textbf{Dynamic loading} - Only a subset of thoughts should be loaded at once based on the user's position in the graph
+  \item \textbf{Big Graph Support} - The graph view should be able to handle arbitrarily big graphs
 \end{itemize}
 
-\subsection{Frontend and graph view}
-Frontend is where the most interesting decisions will be made.
-
-Before getting into technologies we need to decide on the architecture of the application with emphasis on the
-graph view - layout and rendering.
-
-\subsubsection{Graph view}
-We already saw a library that might be usable in our case in chapter 1 - Cytoscape.js.
-We decided against using it as we would use only fraction of its features and it might be an overkill for our needs.
-Instead we will implement our own graph rendering engine using a custom \gls{GLA}
-implementation and render the nodes using a rendering library.
-
-The reasoning behind is primarily based on customizability
-- we will be able to implement only the features we need and optimize the rendering for our use-case.
-
-For rendering the graph we will use an existing javascript library cabable of 2D graphics.
-We considered four possibilities to render the graph:
+\subsection{User Management}
+Aphantasia needs to provide a simple user management system.
+Concretely:
 \begin{itemize}
-    \item \textbf{Html and css} - the most barebones solution would be to use a set of divs to represent nodes and svg lines to represent edges
-    \item \textbf{HTML5 canvas} - a more sophisticated solution to draw both nodes and edges in HTML5 Canvas api
-    \item \textbf{PIXI.js} - library for 2D rendering in the browser
-    \item \textbf{Three.js} - library for 3D rendering in the browser
+  \item \textbf{Registration}
+  \item \textbf{Login}
+  \item \textbf{Logout}
+  \item \textbf{Account Personalization}
+\end{itemize}
+The personalization aspect should include the ability to choose color. Users' thoughts will be displayed in this color.
+
+\subsection{Thought Creation}
+Registered users should be able to create new thoughts and link them to other existing thoughts.
+Each thought should have a title, a body, and up to 5 links to other thoughts.
+
+% The number of links is an important feature and a departure from mainstream social media, which usually allows only one link per post.
+% \xxx{As noted in... ?}
+% Most websites have the structure of a forest - each root node represents a post, and its children are comments.
+% \xxx{Tweets and retweets}
+
+\subsection{Routing and Pages}
+Aphantasia should have at least the following pages:
+\begin{itemize}
+  \item \textbf{Graph View}
+  \item \textbf{User Settings}
+  \item \textbf{Post Creation Form}
+  \item \textbf{Login and registration pages}
 \end{itemize}
 
-We chose to use \textbf{PIXI.js} as it seemed to provide good compromise between ease of use and performance for 2D rendering in the browser.
+\section{Non-functional Requirements}
+Our non-functional requirements will be focused mainly on the graph view and the user experience it provides.
 
-We plan to implement a graph view that will be able to handle large graphs using dynamic loading.
-This can tke mutliple different forms:
+\subsection{Graph View UX}
+The graph view of Aphantasia should offer the following qualities:
 \begin{itemize}
-    \item \textbf{Server-side GLA} - the server will run the GLA and return nodes with fixed positions to the client.
-
-    This approach will enable us zoom-based dynamic loading of the graph but might not allow for interactable graph.
-    \item \textbf{Client-side GLA} - Client will run the GLA and render the graph based on positionless data comming from backend.
-
-    This way the graph can be animated and interactive but at the cost of performance of the application.
-    \item \textbf{Hybrid approach} - both server and client will run GLA - positions will be precalculated but interactable in the client.
-
-    A good compromise between the two but might be overkill for our needs.
+  \item \textbf{Fluidity} - The graph should be animated without stuttering or \gls{fps} drops
+  \item \textbf{Responsive Design} - The graph view should be usable on both desktop and mobile devices
+  \item \textbf{Performance} - The graph should be able to handle at least a hundred thoughts on screen at once
+  \item \textbf{Intuitive Exploration} - The graph exploration should be intuitive and easy to understand
 \end{itemize}
 
-We will implement the application in three stages:
+\subsection{Extendability}
+We would like to design Aphantasia in a way that allows for easy extension and modification.
+The app should be able to easily accommodate additional features such as:
 \begin{itemize}
-    \item In the first stage we will implement tha base of the application including user management and a real time chat.
-
-    \item In the second stage we will use the \textbf{client-side GLA} approach to render small graphs. 
-    The result of this stage should contain an Obsidian-like graph view capable of rendering at least few hundred nodes.
-
-    \item And lastly we will extend the application to handle large graphs.
-    In this stage we might try to implement the \textbf{server-side GLA} approach.
-    But we will utlimately decide based on the results of the first stage.
+  \item \textbf{Notifications} - In the future, a page with replies to user's thoughts is planned
+  \item \textbf{Search and Filters} - In time, users should be able to search for thoughts and filter them based on various criteria
+  \item \textbf{Graph Parameters Modification} - The graph view parametrization (such as the strength of the forces in the FDL algorithm)
+ does not need to be available to the users right away, but the application should allow for it in the future
 \end{itemize}
-
-\subsubsection{Paages and UI}
-To implement graph view UI and pages for user management, login and post creation we will use a frontend library.
-We have experience with two - Angular and React.
-
-We will use React.js with Typescript.
-React has unopinionated approach to architecture which should make it easier to integrate with our rendering solution.
-We have already seen that React can be integrated with Cytoscape.js in chapter 1.
-Hopefully we will be able to do the same with PIXI.js.
-
-\section{Plan of execution}
-With these decisions made, the roadmap for the implementation of Aphantasia is as follows:
-
-\begin{enumerate}
-    \item Set up the hosting and database
-    \item Build and host a simple web application in react
-    \item Create user management and chat functionality
-    \item Implement a graph engine capable of rendering small graphs
-    \item Extend the application to handle large graphs
-\end{enumerate}

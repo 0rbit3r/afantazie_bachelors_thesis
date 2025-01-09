@@ -1,24 +1,28 @@
 @startuml
-!theme reddress-darkblue
+!theme plain
 hide empty members
 
-package React {
+package "React Components" {
   object GraphPage {
++ Entry point to the graph view
++ Thought preview overlay
++ Zoom and time slider controls
   }
 
   object GraphContainer {
++ Holds the PixiJS application object
   }
 }
 
 
-package "State and parameters" {
+package "State and Parameters" {
   object GraphStore {
-+ Holds the state of the graph view application
-+ Accessed by most other graph-related source code
++ Zustand state of the graph view
++ Accessed by all files below
   }
   object GraphParameters {
 + constants for FDL and other behavior
-+ Accessed by most other graph-related source code
++ Accessed by all files below
   }
 }
 
@@ -31,8 +35,7 @@ package Simulation {
 + FDL implementation
   }
   object ThoughtsProvider {
-+ Provides and updates neighborhood and time window thoughts
-+ Accessed by most other graph-related source code
++ Provides and updates thought arrays
   }
 }
 
@@ -41,13 +44,16 @@ package View {
 + Pixi.js rendering logic
   }
   object ViewportInitializer {
++ Initializes panning controls
   }
 }
 
 
+"ForcesSimulation" <-[hidden]- "ThoughtsProvider" 
 GraphPage -> GraphContainer : "Contains"
 GraphContainer --> GraphRunner : "Runs"
-GraphRunner --> GraphGraphics
-ViewportInitializer <- GraphGraphics
-ForcesSimulation <- GraphRunner
+GraphRunner ---> GraphGraphics : "Initiaizes and renders once per frame"
+ViewportInitializer <- GraphGraphics: "On initialization"
+ForcesSimulation <- GraphRunner : "Computes positions once per frame"
+"State and Parameters" <--[hidden] "React Components"
 @enduml

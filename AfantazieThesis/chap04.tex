@@ -1,54 +1,121 @@
 \chapter{Implementation}
+\label{chap:implementation}
+In this chapter, we will go through the implementation process of Aphantasia and the technical challenges we faced.
+The relevant source code is available at \url{https://github.com/0rbit3r/afantazie_bachelors_thesis}.
 
-\section{Hosting and Server Management}
+\section{Preparation}
 
-The VPS we rented comes ready with a lot of tools to manage the server, is fully prepared for hosting,
-is accessible via SSH and has a web-based control panel for managing the server.
-
-After installing the .NET 8 runtime the process of running a .NET application was as simple as transfering the program via SFTP
-and inputting 'dotnet Afantazie.dll' into the terminal.
-Deploying the frontend required only copying the files to the necessary directory in the server filesystem.
-DNS and SSL certificates got set-up in a mouse click in provided server-management.
-
-The greatest challenge when hosting the application came with setting up reverse-proxy server (although that was mostly due to our inexperience with the technology).
-Two provided reverse proxy server technologies were the default Apache and NginX.
-After a short research through forums we decided to make the switch to NginX as it is more modern alternative to Apache and can have performance benefits.
-If needed we could always switch back Apache without much hassle.
-
-The provided template for the NginX configuration was a good starting point but in order to make the
-application functional we had to make a few additions to the afantazie.cz.conf file:
+Aphantasia will be a publicly accessible web application, and as such, we will need to set up the following:
 \begin{itemize}
-    \item Reroute the api requests to the backend
-    \item Set up redirection from http to https
-    \item Force the server to always provide new version of meta.json file used for cache busting (see Cache Busting section below)
+  \item \textbf{Frontend} - a webpage serving an interactive graph and UI
+  \item \textbf{Backend} - for business logic and data processing
+  \item \textbf{Database} - for persistence of data
+  \item \textbf{Hosting} - to make the website accessible
 \end{itemize}
 
-With that the server was set up to host the database, backend and frontend.
+\subsection{Used Technologies and Libraries}
+Before implementing Aphantasia, we need to decide on the technologies we will utilize.
 
-\section{Database}
+\subsubsection{Hosting, Database and Backend}
+Let us start from the bottom with hosting.
+We will use a Virtual Private Server (VPS) from a hosting company, Váš Hosting.
+They will provide us with a Linux server fully prepared for hosting, including
+SSL certificates, domains, databases, and tools to manage the server.
 
-The database of Aphantasia is composed of just three tables:
+For the backend, we will use \textbf{.NET 8.0} with \textbf{C\#}.
+While the main reason for this decision is familiarity with the technology, the .NET platform is regardles as a good choice as:
+\begin{itemize}
+    \item It is Linux-compatible
+    \item The provided the \textbf{Entity Framework Core} library provides \gls{ORM}, complete \gls{code_first} solutions and makes it easy to replace database technology later on if needed
+\end{itemize}
+
+For the database, we will use \textbf{PostgreSQL} (version 15.10) as it is one of the most popular database engines and is known for its reliability and performance.
+We will use \gls{code_first} approach to database design and will use Entity Framework Core (version 8.0.4) to scaffold and migrate the database
+(programmatically create and update the database schema based on defined Entities in the project).
+
+\subsubsection{Graph View}
+This is where the most crucial decisions will be made as its graph view is the our primary focus and we are striving for a good user experience.
+
+We already saw a library that might be usable in our case in Section \ref{sec:cytoscape_js}.
+We decided against using it as we would use only a fraction of its features, and it might be overkill for our needs.
+Instead, we will implement our own graph rendering engine using a custom \gls{GLA}
+implementation and render the nodes using a rendering library.
+
+The reasoning behind this is primarily based on customizability
+- we will be able to implement only the features we need and optimize the rendering for our use case.
+
+To render the graph, we will use an existing JavaScript library capable of 2D graphics.
+We considered four possibilities to render the graph:
+\begin{itemize}
+    \item \textbf{HTML and CSS} - the most barebones solution would be to use a set of divs to represent nodes and SVG lines to represent edges
+    \item \textbf{HTML5 Canvas} - a more sophisticated solution to draw both nodes and edges in HTML5 Canvas API
+    \item \textbf{PixiJS} - library for 2D rendering in the browser
+    \item \textbf{Three.js} - library for 3D rendering in the browser
+\end{itemize}
+
+We chose to use \textbf{PixiJS} (version 7.4.2) as it seemed to provide a good compromise between ease of use and performance for 2D rendering in the browser.
+
+\subsubsection{Pages and UI}
+To implement graph view UI and pages for user management, login, and post creation, it makes sense to take advantage of a JavaScript framework.
+We have experience with two - Angular and React.
+
+We will use \textbf{React} (version 18.2.0) with TypeScript.
+React has an unopinionated approach to architecture, which should make it easier to integrate with our rendering solution.
+We have already seen that React can be integrated with Cytoscape.js in Section \ref{sec:cytoscape_js}.
+We will attempt to integrate React with PixiJS to create a graph view page with UI controls friendly on both desktop and mobile devices.
+
+\subsection{Plan of Execution}
+With technological decisions made, the roadmap for the implementation of Aphantasia is as follows:
+
+\begin{enumerate}
+    \item In the first stage (Section \ref{sec:basic_web_app}), we will implement a basic web application, including user management.
+ We will host this application on the VPS, set up a PostgreSQL database, and configure the reverse proxy server.
+
+    \item Next, in Section \ref{sec:small_graph_implementation} we will implement small graph rendering engine. 
+ The result of this stage should contain an Obsidian-like graph view capable of rendering at least a few hundred nodes.
+
+    \item And lastly, in Section \ref{sec:big_graph_implementation}, we will extend the application to handle large graphs and thus finish the implementation.
+\end{enumerate}
+
+\section{Basic Web Application}
+\label{sec:basic_web_app}
+In this section we will describe our process of creating a simple web application, scaffold the backend architecture, set up the database and implement user management.
+We also decided to implement a simple chat service during this phase.
+The reasoning behind this decision was the following:
+\begin{itemize}
+    \item It will serve as preparation for the real-time server-client communication, which will be useful for the graph view
+ (see Section \ref{sec:server_client_communication})
+    \item The user management system, just on its own, is not useful or testable
+    \item The chat is locked behind login, and thus, we can develop and test authorization early on
+    \item The messages inherit the color of their author, and thus, we can test the color selection feature
+\end{itemize}
+
+\subsection{Database Schema}
+We set up the database of Aphantasia, including the graph-specific tables:
 \begin{itemize}
     \item \textbf{Users} - holds the user data
     \item \textbf{Thoughts} - holds the thought data
     \item \textbf{ThoughtReferences} - holds the links between the thoughts
 \end{itemize}
 
-A diagram of the database schema can be seen in figure \ref{obr:afantazie_database_schema}.
-
-\begin{figure}[p]\centering
-    \includegraphics[width=90mm]{img/afantazie_database_schema.png}
+A diagram of the database schema can be seen in Figure \ref{obr:afantazie_database_schema}.
+\begin{figure}[h]\centering
+    \includegraphics[width=140mm]{img/afantazie_database_schema.png}
     \caption{Aphantasia Database schema}
     \label{obr:afantazie_database_schema}
 \end{figure}
 
+We created the database using \gls{code_first} approach and scaffolded the local development database and production database using Entity Framework Core.
+With that, the database is ready to be used by the backend.
 
-\section{Backend}
-The backend of the chat application is an ASP.NET application written in C\#.
-We decided to develop architectural design early on and it paid off as development of later features was much easier. 
-The initial architectural blueprint remained mostly unchanged up until the end of the project.
+\subsection{Backend Architecture}
+\label{sec:implementation_backend}
+The backend of the basic application is an ASP.NET application written in C\#.
+Similarly to the database schema, we decided to develop architectural design early on and it paid off as development of later features was much easier. 
+The initial architectural blueprint remained mostly unchanged until the end of the project.
 
-The solution of the backend consists of 19 projects implementing the backend to Aphantasia and one project for secondary tools (see chapter 6 - Afantazie.Tools for more details). 
+The solution of the backend consists of 19 projects implementing the backend to Aphantasia and one project for secondary tools
+(see Section \ref{sec:testing_data} for more details). 
 
 The backend projects are divided into four directories (forming conceptual layers):
 \begin{itemize}
@@ -59,43 +126,43 @@ The backend projects are divided into four directories (forming conceptual layer
 \end{itemize}
 
 There is also one project outside of these layers that serves to Bootstrap the application and set up \gls{dependency_injection}.
-In figure \ref{obr:afantazie_backend_architecture} you can see the architecture of the backend with its dependencies.
+Figure \ref{obr:afantazie_backend_architecture} describes the architecture of the backend with its dependencies.
 
 This division is loosely based on Onion architecture \cite{onion_architecture}. Notice that the Presentation layer doesn't directly depend on the Service layer.
-Instead it depends on Service Interface layer and the actual implementation is injected at runtime.
-This allows for clean separation of concerns, makes the code more testable and allows for easy swapping of implementations.
+Instead, it depends on the Service Interface layer, and the actual implementation is injected at runtime.
+This allows for clean separation of concerns, makes the code more testable, and allows for easy swapping of implementations.
 
-\begin{figure}[p]\centering
+\begin{figure}[h]\centering
     \includegraphics[width=140mm]{img/backend_architecture.png}
     \caption{Aphantasia Backend Architecture}
     \label{obr:afantazie_backend_architecture}
 \end{figure}
 
-Let us now take a look at the individual layers.
+The following sections describe the individual layers and their responsibilities in more detail.
 
-\subsection*{Presentation layer}
+\subsubsection*{Presentation Layer}
 The Presentation layer sits in the outermost layer of the application and is responsible for handling HTTP requests and responses.
 It contains two projects - \textbf{Api} and \textbf{Model}.
 
-Api holds Api controllers implemented using Asp.NET Core MVC.
-The controllers and signalR hubs only handle incomming traffic and  
-for handling \gls{business_logic} they call the appropriate service in the Service layer.
+The Api project holds API controllers implemented using ASP.NET Core MVC.
+The controllers and signalR hubs only handle incoming traffic and  
+for handling \gls{business_logic}, they call the appropriate service in the Service layer.
 
 The Presentation Model contains definitions for the data transfer objects (DTOs).
 These objects are used to transfer data between the client and the server.
 
-\subsection*{Service layer}
+\subsubsection*{Service Layer}
 The Service contains the \gls{business_logic} of Aphantaisa.
-It is set of 5 projects (and their respective interfaces):
+It is a set of 5 projects (and their respective interfaces):
 \begin{itemize}
-    \item \textbf{Auth} - handles user registration, login and JWT token generation
+    \item \textbf{Auth} - handles user registration, login, and JWT token generation
     \item \textbf{Chat} - handles the chat functionality
     \item \textbf{Site Activity} - handles the real-time stats of the site (such as the number of users online)
     \item \textbf{Thoughts} - handles the creation and retrieval of thoughts
-    \item \textbf{UserSettings} - handles the user settings (such as selected color or on-screen thoughts limit)
+    \item \textbf{User Settings} - handles the user settings (such as selected color or on-screen thoughts limit)
 \end{itemize}
 
-\subsection*{Core layer}
+\subsubsection*{Core Layer}
 The Core contains three projects:
 \begin{itemize}
     \item \textbf{Core Model} - contains the core model of the application used in Repository and Service interfaces as arguments
@@ -105,19 +172,19 @@ The Core contains three projects:
 
 This layer sits in the midle of the application dependency wise and is used by both the Service and Data layers.
 
-\subsection*{Data layer}
+\subsubsection*{Data Layer}
 The Data layer is called by services to access the database using Entity Framework Core.
-It contains Repository project and its interface.
+It contains the Repository project and its interface.
 The Repository project is responsible for handling the database queries and updates.
 
-\subsection*{AfantazieServer project}
+\subsubsection*{AfantazieServer Project}
 Since the application is using \gls{dependency_injection}
-we cannot put its entry point inside any of the projects mentioned above without breaking the principles of the Onion architecture \cite{onion_architecture}
-If we for example wanted to run the API by setting setting the Presentation.Api as startup project we would have to add
-references to Service layer and Data layer to add their classes to \gls{dependency_injection} container and thus break the separation of concerns.
+we cannot put its entry point inside any of the projects mentioned above without breaking the principles of the Onion architecture.
+If we, for example, wanted to run the API by setting setting the Presentation.Api as the startup project, we would have to add
+references to the Service layer and Data layer to add their classes to \gls{dependency_injection} container and thus break the separation of concerns.
 
-Instead we created a separate project that serves as the entry point to the application.
-It is responsible for all the setup and configuration of the application which includes but is not limited to:
+Instead, we created a separate project that serves as the entry point for the application.
+It is responsible for all the setup and configuration of the application, which includes but is not limited to:
 \begin{itemize}
     \item Configuration files 
     \item Dependency injection setup
@@ -126,32 +193,29 @@ It is responsible for all the setup and configuration of the application which i
 \end{itemize}
 
 Note that not all of these setups are done in the AfantazieServer project itself.
-Instead they are defined inside their respective projects and are only called from the AfantazieServer project.
-For example, AfantazieServer project calls AddDataModule() method from the Data project
-which then registers the Data module with all its responsibilities allowing to swap modules for different implementation if needed.
+All individual projects contain the bootstrapping logic, and expose an "AddModule" method that is called from the AfantazieServer project to add the respective service.
+For example, the AfantazieServer project calls the AddDataModule() method from the Data project,
+which then registers the Data module with all its responsibilities, allowing it to swap modules for different implementations if needed
+(as long as they implement the corresponding interface).
 
-\subsection*{Models}
-You might have noticed that we use three different models in the application.
-That is not an oversight as each model serves different purspose:
+\subsubsection*{Models}
+We use three different models to represent data in the application - each serving a different purpose in its respective layer:
 \begin{itemize}
-    \item \textbf{Presentation Model} - DTOs used for transmition between client and server
-    (client has to implement the exact same model to be able to communicate with the server)
+    \item \textbf{Presentation Model} - DTOs used for transmission between client and server
+ (The client has to implement the exact same model to be able to communicate with the server)
     \item \textbf{Data Model} - Entities correspond to Database tables
-    (which is created \gls{code_first} from the entities by Entity Framework)
-    \item \textbf{Core Model} - Serves as an intemediary between the Presentation and Data models.
-    Business logic should be implemented in the Service layer using this model.
+ (which is created \gls{code_first} from the entities by Entity Framework)
+    \item \textbf{Core Model} - Serves as an intermediary between the Presentation and Data models.
+ Business logic should be implemented in the Service layer using this model.
 \end{itemize}
 
 Both Repository and Service interfaces use the Core Model as arguments and return values.
-This means that the Service layer is not dependent on neither the Entities or the DTOs,
+This means that the Service layer is not dependent on either the Entities or the DTOs,
 but it also requires mapping between the Core Model and the Data Model.
-For mapping we used Mapster library inside Data and Presentation Model projects.
+For mapping, we used the Mapster library inside the Data and Presentation Model projects.
 
-\section{Frontend}
-The frontend of the application is a React web application written in Typescript.
-
-As a warmup before graph rendering we built a small chat application in React.
-The goal was to initialize the architecture and implement \gls{auth_x_y},
+\subsection{Initial Web Application}
+During the first phase, we initialized the web application and implemented \gls{auth_x_y},
 real-time server-client communication and routing with a few pages:
 \begin{itemize}
     \item Home page
@@ -161,65 +225,97 @@ real-time server-client communication and routing with a few pages:
     \item About page
 \end{itemize}
 
-We also styled the application using plain css and while the resulting design is not the most visually appealing,
-it is functional and serves as a good starting point for the development of the graph view.
+We also styled the application using plain css. The styling is minimalistic and not exactly modern but is functional and responsive.
 
-\subsection{Cache busting}
+\subsubsection{Cache Busting}
+\label{sec:cache_busting}
 Browsers routinely cache files to speed up the loading of websites.
 This is a good thing as it reduces the load on the server and speeds up the user experience.
 However when the website is in active development and the files are changing frequently the cache can become a problem.
 Users might not see the changes made to the website because the browser is loading the old cached version of the file.
-The techniques solving this problem are called Cache busting. We used a react library called React cache buster to resolve this issue.
+The techniques for solving this problem are called Cache busting. We used a React library called React cache buster to resolve this issue.
 
-At first we had no success with the library as it was not working as expected.
+At first, we had no success with the library as it was not working as expected.
 The reason, as we found out, was that the library uses a meta.json file to store the version of the application.
-Client then checks the version of the application and if it is different from the version in the meta.json file
+The client then checks the version of the application, and if it is different from the version in the meta.json file,
 it forcefully reloads the page to get the new version of the application.
 
-The problem was that nginX was caching the meta.json file and the client was not getting the new version of the file.
-Instead it was getting response with 304 status code (not modified).
-We solved this by adding a directive to the nginX configuration file that forces the server to always provide a new version of the file.
+The problem was that Nginx was caching the meta.json file, and the client was not getting the new version of the file.
+Instead, it was getting a response with a 304 status code (not modified).
+We solved this by adding a directive to the Nginx configuration file that forces the server to provide a new version of the file at all times.
+See Section \ref{sec:nginx_config} for the exact configuration used.
 
-\subsection{Server-Client communication}
-For the chat application we tried to use \gls{websockets} for real time communication.
+\subsubsection{Server-Client Communication}
+\label{sec:server_client_communication}
+For the chat application, we tried to use \gls{websockets} for real-time communication.
 While we did manage to get this approach working, we did not like the developer experience.
 
-SignalR is a library that simplifies the process of setting up websockets and provides a nice API for server-client communication.
-It's available for both .NET and Javascript and is easy to set up, with much less boilerplate code than using websockets directly.
+\textbf{SignalR} is a library that simplifies the process of setting up WebSockets and provides a nice API for server-client communication.
+It is available for both .NET and JavaScript and is easy to set up, with much less boilerplate code than using WebSockets directly.
 
-SignalR uses so called hubs to communicate between server and client which automatically handle
+SignalR uses so-called hubs to communicate between server and client, which automatically handle
 the connection and disconnection of clients.
 
-We implemented two hubs - chatHub and statshub, with the former being used for chat messages while on the chat page
-and the latter used across the entire application to keep track and display the number of users online on the homepage.
+We implemented two hubs - ChatHub and StatsHub, with the former being used for chat messages while on the chat page
+and the latter used across the entire application to keep track of and display the number of users online on the homepage.
 
-This feature can be exploited further, for example to inform the client that new thoughts were created.
+This feature can be exploited further, for example, to inform the client that new thoughts were created.
 
-\section{Small graph vizualization}
-Small graph implementation required only two things - rendering and focres simulation.
-As mentioned previously, we decided to render the graph using Pixi.js and implement our proprietary \gls{FDL}.
+\subsection{Hosting and Server Management}
+\label{sec:hosting}
 
-To integrate Pixi.js into the React application we first followed the official documentation \cite{pixijs_official_react_guide}.
-We were not happy with the result as the pixi/react components were hard to work with programmatically.
+The VPS we rented comes ready with a lot of tools to manage the server, is fully prepared for hosting,
+is accessible via SSH and has a web-based control panel for managing the server.
 
-So instead we used guide by Adam Emery \cite{pixijs_adam_emery_guide} to integrate Pixi.js into the React application.
-His approach is different in that it only uses the Stage component from the pixi/react library
-and the rest of the Pixi.js code is written in plain javascript (in our case typescript).
-This allows us to better control the Pixi.js code and use the full potential of the library instead of using the pixi/react wrapper.
+After installing the .NET 8 runtime, the process of running a .NET application was as simple as transferring the program via SFTP
+and inputting 'dotnet Afantazie.dll' into the terminal.
+Deploying the frontend required only copying the files to the necessary directory in the server filesystem.
+DNS and SSL certificates were set with a mouse click in the provided server management.
+
+\subsubsection{Nginx}
+The greatest challenge when hosting the application came with setting up a reverse proxy server (although that was mostly due to our inexperience with the technology).
+Two provided reverse proxy server technologies were the default Apache and Nginx.
+After a short research through forums we decided to make the switch to Nginx as it is more modern alternative to Apache and can have performance benefits.
+If needed, we could always switch back to Apache without much hassle.
+
+The provided template for the Nginx configuration was a good starting point, but in order to make the
+application functional, we had to make a few additions to the afantazie.cz.conf file:
+\begin{itemize}
+    \item Reroute the API requests to the backend
+    \item Set up redirection from HTTP to HTTPS
+    \item Force the server to always provide a new version of the meta.json file used for cache busting (see Section \ref{sec:cache_busting})
+\end{itemize}
+For a complete configuration file, see Section \ref{sec:nginx_config}.
+
+\section{Small Graph Vizualization}
+
+\label{sec:small_graph_implementation}
+Small graph implementation, the second phase of development, required two things - rendering and forces simulation.
+As mentioned previously, we decided to render the graph using PixiJS and implement our proprietary \gls{FDL}.
+
+To integrate PixiJS into the React application, we first followed the official documentation \cite{pixijs_official_react_guide}.
+We were not happy with the result as the Pixi/react components were hard to work with programmatically.
+
+So, instead, we used a guide by Adam Emery \cite{pixijs_adam_emery_guide} to integrate PixiJS into the React application.
+His approach is different in that it only uses the Stage component from the Pixi/react library
+, and the rest of the PixiJS code is written in plain JavaScript (in our case, TypeScript).
+This allows us to better control the PixiJS code and use the full potential of the library instead of using the pixi/react wrapper.
 
 After implementing a simple node and edges rendering, we quickly hit a roadblock with massive \glspl{memory_leak}.
-As we found out we were instantiating new Pixi.js objects every time the graph was updated.
-To mitigate this issue we created an interface - RenderedThought - that holds the Pixi.js objects for each thought (the Title text and the Circle graphics).
+As we found out, we were instantiating new PixiJS objects every time the graph was updated.
+To mitigate this issue, we created an interface - RenderedThought - that holds the PixiJS objects for each thought (the Title text and the Circle graphics).
 
 The RenderedThought interface remained to the end of the development and we incrementaly added more properties to it as we needed them.
 It contains all the properties that are needed to render the thought on the screen and to interact with it.
 For example, each rendered thought has a boolean property 'held' which is used to determine if the thought is currently being dragged by the user.
 
-Once we were able to render nodes and edges, we created a simple force directed layout algorithm with two forces - pull connected and push unconnected.
-At this point we had an application with comparable graph view to obsidian (figure \ref{obr:afantazie_selfie}).
+Before big graph solution we stored the loaded thoughts in an array of rendered thoughts kept in the React state.
 
-In figure \ref{obr:afantazie_cithep_3k} you can see again the first 3000 nodes of the citHep dataset now visiaulised using Aphantasia.
-With this many nodes on screen the application lagged a lot. Although it remained somewhat usable.
+Once we were able to render nodes and edges, we created a simple force directed layout algorithm with two forces - pull connected and push unconnected.
+At this point, we had an application with a comparable graph view to obsidian (Figure \ref{obr:afantazie_selfie}).
+
+Figure \ref{obr:afantazie_cithep_3k} showcases the first 3000 nodes of the citHep dataset now visualized using Aphantasia in this stage of development.
+With this many nodes on the screen, the application lagged a lot, although it remained somewhat usable.
 
 \begin{figure}[p]\centering
     \includegraphics[width=100mm, keepaspectratio]{img/afantazie_first_stage_done.jpg}
@@ -233,37 +329,108 @@ With this many nodes on screen the application lagged a lot. Although it remaine
     \label{obr:afantazie_cithep_3k}
 \end{figure}
 
-\section{Big graph visualization}
+\subsection{FDL Implementation}
+
+The core of our FDL implementation is a set of two forces - pull and push.
+These forces are defined as functions accepting distance between the nodes and returning a force that should be applied to them.
+
+These functions are defined in the graphParameters.ts file and currently look like this:
+\begin{lstlisting}
+export const pullForce = (borderDist: number) => {
+    if (borderDist <= 0) {
+        return borderDist;
+    }
+    const computed = 0.01 *
+        (borderDist - IDEAL_LINKED_DISTANCE);
+    const limited = computed > MAX_PULL_FORCE
+        ? MAX_PULL_FORCE
+        : computed < -MAX_PULL_FORCE
+            ? -MAX_PULL_FORCE
+            : computed;
+
+    const final = Math.sign(limited) === -1
+        ? limited / EDGE_COMPRESSIBILITY_FACTOR
+        : limited;
+
+    return final;
+};
+export const pushForce = (borderDist: number) => {
+    if (borderDist === 0) {
+        return 0;
+    }
+    if (borderDist < 0) {
+        return -borderDist;
+    }
+    const computed = 5 / Math.sqrt(borderDist);
+    return Math.min(MAX_PUSH_FORCE, computed);
+};
+\end{lstlisting}
+
+Note that the pull force can be negative. This is intentional as the connected nodes should be attracted not towards each other but towards a certain ideal edge distance.
+This distance is parameterized as IDEAL\_LINKED\_DISTANCE.
+
+The numbers inside the functions are the respective force strength parameters.
+
+\subsection{Parametrization}
+As stated in Section \ref{sec:force_directed_layout}, the FDL algorithm is highly dependent on the parameters set by the user.
+Thus, as expected, we had to implement and configure number of parameters in order to make the graph view a smooth and enjoyable experience.
+The full list of parameters we implemented can be found in Administrator documentation in Chapter \ref{sec:graph_layout_parameterssec:graph_layout_parameters}.
+
+Here, we will discuss what led us to implement many of these parameters - jitter.
+In some situations, particularly when the graph was not yet fully stabilized, and there were a larger amount of nodes in a small area,
+the nodes had the tendency to oscillate quickly.
+
+Parametrizing the forces themselves helped a little but not enought to mitigate the issue.
+Instead we implemented a momentum system, where the nodes would not react to the forces immediately but would instead gradually accelerate based on forces applied.
+The momentum system is influenced by dampening system - a set of parameters controlling how much the forces applied to the momentum and the momentum itself are reduced each frame.
+
+The jitter was not completely eliminated but was reduced to a level where it was not noticeable in normal use.
+We also believe that if the problem arises again, we will be able to alter the parameters accordingly and reduce the problem further.
+
+\section{Big Graph Visualization}
+\label{sec:big_graph_implementation}
+
+In the final stage of the development, we implemented the big graph solution.
 
 \subsection*{State management}
 
-So far we used React states and contexts to hold and manage the information of the graph context.
-This worked for simple small graph approach but we were not happy with this approach once the context started to become more complicated.
+So far, we used React states and contexts to hold and manage the the graph context.
+This worked for a simple small graph approach, but we were not happy with this approach once the context started to become more complicated
+as we had little control over the state from the PixiJS code.
 
 A solution we used is a react library called Zustand \cite{zustand_homepage}.
-This library allows minimal state setup that is compatible with external (meaning outside react) code.
-
-We had to implement time slider and that provided a suprisingly nice way of handling big graphs.
+This library allows minimal state management in React that is compatible with external (meaning non-React) code.
 
 \subsection*{Dynamic loading}
-At the beginning of the development we used one endpoint for all the data at once.
-That worked until around 500 thoughts after which the loading time became quite noticable. 
+At the beginning of the development, we used one endpoint for all the data at once.
+That worked until around 500 thoughts, after which the loading time started to become noticeable. 
 
-The obvious solution was to load only a subset of the data at a time. We implemented this in several ways:
+The obvious solution was to load only a subset of the data at a time. We implemented this idea in two ways:
 \begin{itemize}
-    \item \textbf{Temporal API endpoints} - Client requests new subset of nodes in a form of "beforeId / afterId / aroundId".
-    Thanks to ascending ID increment approach translates to chronological order of the nodes.
-    When time window exceeds the currently loaded data it gets updated with missing nodes from the relative past or future.
-    \item \textbf{Neighborhood API endpoints} - Breadth-first search starting in given node up to given depth. is used to implement graph walk.
+    \item \textbf{Temporal API endpoints} - Client requests a new subset of nodes in the form of "beforeId / afterId / aroundId".
+ Thanks to the ascending ID increment approach, it translates to the chronological order of the nodes.
+ When the time window exceeds the currently loaded data, it gets updated with missing nodes from the relative past or future.
+    \item \textbf{Neighborhood API endpoints} - Breadth-first search starting in a given node up to a given depth is used to implement graph exploration.
 \end{itemize}
 
 This approach worked not just as an optimization technique but we ended up building our big graph handling on it.
-We will look at the result in the next chapter.
+In Figure \ref{obr:afantazie_action_flow}, we can see the logic flow of the big graph rendering solution.
+Aphantasia uses two arrays of rendered thoughts - temporal array and neighborhood array.
 
-\section{Frontend architecture}
+To keep track of which thoughts should be visible on screen as well as fetching and updating temporal and neighborhood thoughts,
+we created the file thoughtsProvider.ts.
+
+\begin{figure}[h]\centering
+    \includegraphics[width=100mm, keepaspectratio]{img/afantazie_graph_view_flow.png}
+    \caption{The logic flow of the big graph rendering solution}
+    \label{obr:afantazie_action_flow}
+\end{figure}
+
+\subsection{Frontend Architecture}
+\label{sec:frontend_architecture}
 
 The frontend architecture is much less clear-cut than the backend
-but we tried to visualise the relationship between the main surce code files in figure
+but we visualized the relationship between the main source code files in Figure
 \ref{obr:afantazie_frontend_architecture}.
 All of the graph-related code sits inside the src/pages/graph directory of the AfantazieWeb project
 and the containers in the diagram correspond to the folder structure.
@@ -274,8 +441,8 @@ and the containers in the diagram correspond to the folder structure.
     \label{obr:afantazie_frontend_architecture}
 \end{figure}
 
-Let's look at the individual parts of the frontend architecture:
-\subsection*{React}
+Let us look at the individual parts of the frontend architecture:
+\subsubsection*{React}
 \textbf{Graph Page} contains the UI elements of the graph view:
 \begin{itemize}
     \item Content preview
@@ -283,30 +450,67 @@ Let's look at the individual parts of the frontend architecture:
     \item Time window date label
     \item New thought button
 \end{itemize}
-It also handles much of the initialization logic such as getting the thought ID from the URL and fetching the appropriate data
-(either latest or around the requested thought).
+It also handles much of the initialization logic, such as getting the thought ID from the URL and fetching the appropriate data
+(either the latest or around the requested thought).
 
 \textbf{Graph Container}
-This component is the bridge between React and Pixi.js code. It calls the run() method of the \textbf{Graph Runer}.
+This component is the bridge between React and PixiJS code. It calls the run() method of the \textbf{Graph Runer}.
 
 \subsection*{Simulation}
-In the Simulation directory we find three files:
+In the Simulation directory, we find three files:
 \begin{itemize}
     \item \textbf{Graph Runner} - Contains the main logic loop of the graph simulation.
-    Its run() method is called by the Graph Container and it initializes the graphics,
-    runs the render function and the simulation functions.
+ Its run() method is called by the Graph Container, and it initializes the graphics,
+ runs the render function and the simulation functions.
     \item \textbf{Forces Simulation} - Custom FDA implementation.
     \item \textbf{ThoughtsProvider} - Responsible for providing the temporal and neighborhood thoughts as well as
-    fetching data from backend based on time window position and graph walk state.
+ fetching data from the backend based on time window position and graph exploration state.
 \end{itemize}
+
+The source code of the main logic loop of the application (located in the file graphRunner.ts) is shown below.
+Note that the code is simplified for the sake of brevity.
+
+% \begin{minipage}{\linewidth}
+\begin{lstlisting}
+export default function runGraph(app: Application) {
+    const renderGraph = initGraphics(app);
+    useGraphStore.getState().setFrame(0);
+
+    // main application loop
+    app.ticker.add((_) => {
+        const graphState = useGraphStore.getState();
+
+        // cache thoughts
+        if (graphState.frame === THOUGHTS_CACHE_FRAME) {
+            ...
+            localStorage.setItem('thoughts-cache',
+                JSON.stringify(thoughtsCache));
+        }
+            
+        // Update temporal thoughts if needed
+        updateTemporalThoughts();
+
+        // FDL simulation
+        const frame = graphState.frame;
+        if (frame < SIMULATION_FRAMES) {
+            simulate_one_frame();   
+        }
+        graphState.setFrame(frame + 1);
+
+        // render the graph
+        renderGraph();
+    });
+}
+\end{lstlisting}
+% \end{minipage}
 
 \subsection*{Graphics}
 This directory contains two files:
 \begin{itemize}
     \item \textbf{Graphics} - Contains the initializeGraphics() method which returns a callback function render()
-    called by the Graph Runner every loop.
+ called by the Graph Runner every loop.
     \item \textbf{ViewportInitializer} - Contains the addDraggableViewport() method
-    which sets up the viewport for the graph. 
+ which sets up the viewport for the graph. 
 \end{itemize}
 
 \subsection*{State and parameters}
@@ -315,4 +519,159 @@ Here we find two files:
     \item \textbf{Graph Store} - Zustand store for the graph state.
     \item \textbf{Graph Parameters} - Constants used in the graph view, \gls{FDL} and other behavior.
 \end{itemize}
+
+\section{Final List of Features}
+This section provides a deeper look into the user-facing features and technical aspects of the application.
+More user-focused documentation will be available in Chapter \ref{chap:user_documentation}.
+
+\subsection{AuthX/Y}
+The application includes user account functionality supporting authentication and authorization.
+Users can register, log in, and log out. Most pages and features are accessible only to logged-in users.
+
+Passwords are hashed using \gls{sha256} encryption and must meet minimal requirements:
+\begin{itemize}
+\item At least eight characters
+\item At least one uppercase letter
+\item At least one lowercase letter
+\item At least one number
+\end{itemize}
+
+Login is managed via \gls{jwt} stored in \gls{local_storage}.
+Tokens expire after one day, and a refresh token mechanism is not implemented, requiring users to re-login every 24 hours.
+
+Tokens are currently sent in URL parameters for SignalR WebSocket connections.
+This practice is not ideal and should be replaced in the future.
+A possible solution involves a ticketing system where a logged-in client would request a ticket from the API.
+This ticket would then authorize the WebSocket connection, avoiding token exposure in the URL. %\xxx{cit?}
+
+\subsection{Pages}
+Thanks to React, the graph view is one of many pages in the application. There are currently ten pages:
+\begin{itemize}
+\item \textbf{Homepage}: Displays a feed of recent thoughts and navigation buttons (Figure \ref{obr:afantazie_welcome_and_homepage})
+\item \textbf{Welcome Page}: Similar to the homepage but tailored for unregistered users (Figure \ref{obr:afantazie_welcome_and_homepage})
+\item \textbf{About Page}: Provides information about the project
+\item \textbf{Chat Room}: A basic real-time chat
+\item \textbf{Settings Page}: Contains user settings and a logout button
+\item \textbf{Login and Registration Pages}
+\item \textbf{Notifications Page}: Displays replies from other users
+\item \textbf{Graph View}: Enables users to view thoughts
+\item \textbf{Thought Creation Page}: Allows users to create new thoughts
+\end{itemize}
+
+\begin{figure}[p]
+\includegraphics[width=130mm, keepaspectratio]{img/afantazie_welcome_and_home_page.png}
+\caption{The Welcome page and homepage of Aphantasia}
+\label{obr:afantazie_welcome_and_homepage}
+\end{figure}
+
+\subsection{Localization}
+Initially, we developed a Czech version of the application and later added an English version.
+For frontend \gls{localization}, we utilized two JSON files and a Localization object which returns 
+either Czech or English text based on \gls{vite} configuration.
+This makes the application easily extensible to more languages.
+
+Backend localization was also required, as the API returns localized authentication and validation messages.
+To achieve this, we created a Localization project with classes implementing localization interfaces.
+During bootstrapping, a specific localization is registered based on configuration. 
+While this approach is somewhat cumbersome, it suffices for the limited localization needs of the backend.
+
+\subsection{Custom Graph Rendering Engine}
+
+The graph view is the primary feature of Aphantasia and the most complex part of the application.
+Its basic features include:
+\begin{itemize}
+\item \textbf{Zooming and Panning}
+\item \textbf{Dragging Thoughts}
+\item \textbf{Floating Text Titles} (Figure \ref{obr:afantazie_floating_titles})
+\item \textbf{Thought Highlighting} (On Figure \ref{obr:afantazie_mobile_graph_view} and \ref{obr:afantazie_floating_titles})
+\end{itemize}
+
+\begin{figure}[p]
+    \includegraphics[width=130mm, keepaspectratio]{img/afantazie_mobile_graph_view.png}
+    \caption{The graph view on a mobile device - non-highlighted mode, half-screen preview, and fullscreen preview, respectively}
+    \label{obr:afantazie_mobile_graph_view}
+\end{figure}
+
+\begin{figure}[p]
+    \includegraphics[width=130mm, keepaspectratio]{img/afantazie_floating_titles.png}
+    \caption{Floating titles in the graph view on desktop}
+    \label{obr:afantazie_floating_titles}
+\end{figure}
+
+\begin{figure}[p]
+    \includegraphics[width=130mm, keepaspectratio]{img/afantazie_animated_edges.png}
+    \caption{Animated edges in the graph view}
+    \label{obr:afantazie_animated_edges}
+\end{figure}
+
+\subsubsection*{On-screen Thoughts Limit}
+The On-screen thoughts limit is a critical part of our big graph rendering solution.
+The default value is 100, but users can adjust it in the settings.
+
+The idea behind it is to always render, at most, this number of thoughts on screen.
+And to view more user input is required - either by moving the time slider or by using the graph exploration feature, both of which we will talk about briefly.
+
+The limit is demonstrated in Figure \ref{obr:afantazie_production_dataset_in_time_window} and \ref{obr:afantzazie_production_dataset_640_nodes} with the values set to 300 and 700, respectively.
+
+\subsubsection*{Time Slider}
+Combining the On-screen thoughts limit, dynamic loading, and two UI buttons resulted in a feature we call the Time slider.
+It allows users to move a conceptual time window smoothly into the past or future by holding the corresponding button.
+The resulting layout using the time slider is demonstrated in Figure \ref{obr:afantazie_production_dataset_in_time_window}
+with 641 thoughts on afantazie.cz viewed in three different time windows of length 300.
+
+Above the time slider controls, there is a label showing the current time window's position - the creation date of the newest thought on the screen.
+The label can be seen in the bottom left in Figure \ref{obr:afantazie_mobile_graph_view}.
+
+New thoughts appear either in their cached positions (see Layout caching section below) or in a circular pattern around the simulation container's center.
+When not yet cached, the appearance of newer/older nodes creates a visually appealing effect as the thoughts gradually appear in what resembles a loading spinner.
+
+\subsubsection*{Live Preview}
+When the time slider moves beyond the last thought, the application enters live preview mode indicated by 'Now...' apearing in place of the time window's date in bottom left.
+In this mode, the client listens to new thoughts and adds them to the graph in real-time.
+
+While this feature enhances interactivity, it has only been tested with two users creating thoughts simultaneously.
+Higher activity levels could potentially overwhelm the system, but until there is an active user base, this remains
+a theoretical concern.
+
+We implemented this feature using long polling, meaning that the client periodically sends
+requests to the server to check for new thoughts. This approach is a bit wasteful, especially considering that we already have an active
+signalR connection to use across the entire application.
+In the future we will replace long polling with the active signalR connection.
+
+\subsubsection*{Graph Exploration}
+The neighborhood API endpoint powers graph exploration demonstrated in Figure \ref{obr:afantazie_mobile_graph_view}.
+After clicking on a node, link, or reply, the client loads the neighborhood of the newly highlighted thought, enabling interactive exploration.
+
+In the example and many other screenshots provided in this work, some thoughts appear hollowed out.
+This effect triggers when the thought's direct neighbors (links or replies) are not currently rendered on screen, signaling that there is more to explore behind it.
+When the neighbors of a node are all visible, the node is filled with its author's color.
+
+Currently, the graph exploration neighborhood array does not respect the on-screen thoughts limit and loads all neighbors of the highlighted thought up to a given depth.
+This didn't pose a problem with the datasets we used but could be a significant issue with highly connected datasets.
+
+\subsubsection*{Thoughts Layout Caching}
+The browser's local storage caches the thoughts layout after a period of inactivity.
+The length of this period is parametrizable by a number of frames,
+with the current value set to 1 000 frames, which corresponds to around 30 seconds of inactivity on most devices.
+When a thought leaves the screen and later reappears, it retains its previous position.
+This feature facilitates graph stability during time sliding and between sessions and removes the need for the graph to stabilize again and again.
+
+Paired with the time slider, this approach produced an unexpected emergent behavior. As the \gls{production} dataset grew beyond 500 thoughts (five times the default on-screen limit), it remained possible to create a stabilized graph across the entire dataset.
+Moving the time slider across such a stabilized layout is a uniquely satisfying experience, which we believe sets Aphantasia apart.
+To some extent, this feature is visible in Figure \ref{obr:afantazie_production_dataset_in_time_window} but it is best experienced in the live application.
+
+The cache currently has no size limit and is not cleared automatically, which could be a potential issue with big datasets and longer graph view sessions.
+Logged-in users can, however, delete cached positions in settings to force the graph to re-stabilize.
+
+\begin{figure}[p]
+    \includegraphics[height=200mm, keepaspectratio]{img/afantazie_production_dataset_in_time_window.png}
+    \caption{Aphantasia with the Czech production dataset in stabilized temporal layout (641 nodes in three time windows of length 300)}
+    \label{obr:afantazie_production_dataset_in_time_window}
+\end{figure}
+
+\begin{figure}[p]
+    \includegraphics[width=130mm, keepaspectratio]{img/afantzazie_production_dataset_641_nodes.png}
+    \caption{The entire dataset of afantazie.cz (641 nodes) in a single time window}
+    \label{obr:afantzazie_production_dataset_640_nodes}
+\end{figure}
 

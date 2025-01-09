@@ -3,66 +3,51 @@
 
 \section*{Motivation}
 
-Every social network with userbase past a certain threshold will at some point face a problem.
-This problem is in essence a one of filtering.
-Questions like what posts should we show to our users, in what order or how often have to be answered at the very least by every social network operating big-tech company,
-though they can also arise with moderately big forums and any post-based online community. 
+In recent years, it has been hard to escape the infinite feed.
+It is a design pattern where the user is presented with a list of posts that can be scrolled through seemingly indefinitely.
+Infinite feed is the primary way of presenting posts used by, for example
+TikTok, Instagram, Facebook, Twitter, Reddit, and, to a lesser extent, YouTube.
+This approach is easy to implement, intuitive, and requires minimal user interaction
+- A swipe or scroll is all the input is needed.
 
-It does not help that the amount of data to consider can be truly vast.
-Meta-owned social apps for example, have over 3.29 billion daily active users as of september 2024 \cite{meta_dau}.
-When different tastes and preferences of the userbase are to be taken into account
-this problem becomes a very interesting software engineering challenge indeed.
-
-It is safe to say that all the big contemporary social networks (Facebook, Twitter, Instagram, Reddit or TikTok)
-tackle this challenge in the same way.
-Commonly reffered to as "The algorithm",
-their solutions rely on machine learning to learn user preferences and maximize retention time.
-
-And the result? User gets presented with an infinite feed of content
-with another tweet, picture or video just a scroll away.
-
-This approach while for sure effective at maximizing ad revenue and user retention has its downsides:
+While the infinite feed is not necessarily bad or insufficient, it does have some drawbacks. Namely:
 \begin{itemize}
-  \item \textbf{Lack of autonomy} - Users have little conscious control over the content they see. The algorithm decides for them based on nebulous criteria.
-  \item \textbf{Echo chambers} - the algorithm will show the user more of what they like and agree with making it easy to believe that
-  everyone thinks the same way.
-  \item \textbf{Addictive design} - The process of scrolling through an infinite-feed can easily become addictive as each swipe is akin to pulling a lever on a slot machine.
+  \item \textbf{Echo chambers}
+ - When the recommendation system behind the infinite feed also includes or even centers around user preferences as a factor,
+ the ideological or political similarity of the content consumed can narrow the user's worldview.
+ This effect is often called an "echo chamber" \cite{echo_chamber_wiki}.
+  \item \textbf{Addictive design}
+ - The infinite feed might encourage mindless, addictive consumption of content with each swipe akin to the pulling of a slot machine lever.
+ The term "doomscrolling" \cite{doomscrolling_wiki} has been coined to describe this behavior.
+  \item \textbf{Lack of autonomy}
+ - The user does not decide on the next post in the feed. Instead, it is decided by the recommendation algorithm
+ (colloquially referred to as "The algorithm" \cite{the_algorithm_wikitionary}),
+ which can be opaque and hard for content creators and consumers to understand.
 \end{itemize}
-While subjective, we believe that these are common experiences of users of social networks.
+
+In this work, we will explore a graph-based approach as an alternative to the infinite feed pattern.
 
 \section*{Aphantasia}
-Aphantasia (sometimes also refered to as Afantazie) is the implementation part and the final product of this thesis.
-It is a website on which we will attempt to give an alternative to how we interact with post-based websites.
-
-This alternative is a graph-based approach.
-Users will be presented with a graph of nodes representing posts and edges representing connections between them.
-
-Now ideally user could log in and see the entirety of the content on the website.
-This is of course unfeasable not just from technical perspective but also because of limits of human perception.
-Our eyes and brains can only process so much information at once
-and rendering potentially billions of nodes is even bigger challenge than the aforementioned infinite feed approach.
-
-But we believe there is a way to make this idea work.
-While presenting the entirety of the content is difficult and impractical,
-giving users the ability to see currently relevant content as a graph might be feasable.
-If we also add the ability to zoom and dynamically load more content related to the area of interest (ie. zoomed-in coordinates of the graph),
-this approach might become a viable way to interact with at least smaller-scale social networks.
-
-If implemented properly, this solution could solve the problems mentioned:
+Aphantasia (sometimes also referred to as Afantázie) is the implementation part and the final product of this thesis,
+currently available at:
 \begin{itemize}
-  \item Users would have more control over the content they see. They could zoom in on the parts of the graph they find interesting.
-  \item Echo chambers could be mitigated by showing the user the graph-based context of the entire site.
-  \item While from the perspective of software makers, an addictive product is not a bad thing, it is not necessarily good for the users.
-    Graph-based interaction doesn't rely on addictive patterns and if in anyway addictive,
-    the addiction would stem from exploring the content on users own terms.
+  \item \textbf{\url{https://aphantasia.io}} internationally
+  \item \textbf{\url{https://afantazie.cz}} for Czech user base
 \end{itemize}
 
-% \xxx{72 Hours of Gamergate ? }
+It is a social network concept based on graph visualization of its contents.
+It lets users create posts called thoughts, interlink them, and explore them as animated, interactive, and colorful graphs.
 
-The task ahead is going to require solving technical challenges regarding development and hosting of a public website
-as well as implementation and research about graph vizualization techniques.
+In the following text, we will go through the design and implementation of Aphantasia and
+explore whether it can mitigate or at least alleviate the drawbacks of the infinite feed pattern.
 
-In chapter 1 we will start by introducing and comparing a few existing software products that provide graph visualization.
-In the chapter 2 we will briefly talk about different graph layout algorithms.
-Chapters 3 and 4 are where we design and implement Aphantasia
-and lastly we will present the finished product in chapter 5 and provide documentation in chapter 6.
+\begin{itemize}
+  \item We will start by introducing the concept of Graph Layout algorithms in Chapter \ref{chap:graph_layout_algorithms}.
+  \item Next, we will compare software products that provide graph visualization in Chapter \ref{chap:related_software}.
+  \item In Chapter \ref{chap:design}, we will look at the analysis, requirements, and use cases of Aphantasia.
+  \item Then we will implement the software accordingly in Chapter \ref{chap:implementation}.
+  \item Chapter \ref{chap:testing} is where we test Aphantasia.
+ We will compare it to the software from Chapter \ref{chap:related_software},
+ try its quantitative limits, and evaluate the user experience when compared to the infinite feed.
+  \item And finally, in Chapter \ref{chap:documentation}, we will provide the User, Developer, and Administrator documentation.
+\end{itemize}

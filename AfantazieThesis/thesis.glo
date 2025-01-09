@@ -1,37 +1,45 @@
-\glossaryentry{graph?\glossentry{graph}|setentrycounter[]{page}"\glsnumberformat}{11}
-\glossaryentry{CitHep?\glossentry{cithep_dataset}|setentrycounter[]{page}"\glsnumberformat}{11}
-\glossaryentry{FDL?\glossentry{FDL}|setentrycounter[]{page}"\glsnumberformat}{15}
-\glossaryentry{FDL?\glossentry{FDL}|setentrycounter[]{page}"\glsnumberformat}{15}
-\glossaryentry{Vite?\glossentry{vite}|setentrycounter[]{page}"\glsnumberformat}{15}
-\glossaryentry{FDL?\glossentry{FDL}|setentrycounter[]{page}"\glsnumberformat}{15}
+\glossaryentry{GLA?\glossentry{GLA}|setentrycounter[]{page}"\glsnumberformat}{11}
+\glossaryentry{tree?\glossentry{tree}|setentrycounter[]{page}"\glsnumberformat}{14}
+\glossaryentry{DAG?\glossentry{DAG}|setentrycounter[]{page}"\glsnumberformat}{14}
+\glossaryentry{graph?\glossentry{graph}|setentrycounter[]{page}"\glsnumberformat}{16}
+\glossaryentry{CitHep?\glossentry{cithep_dataset}|setentrycounter[]{page}"\glsnumberformat}{16}
 \glossaryentry{FDL?\glossentry{FDL}|setentrycounter[]{page}"\glsnumberformat}{19}
-\glossaryentry{FPS?\glossentry{fps}|setentrycounter[]{page}"\glsnumberformat}{19}
-\glossaryentry{code-first?\glossentry{code_first}|setentrycounter[]{page}"\glsnumberformat}{26}
-\glossaryentry{ORM?\glossentry{ORM}|setentrycounter[]{page}"\glsnumberformat}{27}
-\glossaryentry{code-first?\glossentry{code_first}|setentrycounter[]{page}"\glsnumberformat}{27}
-\glossaryentry{GLA?\glossentry{GLA}|setentrycounter[]{page}"\glsnumberformat}{27}
-\glossaryentry{dependency injection?\glossentry{dependency_injection}|setentrycounter[]{page}"\glsnumberformat}{30}
-\glossaryentry{business logic?\glossentry{business_logic}|setentrycounter[]{page}"\glsnumberformat}{30}
-\glossaryentry{business logic?\glossentry{business_logic}|setentrycounter[]{page}"\glsnumberformat}{30}
+\glossaryentry{Vite?\glossentry{vite}|setentrycounter[]{page}"\glsnumberformat}{19}
+\glossaryentry{CitHep?\glossentry{cithep_dataset}|setentrycounter[]{page}"\glsnumberformat}{19}
+\glossaryentry{FDL?\glossentry{FDL}|setentrycounter[]{page}"\glsnumberformat}{22}
+\glossaryentry{FPS?\glossentry{fps}|setentrycounter[]{page}"\glsnumberformat}{22}
+\glossaryentry{CitHep?\glossentry{cithep_dataset}|setentrycounter[]{page}"\glsnumberformat}{22}
+\glossaryentry{thought?\glossentry{thought}|setentrycounter[]{page}"\glsnumberformat}{25}
+\glossaryentry{DAG?\glossentry{DAG}|setentrycounter[]{page}"\glsnumberformat}{25}
+\glossaryentry{FPS?\glossentry{fps}|setentrycounter[]{page}"\glsnumberformat}{27}
+\glossaryentry{ORM?\glossentry{ORM}|setentrycounter[]{page}"\glsnumberformat}{28}
+\glossaryentry{code-first?\glossentry{code_first}|setentrycounter[]{page}"\glsnumberformat}{28}
+\glossaryentry{code-first?\glossentry{code_first}|setentrycounter[]{page}"\glsnumberformat}{28}
+\glossaryentry{GLA?\glossentry{GLA}|setentrycounter[]{page}"\glsnumberformat}{29}
+\glossaryentry{code-first?\glossentry{code_first}|setentrycounter[]{page}"\glsnumberformat}{31}
+\glossaryentry{dependency injection?\glossentry{dependency_injection}|setentrycounter[]{page}"\glsnumberformat}{31}
+\glossaryentry{business logic?\glossentry{business_logic}|setentrycounter[]{page}"\glsnumberformat}{31}
+\glossaryentry{business logic?\glossentry{business_logic}|setentrycounter[]{page}"\glsnumberformat}{31}
 \glossaryentry{dependency injection?\glossentry{dependency_injection}|setentrycounter[]{page}"\glsnumberformat}{32}
 \glossaryentry{dependency injection?\glossentry{dependency_injection}|setentrycounter[]{page}"\glsnumberformat}{32}
 \glossaryentry{code-first?\glossentry{code_first}|setentrycounter[]{page}"\glsnumberformat}{33}
 \glossaryentry{authX/Y?\glossentry{auth_x_y}|setentrycounter[]{page}"\glsnumberformat}{33}
-\glossaryentry{websockets?\glossentry{websockets}|setentrycounter[]{page}"\glsnumberformat}{34}
-\glossaryentry{FDL?\glossentry{FDL}|setentrycounter[]{page}"\glsnumberformat}{34}
-\glossaryentry{memory leak?\glossentry{memory_leak}|setentrycounter[]{page}"\glsnumberformat}{34}
+\glossaryentry{WebSockets?\glossentry{websockets}|setentrycounter[]{page}"\glsnumberformat}{34}
+\glossaryentry{FDL?\glossentry{FDL}|setentrycounter[]{page}"\glsnumberformat}{35}
+\glossaryentry{memory leak?\glossentry{memory_leak}|setentrycounter[]{page}"\glsnumberformat}{35}
 \glossaryentry{FDL?\glossentry{FDL}|setentrycounter[]{page}"\glsnumberformat}{39}
-\glossaryentry{SHA256?\glossentry{sha256}|setentrycounter[]{page}"\glsnumberformat}{41}
-\glossaryentry{JWT?\glossentry{jwt}|setentrycounter[]{page}"\glsnumberformat}{41}
-\glossaryentry{local storage?\glossentry{local_storage}|setentrycounter[]{page}"\glsnumberformat}{41}
-\glossaryentry{localization?\glossentry{localization}|setentrycounter[]{page}"\glsnumberformat}{42}
-\glossaryentry{Vite?\glossentry{vite}|setentrycounter[]{page}"\glsnumberformat}{42}
-\glossaryentry{GLA?\glossentry{GLA}|setentrycounter[]{page}"\glsnumberformat}{44}
-\glossaryentry{local storage?\glossentry{local_storage}|setentrycounter[]{page}"\glsnumberformat}{44}
-\glossaryentry{production?\glossentry{production}|setentrycounter[]{page}"\glsnumberformat}{46}
-\glossaryentry{CitHep?\glossentry{cithep_dataset}|setentrycounter[]{page}"\glsnumberformat}{47}
-\glossaryentry{production?\glossentry{production}|setentrycounter[]{page}"\glsnumberformat}{47}
-\glossaryentry{BFS?\glossentry{BFS}|setentrycounter[]{page}"\glsnumberformat}{47}
-\glossaryentry{FDL?\glossentry{FDL}|setentrycounter[]{page}"\glsnumberformat}{52}
-\glossaryentry{BFS?\glossentry{BFS}|setentrycounter[]{page}"\glsnumberformat}{55}
-\glossaryentry{GLA?\glossentry{GLA}|setentrycounter[]{page}"\glsnumberformat}{61}
+\glossaryentry{SHA256?\glossentry{sha256}|setentrycounter[]{page}"\glsnumberformat}{40}
+\glossaryentry{JWT?\glossentry{jwt}|setentrycounter[]{page}"\glsnumberformat}{40}
+\glossaryentry{local storage?\glossentry{local_storage}|setentrycounter[]{page}"\glsnumberformat}{40}
+\glossaryentry{localization?\glossentry{localization}|setentrycounter[]{page}"\glsnumberformat}{41}
+\glossaryentry{Vite?\glossentry{vite}|setentrycounter[]{page}"\glsnumberformat}{41}
+\glossaryentry{production?\glossentry{production}|setentrycounter[]{page}"\glsnumberformat}{42}
+\glossaryentry{CitHep?\glossentry{cithep_dataset}|setentrycounter[]{page}"\glsnumberformat}{53}
+\glossaryentry{production?\glossentry{production}|setentrycounter[]{page}"\glsnumberformat}{53}
+\glossaryentry{BFS?\glossentry{BFS}|setentrycounter[]{page}"\glsnumberformat}{53}
+\glossaryentry{CitHep?\glossentry{cithep_dataset}|setentrycounter[]{page}"\glsnumberformat}{53}
+\glossaryentry{BFS?\glossentry{BFS}|setentrycounter[]{page}"\glsnumberformat}{57}
+\glossaryentry{GLA?\glossentry{GLA}|setentrycounter[]{page}"\glsnumberformat}{65}
+\glossaryentry{local storage?\glossentry{local_storage}|setentrycounter[]{page}"\glsnumberformat}{65}
+\glossaryentry{GLA?\glossentry{GLA}|setentrycounter[]{page}"\glsnumberformat}{66}
+\glossaryentry{DAG?\glossentry{DAG}|setentrycounter[]{page}"\glsnumberformat}{66}
