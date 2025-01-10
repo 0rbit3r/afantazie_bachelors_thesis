@@ -610,3 +610,4 @@ DeploymentScripts/*
 /AfantazieServer/Afantazie.Data.Core/migrationsettings.json
 /AfantazieServer/Afantazie.Tools/appsettings.json
 Secondary_files/cytoscape.js-euler-master/cytoscape.js-euler-master
+/AfantazieServer/AfantazieServer/appsettings.Production.json
