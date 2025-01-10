@@ -4,9 +4,7 @@ import { MessageResponseDto } from "../dto/chat/MessageResponseDto";
 
 export function connectToChatHub(handleMessage: (message: MessageResponseDto) => void) {
     
-    const hubUrl = import.meta.env.VITE_LANGUAGE === 'cz'
-        ? import.meta.env.VITE_AFANTAZIE_URL + import.meta.env.VITE_HUB_PATH + "/chat"
-        : import.meta.env.VITE_THOUGHTWEB_URL + import.meta.env.VITE_HUB_PATH + "/chat";
+    const hubUrl = import.meta.env.VITE_URL + import.meta.env.VITE_HUB_PATH + "/chat";
 
     const token = localStorage.getItem('token');
 

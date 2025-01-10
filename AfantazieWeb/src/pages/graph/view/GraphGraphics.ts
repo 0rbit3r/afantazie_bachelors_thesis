@@ -1,6 +1,6 @@
 import { Application, Color, Container, Graphics, TextStyle, Text } from "pixi.js";
 import { ARROW_Z, NODES_Z, TEXT_Z } from "./zIndexes";
-import { BASE_EDGE_ALPHA, BASE_EDGE_WIDTH, BASE_RADIUS, HIGHLIGHTED_EDGE_ALPHA, HIGHLIGHTED_EDGE_WIDTH, SIM_HEIGHT, SIM_WIDTH, UNHIGHLIGHTED_EDGE_ALPHA, UNHIGHLIGHTED_EDGE_WIDTH, ZOOM_TEXT_VISIBLE_THRESHOLD } from "../state_and_parameters/graphParameters";
+import { ANIMATED_EDGES, BASE_EDGE_ALPHA, BASE_EDGE_WIDTH, BASE_RADIUS, HIGHLIGHTED_EDGE_ALPHA, HIGHLIGHTED_EDGE_WIDTH, SIM_HEIGHT, SIM_WIDTH, UNHIGHLIGHTED_EDGE_ALPHA, UNHIGHLIGHTED_EDGE_WIDTH, ZOOM_TEXT_VISIBLE_THRESHOLD } from "../state_and_parameters/graphParameters";
 import { RenderedThought } from "../model/renderedThought";
 import { addDraggableViewport } from "./ViewportInitializer";
 import { XAndY } from "../model/xAndY";
@@ -113,7 +113,7 @@ export const initGraphics = (
         const graphState = useGraphStore.getState();
 
         const stateViewport = graphState.viewport;
-        if (stateViewport === null){
+        if (stateViewport === null) {
             return;
         }
 
@@ -137,7 +137,7 @@ export const initGraphics = (
 
             // indicate that htere are neighbors not currently on screen
             const explorable = (thought.links.some(l => onScreenThoughts.filter(t => t.id === l).length === 0) || // any links or replies outside onscreen thoughts check 
-            thought.backlinks.some(l => onScreenThoughts.filter(t => t.id === l).length === 0));
+                thought.backlinks.some(l => onScreenThoughts.filter(t => t.id === l).length === 0));
 
             const circle = thought.graphics as Graphics;
 
@@ -145,7 +145,7 @@ export const initGraphics = (
 
             // if the node is out of screen, don't draw it
             const circleCoors = stateViewport.toViewportCoordinates({ x: thought.position.x, y: thought.position.y });
-            if (circleCoors.x < -thought.radius * 3|| circleCoors.x > stateViewport.width + thought.radius * 3
+            if (circleCoors.x < -thought.radius * 3 || circleCoors.x > stateViewport.width + thought.radius * 3
                 || circleCoors.y < -thought.radius * 3 || circleCoors.y > stateViewport.height + thought.radius * 3) {
                 return;
             }
@@ -161,7 +161,7 @@ export const initGraphics = (
             circle.drawCircle(circleCoors.x, circleCoors.y, stateViewport.zoom * thought.radius);
             circle.endFill();
 
-            if (explorable){
+            if (explorable) {
                 circle.beginFill("black", 1);
                 circle.lineStyle(8 * stateViewport.zoom, tinycolor(thought.color).lighten(15).toString(), 0.5);
                 circle.drawCircle(circleCoors.x, circleCoors.y, stateViewport.zoom * thought.radius - 1);
@@ -302,42 +302,45 @@ const draw_edge = (
 
     graphics.zIndex = ARROW_Z;
 
-    // bezier curved edges
-    graphics.lineStyle({ color: new Color(color), width: zoom * thickness, alpha: alpha });
-    const normal = { x: y1 - y2, y: x2 - x1 };
-    const bezier1 = { x: x1 - ((x1 - arrowTipX) / 3) + normal.x * 0.1, y: y1 - ((y1 - arrowTipY) / 3) + normal.y * 0.1 };
-    const bezier2 = { x: x1 - ((x1 - arrowTipX) * 2 / 3), y: y1 - ((y1 - arrowTipY) * 2 / 3) };
-    graphics.bezierCurveTo(bezier1.x, bezier1.y, bezier2.x, bezier2.y, arrowTipX, arrowTipY);
+    if (!ANIMATED_EDGES) {
+        // bezier curved edges
+        graphics.lineStyle({ color: new Color(color), width: zoom * thickness, alpha: alpha });
+        const normal = { x: y1 - y2, y: x2 - x1 };
+        const bezier1 = { x: x1 - ((x1 - arrowTipX) / 3) + normal.x * 0.1, y: y1 - ((y1 - arrowTipY) / 3) + normal.y * 0.1 };
+        const bezier2 = { x: x1 - ((x1 - arrowTipX) * 2 / 3), y: y1 - ((y1 - arrowTipY) * 2 / 3) };
+        graphics.bezierCurveTo(bezier1.x, bezier1.y, bezier2.x, bezier2.y, arrowTipX, arrowTipY);
+    }
+    else {
+        //animated edges
+        const segments: { x: number, y: number }[] = [];
+        const segmentSize = 8;
+        const edgeLength = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+        const segmentCount = Math.floor(edgeLength / segmentSize + 1);
 
-    //animated edges
-    // const segments: { x: number, y: number }[] = [];
-    // const segmentSize = 8;
-    // const edgeLength = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-    // const segmentCount = Math.floor(edgeLength / segmentSize + 1);
+        const frame = useGraphStore.getState().frame;
+        const cyclePeriod = 30;
+        const offset = frame % cyclePeriod;
 
-    // const frame = useGraphStore.getState().frame;
-    // const cyclePeriod = 30;
-    // const offset = frame % cyclePeriod;
+        for (let i = 0; i < segmentCount; i++) {
+            const segmentX = x1 + (x2 - x1) * (i - 1 + offset / cyclePeriod * 2) / segmentCount;
+            const segmentY = y1 + (y2 - y1) * (i - 1 + offset / cyclePeriod * 2) / segmentCount;
+            segments.push({ x: segmentX, y: segmentY });
+        }
 
-    // for (let i = 0; i < segmentCount; i++) {
-    //     const segmentX = x1 + (x2 - x1) * (i - 1 + offset / cyclePeriod * 2) / segmentCount;
-    //     const segmentY = y1 + (y2 - y1) * (i - 1 + offset / cyclePeriod * 2) / segmentCount;
-    //     segments.push({ x: segmentX, y: segmentY });
-    // }
-
-    // segments.forEach((segment, index) => {
-    //     if (index % 2 === 0) {
-    //         graphics.lineStyle({ color: new Color(color), width: zoom * thickness * 5, alpha: alpha / 3 });
-    //     }
-    //     else {
-    //         graphics.lineStyle();
-    //     }
-    //     if (index < segments.length - 1) {
-    //         const nextSegment = segments[index + 1];
-    //         graphics.moveTo(segment.x, segment.y);
-    //         graphics.lineTo(nextSegment.x, nextSegment.y);
-    //     }
-    // });
+        segments.forEach((segment, index) => {
+            if (index % 2 === 0) {
+                graphics.lineStyle({ color: new Color(color), width: zoom * thickness * 5, alpha: alpha / 3 });
+            }
+            else {
+                graphics.lineStyle();
+            }
+            if (index < segments.length - 1) {
+                const nextSegment = segments[index + 1];
+                graphics.moveTo(segment.x, segment.y);
+                graphics.lineTo(nextSegment.x, nextSegment.y);
+            }
+        });
+    }
 
     // simple arrows    
     // graphics.lineTo(arrowTipX, arrowTipY);

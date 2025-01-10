@@ -106,6 +106,33 @@
       \verb https://en.wiktionary.org/wiki/algorithm#Noun
       \endverb
     \endentry
+    \entry{graph_layout_demos}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=3be3ba947f4c72fa6d392f7a34ddb32b}{%
+           family={yFiles},
+           familyi={y\bibinitperiod}}}%
+      }
+      \strng{namehash}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{fullhash}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{fullhashraw}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{bibnamehash}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{authorbibnamehash}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{authornamehash}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{authorfullhash}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \strng{authorfullhashraw}{3be3ba947f4c72fa6d392f7a34ddb32b}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{yFiles Demos - Layout styles}
+      \field{year}{2024}
+      \verb{urlraw}
+      \verb https://www.yworks.com/demos/showcase/layoutstyles/
+      \endverb
+      \verb{url}
+      \verb https://www.yworks.com/demos/showcase/layoutstyles/
+      \endverb
+    \endentry
     \entry{snap_cit_hep}{online}{}{}
       \name{author}{1}{}{%
         {{hash=97eef6fae0794d7a7a66e11dc0373d5d}{%
@@ -122,8 +149,8 @@
       \strng{authornamehash}{97eef6fae0794d7a7a66e11dc0373d5d}
       \strng{authorfullhash}{97eef6fae0794d7a7a66e11dc0373d5d}
       \strng{authorfullhashraw}{97eef6fae0794d7a7a66e11dc0373d5d}
-      \field{sortinit}{4}
-      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{note}{Accessed: 2024-09-10}
@@ -150,8 +177,8 @@
       \strng{authornamehash}{a1b97edc1a72ab1252ed75a4241a657d}
       \strng{authorfullhash}{a1b97edc1a72ab1252ed75a4241a657d}
       \strng{authorfullhashraw}{a1b97edc1a72ab1252ed75a4241a657d}
-      \field{sortinit}{5}
-      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Obsidian homepage}
@@ -177,8 +204,8 @@
       \strng{authornamehash}{b3a68714a75c60b33bc444a77b630e82}
       \strng{authorfullhash}{b3a68714a75c60b33bc444a77b630e82}
       \strng{authorfullhashraw}{b3a68714a75c60b33bc444a77b630e82}
-      \field{sortinit}{6}
-      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Graphview: At the beginning it starts with cool patterns, then turns into total chaos, and then surprisingly structures emerge from the chaos! (22k nodes)}
@@ -204,8 +231,8 @@
       \strng{authornamehash}{198e1746eaaf235d823038597e3c6de1}
       \strng{authorfullhash}{198e1746eaaf235d823038597e3c6de1}
       \strng{authorfullhashraw}{198e1746eaaf235d823038597e3c6de1}
-      \field{sortinit}{7}
-      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Gephi homepage}
@@ -231,8 +258,8 @@
       \strng{authornamehash}{b4ff61f7d5be6821696f5011ce8fbfb1}
       \strng{authorfullhash}{b4ff61f7d5be6821696f5011ce8fbfb1}
       \strng{authorfullhashraw}{b4ff61f7d5be6821696f5011ce8fbfb1}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Large Steam network visualization with Google Maps + Gephi}
@@ -258,8 +285,8 @@
       \strng{authornamehash}{0d91dc78421d00e82fd8e32a763031af}
       \strng{authorfullhash}{0d91dc78421d00e82fd8e32a763031af}
       \strng{authorfullhashraw}{0d91dc78421d00e82fd8e32a763031af}
-      \field{sortinit}{9}
-      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Cytoscape.js homepage}
@@ -331,33 +358,6 @@
       \verb https://github.com/cytoscape/cytoscape.js-euler
       \endverb
     \endentry
-    \entry{graph_layout_demos}{online}{}{}
-      \name{author}{1}{}{%
-        {{hash=3be3ba947f4c72fa6d392f7a34ddb32b}{%
-           family={yFiles},
-           familyi={y\bibinitperiod}}}%
-      }
-      \strng{namehash}{3be3ba947f4c72fa6d392f7a34ddb32b}
-      \strng{fullhash}{3be3ba947f4c72fa6d392f7a34ddb32b}
-      \strng{fullhashraw}{3be3ba947f4c72fa6d392f7a34ddb32b}
-      \strng{bibnamehash}{3be3ba947f4c72fa6d392f7a34ddb32b}
-      \strng{authorbibnamehash}{3be3ba947f4c72fa6d392f7a34ddb32b}
-      \strng{authornamehash}{3be3ba947f4c72fa6d392f7a34ddb32b}
-      \strng{authorfullhash}{3be3ba947f4c72fa6d392f7a34ddb32b}
-      \strng{authorfullhashraw}{3be3ba947f4c72fa6d392f7a34ddb32b}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{title}{yFiles Demos - Layout styles}
-      \field{year}{2024}
-      \verb{urlraw}
-      \verb https://www.yworks.com/demos/showcase/layoutstyles/
-      \endverb
-      \verb{url}
-      \verb https://www.yworks.com/demos/showcase/layoutstyles/
-      \endverb
-    \endentry
     \entry{onion_architecture}{online}{}{}
       \name{author}{1}{}{%
         {{hash=44f0cf3459a0ddeb7da2de90c0ceb018}{%
@@ -401,8 +401,8 @@
       \strng{authornamehash}{ea72ef2e93c769b7b04d22e5f76803ab}
       \strng{authorfullhash}{ea72ef2e93c769b7b04d22e5f76803ab}
       \strng{authorfullhashraw}{ea72ef2e93c769b7b04d22e5f76803ab}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{PixiJS official React guide}

@@ -18,8 +18,8 @@ with similar properties close together.
 In a circular layout, nodes can be distributed evenly along the circumference of the circle,
 or their placement can be weighted by specific properties (e.g., node degree or importance).
 
-\begin{figure}[p]\centering
-    \includegraphics[width=140mm, keepaspectratio]{img/graph_layout_cicrular.png}
+\begin{figure}[h]\centering
+    \includegraphics[width=100mm, keepaspectratio]{img/graph_layout_cicrular.png}
     \caption{Circular layout\cite{graph_layout_demos}}
     \label{obr:graph_layout_circular}
 \end{figure}
@@ -33,8 +33,8 @@ flowing in a single direction (e.g., top to bottom or left to right).
 This layout can be applied to general graphs but is most effective for directed acyclic graphs (DAGs) or undirected trees.
 Note that the structure in Figure \ref{obr:graph_layout_radial} is not a tree but a general graph.
 
-\begin{figure}[p]\centering
-    \includegraphics[width=140mm, keepaspectratio]{img/graph_layout_hiearchichal.png}
+\begin{figure}[h]\centering
+    \includegraphics[width=100mm, keepaspectratio]{img/graph_layout_hiearchichal.png}
     \caption{Hierarchical layout\cite{graph_layout_demos}}
     \label{obr:graph_layout_hierarchical}
 \end{figure}
@@ -57,8 +57,8 @@ As such, if one visualized the content of these social networks, it might look l
 We are highlighting this fact because Aphantasia's content structure is not a \gls{tree} but a \gls{DAG}
 which might have interesting consequences for navigation, user experience, and usage.
 
-\begin{figure}[p]\centering
-    \includegraphics[width=140mm, keepaspectratio]{img/graph_layout_radial.png}
+\begin{figure}[h]\centering
+    \includegraphics[width=100mm, keepaspectratio]{img/graph_layout_radial.png}
     \caption{Radial layout\cite{graph_layout_demos}}
     \label{obr:graph_layout_radial}
 \end{figure}
@@ -67,7 +67,7 @@ which might have interesting consequences for navigation, user experience, and u
 \label{sec:force_directed_layout}
 
 This type of layout is going to be the focus of this work.
-All of the layouts we will see in Chapter \ref{chap:related_software} were produced by force-directed layout (FDL) algorithms.
+All of the layouts we will present in later chapters were produced by force-directed layout (FDL) algorithms.
 
 The main idea behind FDL algorithms is very intuitive:
 Nodes are attracted to each other when connected by an edge and repelled otherwise.
@@ -84,13 +84,13 @@ or implement entirely new behaviors and parameters to fit specific use cases
 
 These positives are, however, balanced by two drawbacks:
 \begin{itemize}
-    \item high time complexity
+    \item \textbf{high time complexity}
 
  The basic version of FDL has a time complexity of $O(n^2)$ per step, where $n$ is the number of nodes in the graph.
  For stabilization, usually $n$ steps are considered sufficient,
  and thus, the time complexity for producing a stabilized graph is often computed as $O(n^3)$.
 
-    \item sensitive parameterization
+    \item \textbf{sensitive parameterization}
     
  As for parameterization, the algorithm is highly dependent on the parameters set by the user (or developer),
  some of which can be very sensitive and radically change the resulting layout with only a small change in value.

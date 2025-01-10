@@ -3,9 +3,7 @@ import { StatsResponseDto } from "../dto/chat/StatsResponse";
 
 
 export function connectToStatsHub(handleMessage: (message: StatsResponseDto) => void) {
-    const hubUrl = import.meta.env.VITE_LANGUAGE === 'cz'
-        ? import.meta.env.VITE_AFANTAZIE_URL + import.meta.env.VITE_HUB_PATH + "/stats"
-        : import.meta.env.VITE_THOUGHTWEB_URL + import.meta.env.VITE_HUB_PATH + "/stats";
+    const hubUrl = import.meta.env.VITE_URL + import.meta.env.VITE_HUB_PATH + "/stats";
         
     let connection = new signalR.HubConnectionBuilder()
         .withUrl(hubUrl)

@@ -8,16 +8,17 @@ import { updateTemporalThoughts } from './thoughtsProvider';
 
 export default function runGraph(app: Application) {
 
+    const initialGraphState = useGraphStore.getState();
 
     const thoughtGrabbed = () => {
-        useGraphStore.getState().setFrame(1);
+        initialGraphState.setFrame(1);
     };
 
-    const temporalThoughts = useGraphStore.getState().temporalRenderedThoughts; //after dynamic loading this might need to move to ticker.
+    const temporalThoughts = initialGraphState.temporalRenderedThoughts; //after dynamic loading this might need to move to ticker.
 
     const renderGraph = initGraphics(app, temporalThoughts, thoughtGrabbed);
 
-    useGraphStore.getState().setFrame(0);
+    initialGraphState.setFrame(0);
 
     // main application loop
     app.ticker.add((_) => {
